@@ -1,0 +1,37 @@
+<template name ="cadastroCurso">
+	<p>{{>menu}}</p>
+	{{#if currentUser}}
+		{{#if permissao currentUser.profile.permission}}
+			<div class="container">
+				<form id="formCadrastroCurso" name="formCadrastroCurso" class="form-horizontal">
+					<div class="form-group row">
+						<label class="control-label col-sm-4" for="nomeCurso">Nome do curso </label>
+						<div class="col-sm-6">
+							<input type="text" id="nomeCurso" name="nomeCurso"  class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-sm-4" for="siglaCurso">Sigla do curso </label>
+						<div class="col-sm-6">
+							<input type="text" id="siglaCurso" name="siglaCurso"  class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="control-label col-sm-6" name="erro"></label>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-offset-4 col-sm-10">
+							<input class="input btn" type="submit"  id="cadastrarCurso" value="Cadastrar">
+							<input class="input btn" type="submit"  id="deletarCurso" value="Voltar">
+							<input type="submit" class="input btn" name="limpar" id="limpar" value="Limpar Campos">
+						</div>
+					</div>
+				</form>
+			</div>
+		{{/if}}
+	{{/if}}
+	<div class="tabela">
+		{{> tabular table=TabularTables.Curso class="table table-striped table-bordered table-condensed"}}
+	</div>
+</template>

@@ -1,0 +1,14 @@
+meteor remove static-html
+meteor add aldeed:tabular
+meteor add iron:router
+meteor add blaze-html-templates
+meteor add accounts-ui accounts-password
+meteor add session
+meteor add dburles:collection-helpers
+npm install --save jquery-validation
+meteor npm install --save datatables.net-bs4
+meteor npm install --save bcrypt
+meteor add jquery
+npm install --save datatables.net-buttons datatables.net-buttons-bs
+meteor npm install --save datatables.net-bs4
+meteor add mizzao:autocomplete

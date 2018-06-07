@@ -1,0 +1,41 @@
+<head>
+
+
+</head>
+<body style="position: relative;">
+	{{home}}
+</body>
+<template name="home">
+	{{>menu}}
+</template>
+<template name="menu">
+	<div class="container-fluid">
+
+		{{#if currentUser}}
+			{{#if c currentUser.profile.permission}}
+				<a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a>
+				<a class="linkMenu" href="{{pathFor route= 'Usuario'}}"> Usuário</a>
+
+				<a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a>
+				<a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a>
+				<a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a>
+				<a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a>
+				<a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a>
+
+				<a class="linkMenu" href="{{pathFor route= 'Processo'}}">Definiar datas</a>
+				<a class="linkMenu" href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a>
+				<a class="linkMenu" href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
+				<a class="linkMenu" href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
+			{{/if}}
+		{{else}}
+				{{>login}}
+
+				<a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a>
+				<a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a>
+				<a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a>
+				<a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a>
+				<a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a>
+				<a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a>
+		{{/if}}
+	</div>
+</template>

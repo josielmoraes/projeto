@@ -1,0 +1,55 @@
+
+<template name="cadastroMateria">
+	<p>{{>menu}}</p>
+	<div >
+			{{#if currentUser}}
+				{{#if permissao currentUser.profile.permission}}
+				<div class="container">
+					<form id="formCadastroMateria" name="formCadastroMateria" class="form-horizontal">
+
+						<div class="form-group row">
+							<label class="control-label col-sm-4" for="codMateria">Código da Matéria </label>
+							<div class="col-sm-6">
+								<input type="text" id="codMateria" name="codMateria"  class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="control-label col-sm-4" for="nomeMateria">Nome da Matéria </label>
+							<div class="col-sm-6">
+								<input type="text" id="nomeMateria" name="nomeMateria" class="form-control">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-4" for="cargaHorariaMateria">Carga horária</label> 
+							<div class="col-sm-6">
+								<input type="text" id="cargaHorariaMateria" name="cargaHorariaMateria" class="form-control">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-4" for="aulaSemanal">Aulas semanal </label>
+							<div class="col-sm-6">
+								<input type="text" id="aulaSemanal" name="aulaSemanal" class="form-control">
+							</div>
+						</div>
+						<div class="form-group row">
+								<label class="control-label col-sm-6" name="erro" id="erro"></label>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-10">
+								<input type="submit" class="input btn" id="Cadastrar" value="Cadastrar">
+								<input type="submit" class="input btn" id="Deletar" value="Voltar">
+								<input type="submit" class="input btn" name="limpar" id="limpar" value="Limpar Campos">
+							</div>
+						</div>
+					</form>
+				</div>
+				{{/if}}
+			{{/if}}
+			<p></p>
+		<div class="tabela">
+			{{> tabular table=TabularTables.Materia selector=selector  class="table table-striped table-bordered table-condensed"}}
+		</div>
+	</div>
+</template>
+

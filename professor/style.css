@@ -1,0 +1,37 @@
+#group{
+	background-color: gray;
+}
+#menu{
+	height: 10%;
+	margin: 5px;
+}
+.linkMenu{
+	margin: 5px;
+}
+.cadastro{
+	margin-bottom: 30px;
+	margin-left: 400px;
+	display: center;
+
+}
+
+.contTable{
+	padding:  20px;
+	text-align: center;
+	border:  2px solid #000000;
+}
+#table{
+	margin-left: 20%;
+
+}
+
+#busca{
+	margin-left: 15%;
+}
+#scroll {
+   overflow: auto;
+}
+
+#idShowProfessor{
+	opacity: 0; display: none;
+}

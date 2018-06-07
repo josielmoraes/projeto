@@ -1,0 +1,68 @@
+<template name="confirmarProcesso">
+	{{>menu}}
+	<p></p>
+	{{> confirmar}}
+</template>
+
+<template name="confirmar">
+	<div class="container" id="cadastroOferta">
+			<label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
+			<div class="col-sm-4">
+				{{>buscaProcesso pro="2"}}
+			</div>
+	</div>
+	{{#if mostrar}}
+		<div class="container">
+
+				<label>Visualização por: </label>
+				<label class="radio-inline"><input type="radio" name="optradio" class="radioB" id="radioArea">Area</label>
+				<label class="radio-inline"><input type="radio" name="optradio" class="radioB" id="radioProfessor">Professor</label>
+
+		</div>
+		{{#if mostrarArea}}
+		<div class="container" >
+			{{> tabular table=TabularTables.OfertaConfirmarArea selector=selectProfessor class="table table-striped table-bordered table-condensed" id="Tabelar"}}
+		</div>
+		{{/if}}
+
+		{{#if mostrarProfessor}}
+			<div class="container">
+				{{> tabular table=TabularTables.OfertaConfirmarProfessor selector=selectProfessor class="table table-striped table-bordered table-condensed" id="Tabelar"}}
+			</div>
+
+		{{/if}}
+			{{#if teste}}
+				<form id="formConfirmar" name="formConfirmar" class="form-horizontal">
+					<div class="form-group row">
+						<label class="control-label col-sm-1 col-sm-offset-1">Turma </label>
+						<label class="control-label col-sm-2" id="valorTurmaConfirmar"></label>
+						<label class="control-label col-sm-1"> Materia</label>
+						<label class="control-label col-sm-2" id="valorMateriaConfirmar"></label>
+					</div>
+					<div class="form-group row">
+						<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Professor</label>
+							<div class="col-sm-4">
+								{{> inputAutocomplete settings=settingsProfessor id='professor' name="professor" autocomplete="off" class="form-control"}}
+								</div>
+						 </div>
+						 <div class="form-group row">
+							<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Area: </label>
+							 <div class="col-sm-4">
+									{{> inputAutocomplete settings=settingsArea id='area' name="area" autocomplete="off" class="form-control"}}
+							</div>
+					</div>
+					 <div class="form-group row">
+							<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Curso: </label>
+							 <div class="col-sm-4">
+									{{> inputAutocomplete settings=settingsCurso id='curso' name="curso" autocomplete="off" class="form-control"}}
+							</div>
+					</div>
+					<div class="form-group row">
+						 <label  class="control-label col-sm-2" id="erro" name="erro" for="alocarProfessor"></label>
+						<input class="btn input col-sm-1" type="submit" name="alocarProfessor" id="atualizarConfirmar" value="Atualizar">
+						<input class="btn input col-sm-1" type="submit" name="alocarProfessor" id="removerConfirmar" value="Remover">
+					</div>
+				</form>
+			{{/if}}
+	{{/if}}
+</template>
