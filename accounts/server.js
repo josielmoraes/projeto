@@ -21,7 +21,8 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
-	Meteor.users.remove("hEgcPSo6YkTwydtTN");
+	//Processo.update({_id:"tPt2tLvSgpZNPdbah"},{$set:{etapas:1}})
+
 	//Meteor.users.remove("WS2aQotJje9JHBZh5");
 	var us=Meteor.users.find({username:'root'}).fetch();
 		//console.log(us);

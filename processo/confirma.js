@@ -1,7 +1,7 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
 import Professor from '/imports/collections/professor'
-import '/node_modules/datatables.net-plugins/api/fnFakeRowspan.js'
+
 Router.route('/confirmarProcesso',{
 	template:'confirmarProcesso'
 })
@@ -211,6 +211,15 @@ if(Meteor.isClient){
 			teste(){
 				return Session.get('mostrarForm');
 			},
+			mostrarFinalizar(){
+				var a= Session.get('mostrarArear');
+				var b= Session.get('mostrarProfessor');
+				if(a || b)
+					return true;
+
+				if(!a && !b)
+					return false
+			},
 			setFields(){
 					var rowData=Session.get('rowDataConfirma');
 					console.log(rowData)
@@ -258,8 +267,34 @@ if(Meteor.isClient){
 					alert("Selecione uma area")
 				}else if(curso==null || curso==""){
 					alert("Selecione um curso")
+				}else{
+					var oferta=Session.get('rowDataConfirma');
+					Meteor.call('atualizarConfirmar',oferta,prof,area,curso)
+				}
+			}else if(id=="removerConfirmar"){
+				console.log('niaoncisaonc');
+				var row= Session.get('rowDataConfirma');
+				console.log(row)
+				if(row.auto==""){
+					Meteor.call('removerById',row._id);
+						console.log('result rem ', r)
+				}else{
+						Meteor.call('removerById',row._id);
+						Meteor.call('atualizarQtdeDesc',row.auto);
 				}
 			}
+		},
+		'click #finalizarConfimar':function(event){
+			event.preventDefault();
+			Meteor.call('mudarEtapa',Session.get('processoSelecionado'),3,function(e,r){
+				if(e){
+
+				}else{
+					alert("Confirmação realizada com sucesso");
+					Session.set('processoSelecionado',"")
+					Session.set("aux",false)
+				}
+			})
 		},
 		'change .radioB':function(event){
 			event.preventDefault();
@@ -308,6 +343,16 @@ if(Meteor.isServer){
 	Meteor.methods({
 			teste(s){
 				console.log(s)
+			},
+			atualizarConfirmar(oferta,professor,area,curso){
+				OfertaMateria.update({_id:oferta._id},{$set:{Professor:professor,Area:area,Curso:curso}})
+			},
+			'atualizarQtdeDesc':function(id) {
+				OfertaMateria.update({_id:id},{ $inc:{qtdeAuto:-1} })
+			},
+			removerById(id){
+				OfertaMateria.remove({_id:id})
 			}
+
 		})
 }

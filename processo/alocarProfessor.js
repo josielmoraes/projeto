@@ -28,7 +28,8 @@ new Tabular.Table({
 		  	}
 	  	},
 	  },
-  	{data:"Curso.nome", title:"Curso"}
+  	{data:"Curso.nome", title:"Curso"},
+		{data:"Semestre", title:"Semestre"}
     ],
     extraFields:[
     	'Materia','Area','aulaSemanal','cargaHoraria','qtdeAuto','auto','Professor','Curso'
@@ -78,7 +79,6 @@ new Tabular.Table({
     extraFields:[
     	'Materia','Area','auto','Professor','Curso'
     ],
-    tbody:'teste',
   	 createdRow( row, data, dataIndex ) {
     	console.log(row);
     	$(row).attr('id', 'escolha')
@@ -237,8 +237,9 @@ if(Meteor.isClient){
   		setRowDataProfessor:function(){
   			var rowData=Session.get('setRowDataProfessor');
   			$('#valorTurma').text(rowData.Turma);
-  			var m= Materia.findOne({_id:rowData.Materia});
-  			$('#valorMateria').text(rowData.nomeMateria);
+  			var m= rowData.Materia;
+				console.log(m)
+  			$('#valorMateria').text(m.nomeMateria);
   			var prof=Session.get('professorSelecionado');
   			$("#professor").val(prof.nome)
   			var area=rowData.Area;
@@ -317,11 +318,13 @@ if(Meteor.isClient){
 			 	}else{
 			 		$('#erro').text("");
 			 		console.log(professor);
+					var semestre=$('#semestreAlocar').val();
 			 		console.log(rowData);
+					console.log('semestre ',semestre)
 			 		if(professor==""){
-			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso);
+			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso,semestre);
 			 		}else{
-			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso);
+			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso,semestre);
 			 		}
 			 		Template.cadastroAlocarProfessor.__helpers.get('campos').call();
 			 	}
@@ -342,8 +345,6 @@ if(Meteor.isClient){
 		 				Session.set("aux",false)
 		 			}
 		 		})
-
-
 		 	}
 		 }
   	})
@@ -351,8 +352,8 @@ if(Meteor.isClient){
 }
 if(Meteor.isServer){
 	Meteor.methods({
-		'atualizarProfessorOferta':function(oferta,prof,area,curso){
-			OfertaMateria.update({_id:oferta._id},{$set:{Professor:prof,Area:area,Curso:curso}})
+		'atualizarProfessorOferta':function(oferta,prof,area,curso,semestre){
+			OfertaMateria.update({_id:oferta._id},{$set:{Professor:prof,Area:area,Curso:curso,Semestre:semestre}})
 		}
 	})
 }
