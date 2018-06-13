@@ -32,7 +32,7 @@ new Tabular.Table({
 		{data:"Semestre", title:"Semestre"}
     ],
     extraFields:[
-    	'Materia','Area','aulaSemanal','cargaHoraria','qtdeAuto','auto','Professor','Curso'
+    	'Materia','Area','aulaSemanal','cargaHoraria','qtdeAuto','auto','Professor','Curso','Ofertantes'
     ],
     createdRow( row, data, dataIndex,cells) {
     	$(row).attr('id', 'professor')
@@ -77,7 +77,7 @@ new Tabular.Table({
   	{data:"cargaHoraria", title: "Carga horária"},
     ],
     extraFields:[
-    	'Materia','Area','auto','Professor','Curso'
+    	'Materia','Area','auto','Professor','Curso','Ofertantes'
     ],
   	 createdRow( row, data, dataIndex ) {
     	console.log(row);
@@ -160,7 +160,19 @@ if(Meteor.isClient){
 
 	Template.cadastroAlocarProfessor.onCreated(function(){
 		 Session.set('setRowDataProfessor',"");
+		 Session.set('aux',false);
+		 Session.set('plus',0);
 	})
+	Template.alocarProfessor.helpers({
+			'permissao':function(valor){
+				if(valor==0){
+					return true;
+				}else {
+						Router.go('/')
+						return false
+					}
+			},
+		})
 	Template.cadastroAlocarProfessor.helpers({
 		selectEscolha:function(){
   			var processo= Session.get('processoSelecionado');
@@ -231,7 +243,7 @@ if(Meteor.isClient){
   			$('#area').val("");
   			$('#curso').val("")
   			Session.set('cursoSelecionado',"");
-
+				Session.set('plus',0)
 
   		},
   		setRowDataProfessor:function(){
@@ -248,11 +260,59 @@ if(Meteor.isClient){
   			var curso=rowData.Curso
   			$('#curso').val(curso.nome)
   			Session.set('cursoSelecionado',curso);
+				Template.cadastroAlocarProfessor.__helpers.get('setCursoOfertantes').call()
   		},
   		tbodyNameOfertaEscolha:function() {
   			var dt=$('tbody').DataTable();
   			console.log(dt);
-  		}
+  		},
+			plus(){
+				var cont= Session.get('plus');
+				var tmp= new Array( Session.get('plus'));
+				for(x=0;x<cont;x++){
+					tmp[x]=x
+				}
+				return tmp
+			},
+			getCursoOfertante(){
+				var tmp= Session.get('plus');
+				var array= new Array(tmp);
+				for(x=0;x<tmp;x++){
+					s=('#cursoOferta'+x).toString();
+					c= $(s).children().val();
+					id=Curso.findOne({nome:c});
+					s=('#semestreOfertante'+x).toString();
+					sem=$(s).val()
+					array[x]={
+						curso:id,
+						semestre:sem
+					}
+				}
+			return array;
+		},
+		setCursoOfertantes(){
+			var rowData=Session.get('setRowDataProfessor');
+			console.log(rowData)
+			var ofertantes=rowData.Ofertantes;
+			console.log(ofertantes);
+			if(ofertantes!=null){
+				Session.set('plus',ofertantes.length)
+				setTimeout(function(){
+					if (ofertantes!=null) {
+
+						for (i =0; i < ofertantes.length; i++) {
+							if(ofertantes[i].curso!=null){
+								s=('#cursoOferta'+i).toString();
+								c= $(s).children().val(ofertantes[i].curso.nome);
+								s=('#semestreOfertante'+i).toString();
+								sem=$(s).val(ofertantes[i].semestre)
+							}
+						}
+					}
+				},50)
+			}
+		}
+
   	})
   	Template.cadastroAlocarProfessor.events({
   		'click table >  tbody >tr': function (event,template) {
@@ -317,15 +377,16 @@ if(Meteor.isClient){
 			 		alert("Selecione um Curso");
 			 	}else{
 			 		$('#erro').text("");
-			 		console.log(professor);
+					var cursoOfertantes=Template.cadastroAlocarProfessor.__helpers.get('getCursoOfertante').call()
 					var semestre=$('#semestreAlocar').val();
-			 		console.log(rowData);
-					console.log('semestre ',semestre)
-			 		if(professor==""){
-			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso,semestre);
-			 		}else{
-			 			Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso,semestre);
-			 		}
+					console.log('cursos oferta ',cursoOfertantes)
+					if(rowData.Turma.length==1){
+						var novaTurma=curso.sigla+rowData.Turma;
+						console.log(novaTurma)
+					}else if(rowData.Turma.length==3){
+						novaTurma=rowData.Turma
+					}
+			 		Meteor.call('atualizarProfessorOferta',rowData,professor,area,curso,semestre,cursoOfertantes,novaTurma);
 			 		Template.cadastroAlocarProfessor.__helpers.get('campos').call();
 			 	}
 		 },
@@ -334,7 +395,7 @@ if(Meteor.isClient){
 		 	var oferta=OfertaMateria.findOne({Processo:Session.get('processoSelecionado'),  Curso:""})
 		 	console.log(oferta);
 		 	if(oferta!=null){
-		 		alert("Necessita alocar pelo menos curso em todas disciplinas todas as disciplinas")
+		 		alert("Necessita alocar pelo menos curso em todas disciplinas")
 		 	}else{
 		 		Meteor.call('mudarEtapa',Session.get('processoSelecionado'),2,function(e,r){
 		 			if(e){
@@ -346,14 +407,28 @@ if(Meteor.isClient){
 		 			}
 		 		})
 		 	}
-		 }
+		},
+			'click #plus':function(event){
+				console.log("plusss")
+				event.preventDefault();
+				var tmp=Session.get('plus');
+				Session.set('plus',tmp+1)
+				console.log(Session.get('plus'))
+			},
+			'click #less':function(event){
+				event.preventDefault();
+				var tmp=Session.get('plus');
+				if(tmp>0){
+					Session.set('plus',tmp-1)
+				}
+			}
   	})
 
 }
 if(Meteor.isServer){
 	Meteor.methods({
-		'atualizarProfessorOferta':function(oferta,prof,area,curso,semestre){
-			OfertaMateria.update({_id:oferta._id},{$set:{Professor:prof,Area:area,Curso:curso,Semestre:semestre}})
+		'atualizarProfessorOferta':function(oferta,prof,area,curso,semestre,ofertantes,novaTurma){
+			OfertaMateria.update({_id:oferta._id},{$set:{Professor:prof,Area:area,Curso:curso,Semestre:semestre,Ofertantes:ofertantes,Turma:novaTurma}})
 		}
 	})
 }

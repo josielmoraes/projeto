@@ -24,6 +24,7 @@ new Tabular.Table({
     ],
    responsive: true,
 	autoWidth: false,
+
 	language:{
 			"decimal":        "",
 		    "emptyTable":     "Nao há dados disponível",
@@ -87,7 +88,7 @@ if(Meteor.isClient){
 			var cod=Session.get('materia');
 			console.log('cod anti '+cod.codMateria);
 			console.log('cod novo '+$('#codMateria').val());
-			if(cod==$('#codMateria').val()){
+			if(cod.codMateria==$('#codMateria').val()){
 				console.log("codAtualizar");
 				return true;
 			}else{

@@ -10,7 +10,7 @@ if(Meteor.isClient){
 	console.log("inicio");
 
 	//Meteor.logout();
-	Meteor.loginWithPassword('root','root1234', function(e,r){
+	Meteor.loginWithPassword('root','root123', function(e,r){
 		if(e){
 			console.log(e);
 		}else{
@@ -21,11 +21,15 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
-	//Processo.update({_id:"tPt2tLvSgpZNPdbah"},{$set:{etapas:1}})
-
+	//Processo.update({_id:"Tg42BY9uYFv2NBJfD"},{$set:{etapas:0}})
+	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	//Meteor.users.remove("WS2aQotJje9JHBZh5");
-	var us=Meteor.users.find({username:'root'}).fetch();
+	//export MONGO_URL='mongodb://localhost:27017/admin';
+
+  //process.env.MAIL_URL = 'smtp://jozeil@hotmail.com:jlm12345@smtp.live.com:25'
+	//MAIL_URL = 'smtp://jozeil@hotmail.com:jlm12345@smtp.live.com:25'
 		//console.log(us);
+		var us=Meteor.users.find({username:'root'}).fetch();
 	var r={
 		username:'root',
 		email:'josielloureirodemoraes@gmail.com',

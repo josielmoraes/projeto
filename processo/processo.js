@@ -54,6 +54,16 @@ Processo.helpers({
 })
 
 if(Meteor.isClient){
+	Template.processo.helpers({
+			'permissao':function(valor){
+				if(valor==0){
+					return true;
+				}else {
+						Router.go('/')
+						return false
+					}
+			},
+		})
 	Template.buscaSemestre.helpers({
 		'buscaTodosSemestres':function(){
 			var x=Semestre.find({})

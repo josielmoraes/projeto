@@ -1,20 +1,16 @@
 
-Router.route('/reset-password', {name: 'resetPassword',template:'resetPassword'});
+//Router.route('/reset-password', {name: 'resetPassword',template:'resetPassword'});
 
-Router.route('/reset-password/:token',
- function () {
- 	this.render('resetPassword')
-
-  Session.set('tokenReset',this.params.token.replace("=",""))
-});
-
+Router.route('/#/reset-password/:token',
+ {name: 'resetPassword',template:'resetPassword'}
+ );
 /*
 AccountsTemplates.configureRoute('resetPwd',{
 		path: '/reset',
-    	template: 'recuperarSenha',
+    	template: 'resetPassword',
 
     });
-    */
+*/
 
 if(Meteor.isClient){
 	Template.login.onCreated(function(){
@@ -29,7 +25,7 @@ if(Meteor.isClient){
 		'click #esqueciSenha':function(event,template){
 			console.log("esquicisenha");
 			Modal.show('esqueceuSenha');
-			
+
 		},
 		'submit form':function(event){
 			event.preventDefault();
@@ -75,7 +71,7 @@ if(Meteor.isClient){
 			//var user=Meteor.users.find({"emails[0].address":email.toString()}).fetch();
 			//console.log(user);
 			Meteor.call('esqueceuSenha',email)
-
+      	Modal.hide('esqueceuSenha');
 		}
 	})
 
@@ -102,8 +98,9 @@ if(Meteor.isClient){
 			console.log("teste")
 			var a= Meteor.userId();
 			var s=$('#confirmarSenha').val();
-			var t=Session.get('tokenReset');
-			console.log(t);
+			//var t=Session.get('tokenReset');
+			console.log(Accounts._resetPasswordToken);
+      /*
 			Accounts.resetPassword(t.toString(),s,function(e,r){
 				if(e){
 					console.log(e)
@@ -112,6 +109,7 @@ if(Meteor.isClient){
 					Router.go('/Inicio')
 				}
 			})
+      */
 		}
 	})
 
@@ -120,29 +118,15 @@ if(Meteor.isClient){
 if(Meteor.isServer){
 	Meteor.methods({
 		'esqueceuSenha':function(user){
+
+
 			var a=Accounts.findUserByEmail(user);
-			console.log(a);
+			console.log('inicio:',a);
 			Accounts.sendResetPasswordEmail(a._id)
 		},
 		'resetarSenha':function(){
 
 		}
 	})
-	Meteor.startup(function() {
-		let templateEmailrecovery ={
-			    from:function(){
-			        
-			    },
-			    subject:function(user){
-			        return 'Recuperação de Senha';
-			    },
-			    text:function(user, url){
-			              var newUrl = Meteor.absoluteUrl('reset-password/' + token);
-			               return 'Olá,\nPara recuperar sua senha, clique no link...\n'+newUrl;;
-			    },
-			  
-			}
-		  Accounts.emailTemplates.resetPassword=templateEmailrecovery;
-	   
-	});
+
 }

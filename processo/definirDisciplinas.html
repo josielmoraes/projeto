@@ -1,7 +1,9 @@
 <template name="definirDisciplina">
 	{{>menu}}
 	<p></p>
-	{{> ofertaDisciplina}}
+	{{#if permissao currentUser.profile.permission}}
+		{{> ofertaDisciplina}}
+	{{/if}}
 </template>
 
 <template name="ofertaDisciplina">
@@ -24,14 +26,14 @@
 					<div class="form-group row">
 						<label  class="control-label col-sm-4" for="turmaMateria">Turma</label>
 						<div class="col-sm-4">
-						 	<input type="text" name="turmaMateria" id="turmaMateria" class="form-control">
-						 </div> 
+						 	<input type="number" min="0" max="5" value="0" name="turmaMateria" id="turmaMateria" class="form-control">
+						 </div>
 					</div>
 					<div class="form-group row">
 						<label  class="control-label col-sm-4" for="materia">Matéria</label>
 						<div class="col-sm-4">
 						 	{{> inputAutocomplete settings=settings id='materia' name="materia" autocomplete="off" class="form-control"}}
-						 </div> 
+						 </div>
 					</div>
 					<div class="form-group row">
 						<label  class="control-label col-sm-4" for="area">Sugestão Area</label>
@@ -51,7 +53,7 @@
 					<div class="form-group row">
 						<label  class="control-label col-sm-4" for="subMateria">SubTurmas</label>
 						<div class="col-sm-2">
-							<input type="number" name="subMateria" id='subMateria' min="0" max="5" value="0" class="form-control">
+							<input type="number" name="subMateria" id='subMateria' min="1" max="5" value="0" class="form-control">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -68,7 +70,7 @@
 			</div>
 			{{#if validar}}{{/if}}
 		{{/if}}
-	
+
 	{{#if mostrar}}
 		<div class="container">
 			{{> tabular table=TabularTables.Oferta selector=select class="table table-striped table-bordered table-condensed"}}
@@ -76,7 +78,7 @@
 		<button class="col-sm-offset-9 col-sm-2 btn" type="submit" name="confirmaOferta" id="confirmaOferta" >Concluir Oferta </button>
 	{{/if}}
 
-</template>	
+</template>
 
 <template name="buscaProcesso">
 	<select id="processoSelecionado" class="form-control dropdown">
@@ -99,14 +101,14 @@
 </template>
 
 <template name="subMateria">
-	
+
 		{{#each sub in habilitarSubMateria}}
 			<div class="col-sm-4">
 				<label > Sub-Turma {{sub}}</label>
 				<div class="form-group row">
 					<label  class="control-label col-sm-4" for="subTurma{{sub}}">Turma </label>
 					<div class="col-sm-4">
-						<input type="text" id="subTurma{{sub}}" name="subTurma{{sub}}" class="form-control" >
+						<input type="number" min="1" max="5" value="0" id="subTurma{{sub}}" name="subTurma{{sub}}" class="form-control" >
 					</div>
 				</div>
 				<div class="form-group row">

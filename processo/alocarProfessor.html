@@ -1,7 +1,9 @@
 <template name="alocarProfessor">
 	{{>menu}}
 	<p></p>
-	{{> cadastroAlocarProfessor}}
+		{{#if permissao currentUser.profile.permission}}
+			{{> cadastroAlocarProfessor}}
+		{{/if}}
 </template>
 
 <template name="cadastroAlocarProfessor">
@@ -36,14 +38,13 @@
 					</div>
 			</div>
 			<div class="form-group row">
-		     	<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Curso: </label>
-					 <div class="col-sm-4">
+		     	<label  class="control-label col-sm-2 " for="professor">Curso responsável: </label>
+					 <div class="col-sm-3">
 						 	{{> inputAutocomplete settings=settingsCurso id='curso' name="curso" autocomplete="off" class="form-control"}}
 					</div>
-			</div>
-			<div class="form-group row">
-				 <label  class="control-label col-sm-1 col-sm-offset-1" for="semestreAlocar">Semestre: </label>
-					<div class="col-sm-4">
+
+				 <label  class="control-label col-sm-1" for="semestreAlocar">Semestre: </label>
+					<div class="col-sm-1">
 						<select id="semestreAlocar" class="form-control dropdown">
 						 <option value='1'>1</option>
 						 <option value='2'>2</option>
@@ -58,6 +59,34 @@
 					 </select>
 				 </div>
 		 </div>
+
+			 {{#each val in plus}}
+			 			<div class="form-group row">
+							 <label  class="control-label col-sm-2 " for="curso">Curso ofertante: </label>
+								<div class="col-sm-3" id='cursoOferta{{val}}'>
+									 {{> inputAutocomplete settings=settingsCurso autocomplete="off" class="form-control"}}
+							 </div>
+
+							<label  class="control-label col-sm-1" for="semestreOfertante">Semestre: </label>
+							 <div class="col-sm-1">
+								 <select id="semestreOfertante{{val}}" class="form-control dropdown">
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+									<option value='3'>3</option>
+									<option value='4'>4</option>
+									<option value='5'>5</option>
+									<option value='6'>6</option>
+									<option value='7'>7</option>
+									<option value='8'>8</option>
+									<option value='9'>9</option>
+									<option value='10'>10</option>
+								</select>
+							</div>
+						</div>
+			 {{/each}}
+			 	<input type="submit" name="plus" id="plus" class="btn col-sm-offset-5" value="+">
+				<input type="submit" name="less" id="less" class="btn" value="-">
+
 			<div class="form-group row">
 				 <label  class="control-label col-sm-2" id="erro" name="erro" for="alocarProfessor"></label>
 				<input class="btn input col-sm-2" type="submit" name="alocarProfessor" id="alocarProfessor" value="Alocar Professor">

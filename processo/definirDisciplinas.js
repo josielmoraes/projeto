@@ -59,6 +59,16 @@ if(Meteor.isClient){
 		Session.set('aux',false);
 		Session.set('setSubMateria',0);
 	})
+	Template.definirDisciplina.helpers({
+			'permissao':function(valor){
+				if(valor==0){
+					return true;
+				}else {
+						Router.go('/')
+						return false
+					}
+			},
+		})
 
 	Template.cadastroOfertaDisciplina.helpers({
 
@@ -417,7 +427,7 @@ Template.cadastroOfertaDisciplina.events({
 				var evento=$('#cadastrar').val()
 				var sair=false;
 					sair=$('#cadastroOfertaMateria').valid();
-					sair=Template.cadastroOfertaDisciplina.__helpers.get('validarTurma').call();
+					//sair=Template.cadastroOfertaDisciplina.__helpers.get('validarTurma').call();
 					var sub=Template.cadastroOfertaDisciplina.__helpers.get('completarSub').call();
 					var mat= Session.get('materiaSelecionada');
 					var processo= $('#processoSelecionado').val();
@@ -459,9 +469,9 @@ Template.cadastroOfertaDisciplina.events({
 				if(e){
 
 				}else{
-					console.log("Mudado de status");
 					Session.set('aux',false);
 					Session.set('processoSelecionado',"");
+					alert("Pré-oferta realizada com sucesso")
 				}
 			})
 		},
@@ -605,6 +615,8 @@ if(Meteor.isServer){
 				Curso:"",
 				cargaHoraria:cargaMateria,
 				aulaSemanal:aulaSemanal,
+				horario:[],
+				restricao:[]
 				},function(e,r){
 					if(e){
 
@@ -621,7 +633,9 @@ if(Meteor.isServer){
 								Materia:Materia,
 								Area:Area,
 								Professor:"",
-								Curso:""
+								Curso:"",
+								horario:[],
+								restricao:[]
 							},function(e,r){
 								if(e){
 									console(e)
@@ -645,6 +659,8 @@ if(Meteor.isServer){
 				Curso:"",
 				cargaHoraria:cargaMateria,
 				aulaSemanal:aulaSemanal,
+				horario:[],
+				restricao:[]
 				})
 			}
 
@@ -662,6 +678,8 @@ if(Meteor.isServer){
 				Curso:"",
 				cargaHoraria:cargaMateria,
 				aulaSemanal:aulaSemanal,
+				horario:[],
+				restricao:[],
 				})
 			},
 
@@ -690,8 +708,6 @@ if(Meteor.isServer){
 					_id:id
 				})
 			}
-
-
 		},
 		'oferta':function(idM){
 		},
@@ -711,6 +727,9 @@ if(Meteor.isServer){
 					Curso:"",
 					cargaHoraria:cargaMateria,
 					aulaSemanal:aulaSemanal,
+					horario:[],
+					restricao:[],
+					
 					}
 				})
 		},

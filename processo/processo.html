@@ -1,7 +1,9 @@
 <template name="processo">
 	{{>menu}}
 	<p></p>
-	{{> cadastroProcesso}}
+	{{#if permissao currentUser.profile.permission}}
+		{{> cadastroProcesso}}
+	{{/if}}
 </template>
 
 <template name="cadastroProcesso">

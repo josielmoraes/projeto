@@ -20,4 +20,11 @@ if(Meteor.isClient){
 				return false
 		}
 	})
+	Template.menu.events({
+		'click #sair':function(event){
+			event.preventDefault();
+			console.log('sair')
+			Meteor.logout()
+		}
+	})
 }

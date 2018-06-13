@@ -1,7 +1,9 @@
 <template name="confirmarProcesso">
 	{{>menu}}
 	<p></p>
-	{{> confirmar}}
+	{{#if permissao currentUser.profile.permission}}
+		{{> confirmar}}
+	{{/if}}
 </template>
 
 <template name="confirmar">

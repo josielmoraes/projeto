@@ -133,10 +133,21 @@ OfertaMateria.helpers({
 })
 
 if(Meteor.isClient){
+	Template.confirmarProcesso.helpers({
+			'permissao':function(valor){
+				if(valor==0){
+					return true;
+				}else {
+						Router.go('/')
+						return false
+					}
+			},
+		})
 	Template.confirmar.onCreated(function(){
 		Session.set('mostrarArear',false)
 		Session.set('mostrarProfessor',false)
 		Session.set('mostrarForm',false);
+		Session.set('aux',false);
 	})
 	Template.confirmar.helpers({
 		settingsProfessor: function() {

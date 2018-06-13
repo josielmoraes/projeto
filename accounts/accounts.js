@@ -5,7 +5,7 @@ Router.route('/Usuario',{
 })
 
 
-		
+
 new Tabular.Table({
   name: "Usuario",
   collection: Meteor.users,
@@ -15,11 +15,11 @@ new Tabular.Table({
      {data: "profile.permission", title: "Permissão"},
     ],
     extraFields:[
-    	'emails[0]', 
+    	'emails[0]',
     ],
 
    responsive: true,
-	autoWidth: false,
+	//autoWidth: false,
 	language:{
 			"decimal":        "",
 		    "emptyTable":     "Nao há dados disponível",
@@ -45,7 +45,7 @@ new Tabular.Table({
 
 
 function validarUsuario(){
-	
+
 		console.log("email 1",$('#emailUsuario').val());
 		var c=$('#emailUsuario').val()
 		var sair=Meteor.users.findOne({"emails.address":c.toString()});
@@ -57,7 +57,7 @@ function validarUsuario(){
 			}
 		};
 if(Meteor.isClient){
-	
+
 	Template.cadastroUsuario.helpers({
 
 		'logado':function(l){
@@ -75,8 +75,16 @@ if(Meteor.isClient){
 			}
 		},
 		selec(){
-			
-		}
+
+		},
+		'permissao':function(valor){
+			if(valor==0){
+				return true;
+			}else {
+					Router.go('/')
+					return false
+				}
+		},
 	})
 	Template.cadastroUsuario.onRendered(function(){
 		console.log("render");
@@ -130,7 +138,7 @@ if(Meteor.isServer){
 	Meteor.methods({
 
 		'sendConfirmation':function(user){
-		Accounts.sendEnrollmentEmail(user)	
+		Accounts.sendEnrollmentEmail(user)
 		//Accounts.sendResetPasswordEmail(user);
 		},
 		cadastrarUsuario:function(user){
@@ -144,5 +152,5 @@ if(Meteor.isServer){
 	Meteor.publish('usuarios',function(){
 		return Meteor.users.find({"profile.permission":{$not: 0}})
 	})
-	
+
 }

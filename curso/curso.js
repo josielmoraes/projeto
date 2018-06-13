@@ -39,7 +39,7 @@ new Tabular.Table({
   })
 
 if(Meteor.isClient){
-	
+
 	function validarDeletar(id){
 		var horarioSemanal= HorarioSemanal.find({idCurso:id}).fetch();
 		if(horarioSemanal.length>0){
@@ -50,10 +50,10 @@ if(Meteor.isClient){
 		}else{
 			return true;
 		}
-		
+
 	}
 	Template.cadastroCurso.helpers({
-		
+
 		 campos(){
 			$('#nomeCurso').val("");
 			$('#siglaCurso').val("");
@@ -99,10 +99,10 @@ if(Meteor.isClient){
 				}
 
 			}else if(id=="limpar"){
-				Template.cadastroCurso.__helpers.get('campos').call();	
+				Template.cadastroCurso.__helpers.get('campos').call();
 			}
-			
-			
+
+
 		},
 		'click tbody > tr': function (event,template) {
 		    var dataTable = $(event.target).closest('table').DataTable();
@@ -120,11 +120,11 @@ if(Meteor.isClient){
 			rules:{
 				nomeCurso:{
 					required:true,
-					minlength:8
+					minlength:6
 				},
 				siglaCurso:{
 					required:true,
-					minlength:3
+					minlength:2
 				}
 			},
 			messages:{
@@ -134,7 +134,7 @@ if(Meteor.isClient){
 				},
 				siglaCurso:{
 					required:" Campo obrigatório",
-					minlength:"Mínimo de 3 letras"
+					minlength:"Mínimo de 2 letras"
 				}
 			}
 		});

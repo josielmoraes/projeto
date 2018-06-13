@@ -12,3 +12,5 @@ meteor add jquery
 npm install --save datatables.net-buttons datatables.net-buttons-bs
 meteor npm install --save datatables.net-bs4
 meteor add mizzao:autocomplete
+meteor npm install --save bootstrap
+meteor add email
