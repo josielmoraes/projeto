@@ -729,7 +729,7 @@ if(Meteor.isServer){
 					aulaSemanal:aulaSemanal,
 					horario:[],
 					restricao:[],
-					
+
 					}
 				})
 		},
