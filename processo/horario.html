@@ -1,0 +1,92 @@
+<template name="horario">
+	{{>menu}}
+	<p></p>
+	{{#if permissao currentUser.profile.permission}}
+		{{> criarHorario}}
+	{{/if}}
+</template>
+
+<template name='criarHorario'>
+  <div class="container">
+      <label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
+      <div class="col-sm-4">
+        {{>buscaProcesso pro="3"}}
+      </div>
+
+  </div>
+	{{#if mostrar}}
+	<div class='container'>
+		<div class="form-group row">
+			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
+			<div class="col-sm-4">
+				{{>buscaCurso}}
+			</div>
+		</div>
+		<div class="form-group row">
+			 <label  class="control-label col-sm-1" for="semestre">Semestre: </label>
+				<div class="col-sm-4">
+					<select id="semestre" class="form-control dropdown">
+					<option value=''> </option>
+					 <option value='1'>1</option>
+					 <option value='2'>2</option>
+					 <option value='3'>3</option>
+					 <option value='4'>4</option>
+					 <option value='5'>5</option>
+					 <option value='6'>6</option>
+					 <option value='7'>7</option>
+					 <option value='8'>8</option>
+					 <option value='9'>9</option>
+					 <option value='10'>10</option>
+				 </select>
+			 </div>
+		</div>
+		{{#if mostrarTabela}}
+			<div class="container">
+				{{> tabelaHorario}}
+			</div>
+		{{/if}}
+		</div>
+	{{/if}}
+</template>
+
+<template name="buscaCurso">
+	<select id="cursoSelecionado" class="form-control dropdown">
+		<option value=""></option>
+		{{#each val in buscaCurso}}
+			<option value="{{val._id}}">{{val.nome}}</option>
+		{{/each}}
+	</select>
+</template>
+<template name='tabelaHorario'>
+	{{#each tmp in turmasTabela}}
+		<p>Turma {{tmp}}</p>
+
+			<table id='tableHorario{{tmp}}'>
+					<tr>
+					{{#each val in diasSemana}}
+							<th>{{val}}</th>
+					{{/each}}
+					</tr>
+					{{#each aux in aulas}}
+						{{#let a=@index}}
+							<tr>
+							{{#each val in diasSemana}}
+									{{#let d=@index }}
+										{{#if criarTabela d }}
+											<td>{{aux}}</td>
+										{{else}}
+											<td>
+													<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+													</select>
+											</td>
+										{{/if}}
+									{{/let}}
+							{{/each}}
+								</tr>
+						{{/let}}
+					{{/each}}
+				</table>
+				{{buscaOferta tmp}}
+		<p></p>
+	{{/each}}
+</template>
