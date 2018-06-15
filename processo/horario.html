@@ -82,7 +82,7 @@
 														</select>
 													{{else}}
 														{{#each saida in buscarValido d a}}
-														<label> {{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
+														<label id="{{saida._id}}"> {{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
 														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
 														</select>
 														{{/each}}

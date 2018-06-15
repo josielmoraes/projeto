@@ -8,7 +8,7 @@ Router.route('/criarHorario',{
 
 function criarArrayOferta(turma){
   var pro=Session.get('processoSelecionado');
-  var curso=  Session.get("cursoSelecionado");
+  var curso= Session.get("cursoSelecionado");
   var sem=Session.get('periodoSelecionado');
   console.log(pro,curso,sem,turma)
   var array=[" "];
@@ -229,7 +229,6 @@ if(Meteor.isClient){
       dia=parseInt(dia)
       aula=parseInt(aula)
       var array=new Array()
-      //console.log(pro,curso,sem,dia,aula)
       var tmp=OfertaMateria.findOne({Processo:pro,'Curso._id':curso,Semestre:sem,horario:{dia:dia,aula:aula}});
       if(tmp!=null){
         array.push(tmp)
@@ -239,7 +238,6 @@ if(Meteor.isClient){
               array.push(tmp2)
           }
         }
-        //console.log(array)
         return array
       },
   })
@@ -385,14 +383,16 @@ function validarMaterias(id,dia,aula){
             }
         }else{
           var ant= Session.get('anterior');
-          console.log('anterior ',ant);
           var val = $(event.target).val();
           var text = $(event.target).find("option:selected").text(); //only time the find is required
           var id = $(event.target).find("option:selected").attr('id');
-          console.log(val,text,id);
           id=id.split(';');
+          console.log(val)
           var dia= id[0];
           var aula=id[1];
+          id=event.target.parentNode.children[0].id
+          console.log(id)
+          Meteor.call('alocarSala',id,dia,aula,val)
         }
     },
 
@@ -417,7 +417,7 @@ if(Meteor.isServer){
         dia:dia,
         aula:aula
       }
-      OfertaMateria.update({_id:id},{$addToSet:{horario:{dia:dia,aula:aula}} })
+      OfertaMateria.update({_id:id},{$addToSet:{horario:{dia:dia,aula:aula,sala:""}} })
     },
     'removerAula':function(id,dia,aula){
       dia=parseInt(dia)
@@ -436,6 +436,23 @@ if(Meteor.isServer){
       var string= ('horario.'+posicao)
       console.log(string)
       OfertaMateria.update({_id:id},{$pull:{horario:{dia:dia,aula:aula}} })
+    },
+    'alocarSala':function(id,dia,aula,sala){
+        var tmp= OfertaMateria.findOne({_id:id});
+        array=tmp.horario;
+        var posicao=""
+          console.log(array)
+        for(x=0;x<array.length;x++){
+          console.log(array[x].dia)
+          if(array[x].dia==dia && array[x].aula==aula){
+            posicao=x
+          }
+        }
+        var string= ('horario.'+posicao+'.sala')
+        console.log(sala)
+        var sala=Sala.findOne({_id:sala})
+        console.log(string,sala)
+        OfertaMateria.update({_id:id} ,{$set:{string:sala} })
     }
   })
 }
