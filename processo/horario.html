@@ -46,6 +46,7 @@
 			</div>
 		{{/if}}
 		</div>
+
 	{{/if}}
 </template>
 
@@ -76,8 +77,16 @@
 											<td>{{aux}}</td>
 										{{else}}
 											<td>
-													<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
-													</select>
+													{{#if validarTemplate}}
+														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+														</select>
+													{{else}}
+														{{#each saida in buscarValido d a}}
+														<label> {{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
+														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+														</select>
+														{{/each}}
+													{{/if}}
 											</td>
 										{{/if}}
 									{{/let}}
@@ -86,7 +95,11 @@
 						{{/let}}
 					{{/each}}
 				</table>
-				{{buscaOferta tmp}}
+				{{#if validarTemplate}}
+					{{buscaOferta tmp}}
+				{{else}}
+					{{buscarSala tmp}}
+				{{/if}}
 		<p></p>
 	{{/each}}
 </template>

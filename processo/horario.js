@@ -1,4 +1,5 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
+import Sala from "../imports/collections/sala";
 import Tabular from 'meteor/aldeed:tabular';
 
 Router.route('/criarHorario',{
@@ -19,7 +20,6 @@ function criarArrayOferta(turma){
    for(x=0;x<temp.length;x++){
      array.push(temp[x])
    }
-
    return array;
 }
 
@@ -55,6 +55,9 @@ if(Meteor.isClient){
       Session.set('periodoSelecionado',"")
     }
   })
+    Template.criarHorario.onCreated(function(){
+      Session.set('validarTemplate','criarHorario')
+    })
   Template.criarHorario.helpers({
     mostrar(){
       var s=Session.get('aux');
@@ -132,12 +135,21 @@ if(Meteor.isClient){
       console.log('array turmas ',array, 'tamanha: ',array.length);
         return array
     },
+    'validarTemplate':function(){
+      var tmp=Session.get('validarTemplate')
+      //console.log(tmp)
+      if(tmp=="criarHorario"){
+        return true
+      }else{
+        return false
+      }
+    },
     buscaOferta(a){
       var tmp;
+
       if(a!=null){
       tmp=criarArrayOferta(a)
-      console.log(tmp)
-
+      //console.log(tmp)
           setTimeout(function(){
           for(dia=1;dia<7;dia++){
             for(aula=0;aula<12;aula++){
@@ -175,34 +187,61 @@ if(Meteor.isClient){
         },2)
       }
     },
-    condicao( dia, aula,tmp){
-      var tmp=Session.get('arrayDrop');
-      var posicao=""
-      dia=parseInt(dia)
-      aula=parseInt(aula)
+    buscarSala(a){
+      var tmp=[" "]
+      var aux=Sala.find().fetch()
+      for(x=0;x<aux.length;x++){
+        tmp.push(aux[x])
+      }
       setTimeout(function(){
-        for(x=1;x<tmp.length;x++){
-          horario=tmp[x].horario;
-          for(y=0;y<horario.length;y++){
-            if(horario[y].dia==dia && horario[y].aula==aula){
-              posicao=x
+      for(dia=1;dia<7;dia++){
+        for(aula=0;aula<12;aula++){
+            string=dia+'s'+aula+a;
+            aux=document.getElementById(string);
+            if(aux!=null){
+              var i;
+              for(i =aux.options.length - 1 ; i >= 0 ; i--)
+              {
+                  aux.remove(i);
+              }
+              for(x=0;x<tmp.length;x++){
+                var option = document.createElement("option");
+                if(x==0){
+                option.text=""
+                option.value=""
+                }else{
+                  option.text=tmp[x].local+" "+tmp[x].numero
+                  option.value=tmp[x]._id;
+                }
+                option.id=dia+';'+aula;
+                aux.add(option)
+              }
             }
           }
         }
-        if(posicao!=""){
-          var string=dia+'s'+aula;
-          //document.getElementById(string).options[posicao].selected=true
+      },10)
+    },
+    buscarValido(dia,aula){
+      var pro=Session.get('processoSelecionado');
+      var curso=  Session.get("cursoSelecionado");
+      var sem=Session.get('periodoSelecionado');
+      Session.set('validarLabel',"")
+      dia=parseInt(dia)
+      aula=parseInt(aula)
+      var array=new Array()
+      //console.log(pro,curso,sem,dia,aula)
+      var tmp=OfertaMateria.findOne({Processo:pro,'Curso._id':curso,Semestre:sem,horario:{dia:dia,aula:aula}});
+      if(tmp!=null){
+        array.push(tmp)
+      }else{
+          tmp2=OfertaMateria.findOne({Processo:pro,'Ofertantes.semestre':sem,'Ofertantes.curso._id':curso,horario:{dia:dia,aula:aula}});
+          if(tmp2!=null){
+              array.push(tmp2)
+          }
         }
-      })
-    },
-  imprimir(loop){
-        console.log("imprimir ",loop)
-
-    },
-    imprimir2(tmp){
-        //var tmp=Session.get('arrayDrop');
-         console.log(tmp)
-      }
+        //console.log(array)
+        return array
+      },
   })
 function validarProfessor(id,dia,aula){
   var pro=Session.get('processoSelecionado');
@@ -292,56 +331,69 @@ function validarMaterias(id,dia,aula){
   Template.tabelaHorario.events({
     'change .sel':function(event){
       event.preventDefault();
-      console.log('change');
-      var ant= Session.get('anterior');
-      console.log('anterior ',ant)
-      console.log(event.target)
-        var val = $(event.target).val();
-        var text = $(event.target).find("option:selected").text(); //only time the find is required
-        var id = $(event.target).find("option:selected").attr('id');
-        console.log(val,text,id);
-        id=id.split(';');
-        var dia= id[0];
-        var aula=id[1];
+      var tmp=Session.get('validarTemplate')
+      console.log(tmp)
+      if(tmp=="criarHorario"){
+        console.log('change');
+        var ant= Session.get('anterior');
+        console.log('anterior ',ant)
+        console.log(event.target)
+          var val = $(event.target).val();
+          var text = $(event.target).find("option:selected").text(); //only time the find is required
+          var id = $(event.target).find("option:selected").attr('id');
+          console.log(val,text,id);
+          id=id.split(';');
+          var dia= id[0];
+          var aula=id[1];
 
-          if(ant==""){
-            if(validarProfessor(val ,dia, aula)){
-              event.target.options[0].selected=true;
-            }else if(validarRestricao(val ,dia, aula)){
+            if(ant==""){
+              if(validarProfessor(val ,dia, aula)){
+                event.target.options[0].selected=true;
+              }else if(validarRestricao(val ,dia, aula)){
 
-              event.target.options[0].selected=true;
-            }else if(validarMaterias(val ,dia, aula)){
-                event.target.options[0].selected=true;;
-            }else{
-
-              Meteor.call('atualizarAula',val ,dia, aula)
-            }
-          }else if(ant!=val){
-              if(val==''){
-                  Meteor.call('removerAula',ant,dia,aula);
+                event.target.options[0].selected=true;
+              }else if(validarMaterias(val ,dia, aula)){
+                  event.target.options[0].selected=true;;
               }else{
-                aux=event.target;
-                var posicao="";
-                for(x=0;x<event.target.length;x++){
-                  if(event.target.options[x].value==ant){
-                    posicao=x;
+
+                Meteor.call('atualizarAula',val ,dia, aula)
+              }
+            }else if(ant!=val){
+                if(val==''){
+                    Meteor.call('removerAula',ant,dia,aula);
+                }else{
+                  aux=event.target;
+                  var posicao="";
+                  for(x=0;x<event.target.length;x++){
+                    if(event.target.options[x].value==ant){
+                      posicao=x;
+                    }
+                  }
+                  if(validarProfessor(val ,dia, aula)){
+                    event.target.options[posicao].selected=true;
+                  }else if(validarRestricao(val ,dia, aula)){
+
+                    event.target.options[posicao].selected=true;
+                  }else if(validarMaterias(val ,dia, aula)){
+                      event.target.options[posicao].selected=true;;
+
+                  }else{
+                    Meteor.call('removerAula',ant,dia,aula);
+                    Meteor.call('atualizarAula',val ,dia, aula)
                   }
                 }
-                if(validarProfessor(val ,dia, aula)){
-                  event.target.options[posicao].selected=true;
-                }else if(validarRestricao(val ,dia, aula)){
-
-                  event.target.options[posicao].selected=true;
-                }else if(validarMaterias(val ,dia, aula)){
-                    event.target.options[posicao].selected=true;;
-
-                }else{
-                  Meteor.call('removerAula',ant,dia,aula);
-                  Meteor.call('atualizarAula',val ,dia, aula)
-                }
-              }
-          }
-
+            }
+        }else{
+          var ant= Session.get('anterior');
+          console.log('anterior ',ant);
+          var val = $(event.target).val();
+          var text = $(event.target).find("option:selected").text(); //only time the find is required
+          var id = $(event.target).find("option:selected").attr('id');
+          console.log(val,text,id);
+          id=id.split(';');
+          var dia= id[0];
+          var aula=id[1];
+        }
     },
 
     'mouseenter .sel':function(event){

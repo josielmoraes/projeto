@@ -44,6 +44,7 @@ if(Meteor.isClient){
 				return true;
 		},
 		campos:function(){
+			$('#areaNome').focus()
 			$('#areaNome').val("");
 			$('#areaSigla').val("");
 			$('#cadastrar').val("Cadastrar");

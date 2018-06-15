@@ -37,7 +37,7 @@ new Tabular.Table({
 		        "previous":   "Anterior"
 		    },
 	}
-	
+
 
   })
 
@@ -53,36 +53,37 @@ function validarDeletar(id){
 		}else{
 			return true;
 		}
-		
+
 	}
 	Template.cadastroProfessor.helpers({
 		campos(){
+			$('#nomeProfessor').focus()
 			$('#nomeProfessor').val("");
 			$('#siape').val("");
 			$('#formacaoProfessor').val("");
 			$('#emailProfessor').val("");
 			$('#telefoneProfessor').val("");
 			$('#Cadastrar').val("Cadastrar");
-			$('#Deletar').val("Voltar");	
+			$('#Deletar').val("Voltar");
 		},
 		'permissao':function(valor){
 			console.log(valor);
 			if(valor==0)
 				return true
-			
+
 		},
 	})
 	Template.cadastroProfessor.events({
-		
+
 		'click .input': function(event){
-			event.preventDefault();	
-			
+			event.preventDefault();
+
 			var id=$(event.target).prop('id');
 			console.log(id);
 			if(id=="Cadastrar"){
 				var evento=  $('#Cadastrar').val();
 				var dadosProfessor={
-						nome:  $('#nomeProfessor').val(), 
+						nome:  $('#nomeProfessor').val(),
 						siape:  $('#siape').val(),
 						formacao:  $('#formacaoProfessor').val(),
 						email: $('#emailProfessor').val(),
@@ -98,11 +99,11 @@ function validarDeletar(id){
 					Meteor.call('atualizarProfessor',prof._id, dadosProfessor);
 					Template.cadastroProfessor.__helpers.get('campos').call();
 				}
-				
+
 			}else if( id=="Deletar"){
 				var evento=  $('#Deletar').val();
 				if(evento=="Voltar"){
-					Router.go('/');		
+					Router.go('/');
 				}else if(evento=="Deletar"){
 					var prof=Session.get("professor");
 					if(validarDeletar(prof._id)){
@@ -113,8 +114,8 @@ function validarDeletar(id){
 			}else if(id=="limpar"){
 				Template.cadastroProfessor.__helpers.get('campos').call();
 			}
-					
-			
+
+
 		},
 		'click tbody > tr': function (event,template) {
 		    var dataTable = $(event.target).closest('table').DataTable();
@@ -135,8 +136,8 @@ function validarDeletar(id){
 
   	});
 
-	Template.cadastroProfessor.onRendered(function(){	  
-	
+	Template.cadastroProfessor.onRendered(function(){
+
 		$( '#formCadastroProfessor' ).validate({
 			    	rules:{
 			    		nomeProfessor:{
@@ -215,5 +216,5 @@ if(Meteor.isServer){
 		}
 
 	});
-	
+
 }

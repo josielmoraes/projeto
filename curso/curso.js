@@ -55,6 +55,7 @@ if(Meteor.isClient){
 	Template.cadastroCurso.helpers({
 
 		 campos(){
+			 	$('#nomeCurso').focus()
 			$('#nomeCurso').val("");
 			$('#siglaCurso').val("");
 			$('#cadastrarCurso').val("Cadastrar");
@@ -124,7 +125,7 @@ if(Meteor.isClient){
 				},
 				siglaCurso:{
 					required:true,
-					minlength:2
+					minlength:2,
 				}
 			},
 			messages:{
@@ -134,7 +135,7 @@ if(Meteor.isClient){
 				},
 				siglaCurso:{
 					required:" Campo obrigatório",
-					minlength:"Mínimo de 2 letras"
+					minlength:"Duas letras"
 				}
 			}
 		});

@@ -1,0 +1,39 @@
+<template name='sala'>
+  {{>menu}}
+  <p></p>
+  {{>cadastrarSala}}
+</template>
+<template name="cadastrarSala">
+  <div class="container">
+    <form id="formCadastrosala" name="formCadastrosala" class="form-horizontal">
+      <div class="form-group row">
+        <label class="control-label col-sm-4" for="localSala">Local </label>
+        <div class="col-sm-3">
+          <input type="text" id="localSala" name="localSala" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="control-label col-sm-4" for="numeroSala">Número </label>
+        <div class="col-sm-3">
+          <input type="number" id="numeroSala" name="numeroSala" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="control-label col-sm-4" for="apelidoSala">Apelido </label>
+        <div class="col-sm-3">
+          <input type="text" id="apelidoSala" name="apelidoSala" class="form-control">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-offset-4 col-sm-10">
+          <input type="submit" class="input btn" id="Cadastrar" name="Cadastrar" value="Cadastrar">
+          <input type="submit" class="input btn" id="Deletar" name="Deletar" value="Voltar">
+          <input type="submit" class="input btn" name="Limpar" id="Limpar" value="Limpar Campos">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container">
+    {{> tabular table=TabularTables.Sala class="table table-striped table-bordered table-condensed" }}
+  </div>
+</template>

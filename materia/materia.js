@@ -51,14 +51,15 @@ new Tabular.Table({
 if(Meteor.isClient){
 	Template.cadastroMateria.helpers({
 		'campos':function (){
+			$('#codMateria').focus()
 			$('#codMateria').val("");
 			$('#nomeMateria').val("");
 			$('#cargaHorariaMateria').val("");
 			$('#aulaSemanal').val("");
 			$('#Cadastrar').val("Cadastrar");
-		    $('#Deletar').val("Voltar");
-		    $('#formCadastroMateria').validate().resetForm();
-		    $('#erro').val("");
+		  $('#Deletar').val("Voltar");
+		  $('#formCadastroMateria').validate().resetForm();
+		  $('#erro').val("");
 		},
 
 		'permissao':function(valor){
