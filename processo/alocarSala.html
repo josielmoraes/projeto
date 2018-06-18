@@ -1,18 +1,31 @@
 <template name="alocarSala">
-  {{>menu}}
-  <p></p>
-  {{> criarAlocarSala}}
+  <div class="container-fluid">
+    <div class="container-fluid navbar text-center">
+      {{>login}}
+    </div>
+	  <div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav">
+          {{>menu}}
+        </div>
+        {{#if permissao currentUser.profile.permission}}
+          {{> criarAlocarSala}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
 </template>
 
 <template name="criarAlocarSala">
-  <div class="container" id="cadastroOferta">
+  <div class="col-sm-10 text-center" id="cadastroOferta">
+    <p></p>
 			<label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
 			<div class="col-sm-4">
 				{{>buscaProcesso pro="3"}}
 			</div>
 	</div>
   {{#if mostrar}}
-  	<div class='container'>
+  	<div class="col-sm-10 text-center">
   		<div class="form-group row">
   			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
   			<div class="col-sm-4">
@@ -38,11 +51,7 @@
   			 </div>
   		</div>
       {{#if mostrarTabela}}
-        {{#if mostrarTabela}}
-          <div class="container">
             {{> tabelaHorario}}
-          </div>
-        {{/if}}
   		{{/if}}
     </div>
 	{{/if}}

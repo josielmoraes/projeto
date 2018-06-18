@@ -115,12 +115,14 @@ if(Meteor.isClient){
 			return Session.get('aux');
   		},
   		campos(){
-  			$('#materia').val("");
+  		$('#materia').val("");
 			$('#area').val("");
 			$('#subMateria').val(0);
 			$('#turmaMateria').val("");
+			$('#turmaMateria').focus()
 			$('#subMateria').attr('disabled',false)
 			$('#subMateria').attr('min',0)
+			$("#cadastrar").val('Ofertar')
 			Session.set('materiaSelecionada',"")
 			Session.set('areaSelecionada',"");
 			Session.set('setSubMateria',0);

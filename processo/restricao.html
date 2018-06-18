@@ -1,23 +1,34 @@
 <template name="restricao">
-	{{>menu}}
-	<p></p>
-	{{#if permissao currentUser.profile.permission}}
-		{{> restricaoTurma}}
-	{{/if}}
+	<div class="container-fluid">
+		<div class="container-fluid navbar text-center">
+			{{>login}}
+		</div>
+	  <div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav">
+					{{>menu}}
+				</div>
+			{{#if permissao currentUser.profile.permission}}
+				{{> restricaoTurma}}
+			{{/if}}
+		</div>
+	</div>
+</div>
 </template>
 <template name="restricaoTurma">
-  <div class="container">
+  <div class="col-sm-10 text-center">
       <label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
       <div class="col-sm-4">
         {{>buscaProcesso pro="3"}}
       </div>
   </div>
   {{#if mostrar}}
-		<div class="container" >
+		<div class="col-sm-10 text-center" >
+			<p></p>
 				{{> tabular table=TabularTables.OfertaRestricao id="OfertaRestricao" selector=selectTurmaEscolha class="table table-striped table-bordered table-condensed col-sm-6"}}
 		</div>
     {{#if turma}}
-    <div class="container">
+    <div class="col-sm-10 text-center">
           {{> tabular table=TabularTables.OfertaRestricao2 id="OfertaRestricaoSelect2" selector=selectTurmaEscolha2 class="table table-striped table-bordered table-condensed col-sm-6"}}
           	<input type="submit" id="restringir" class="btn col-sm-offset-10" value="Restringir">
             {{#if create}} {{/if}}

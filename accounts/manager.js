@@ -19,7 +19,17 @@ if(Meteor.isClient){
 	Template.login.helpers({
 		'showModal':function(){
 			return Session.get('showModal')
-		}
+		},
+    logado(current){
+      console.log(current)
+      if(current!=null){
+        console.log('true')
+        return false;
+      }else{
+        console.log(false)
+        return true;
+      }
+    }
 	})
 	Template.login.events({
 		'click #esqueciSenha':function(event,template){
@@ -41,7 +51,11 @@ if(Meteor.isClient){
 					Router.go('/')
 				}
 			})
-
+		},
+    'click #sair':function(event){
+			event.preventDefault();
+			console.log('sair')
+			Meteor.logout()
 		}
 	})
 	Template.esqueceuSenha.helpers({

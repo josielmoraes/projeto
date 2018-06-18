@@ -8,6 +8,16 @@ Router.route('/alocarSala',{
 
 
 if(Meteor.isClient){
+	Template.alocarSala.helpers({
+			'permissao':function(valor){
+				if(valor==0){
+					return true;
+				}else {
+						Router.go('/')
+						return false
+					}
+			},
+		})
   Template.criarAlocarSala.onCreated(function(){
     Session.set('cursoSelecionado',"");
     Session.set('periodoSelecionado',"")

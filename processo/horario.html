@@ -1,22 +1,32 @@
 <template name="horario">
-	{{>menu}}
-	<p></p>
-	{{#if permissao currentUser.profile.permission}}
-		{{> criarHorario}}
-	{{/if}}
+	<div class="container-fluid">
+		<div class="container-fluid navbar text-center">
+			{{>login}}
+		</div>
+	  <div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav">
+					{{>menu}}
+				</div>
+				{{#if permissao currentUser.profile.permission}}
+					{{> criarHorario}}
+				{{/if}}
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name='criarHorario'>
-  <div class="container">
+  <div class="col-sm-10 text-center">
       <label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
       <div class="col-sm-4">
         {{>buscaProcesso pro="3"}}
       </div>
-
   </div>
 	{{#if mostrar}}
-	<div class='container'>
-		<div class="form-group row">
+	<div class="col-sm-10 text-center">
+		<div class="form-group row text-center">
+			<p></p>
 			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
 			<div class="col-sm-4">
 				{{>buscaCurso}}
@@ -41,7 +51,7 @@
 			 </div>
 		</div>
 		{{#if mostrarTabela}}
-			<div class="container">
+			<div class="col-sm-10 text-center">
 				{{> tabelaHorario}}
 			</div>
 		{{/if}}
@@ -81,8 +91,8 @@
 														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
 														</select>
 													{{else}}
-														{{#each saida in buscarValido d a}}
-														<label id="{{saida._id}}"> {{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
+														{{#each saida in buscarValido d a tmp}}
+													<label id="{{saida._id}}">{{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
 														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
 														</select>
 														{{/each}}

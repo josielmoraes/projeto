@@ -1,47 +1,62 @@
 <head>
-
-
 </head>
-<body style="position: relative;">
-	{{home}}
+<body>
+		{{home}}
 </body>
+
 <template name="home">
-	{{>menu}}
-</template>
-<template name="menu">
 	<div class="container-fluid">
+		<div class="container-fluid navbar text-center">
+			{{>login}}
+		</div>
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-2 sidenav">
+					{{>menu}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="menu">
+
 
 		{{#if currentUser}}
 			{{#if c currentUser.profile.permission}}
-				<a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a>
-				<a class="linkMenu" href="{{pathFor route= 'Usuario'}}"> Usuário</a>
 
-				<a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a>
-				<a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a>
-				<a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a>
-				<a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a>
-				<a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a>
-				<a class="linkMenu" href="{{pathFor route= 'Sala'}}">Sala</a>
+				<ul class="nav nav-pills nav-stacked">
+					<li><a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Usuario'}}"> Usuário</a></li>
 
-				<a class="linkMenu" href="{{pathFor route= 'Processo'}}">Definiar datas</a>
-				<a class="linkMenu" href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a>
-				<a class="linkMenu" href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
-				<a class="linkMenu" href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
-				<a class="linkMenu" href="{{pathFor route= 'restricaoDisciplina'}}">Restricao entre disciplina</a>
-				<a class="linkMenu" href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
-				<a class="linkMenu" href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
-				<a class="linkMenu" id="sair">Sair</a>
+					<li><a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'Sala'}}">Sala</a></li>
+
+					<li><a class="linkMenu" href="{{pathFor route= 'Processo'}}">Definiar datas</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'restricaoDisciplina'}}">Restricao entre disciplina</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'criarHorario'}}">Criar horario</a></li>
+					<li><a class="linkMenu" href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a></li>
+
+				</ul>
+
 			{{/if}}
 		{{else}}
-				{{>login}}
-
-				<a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a>
-				<a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a>
-				<a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a>
-				<a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a>
-				<a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a>
-				<a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a>
-				<a class="linkMenu" href="{{pathFor route= 'Sala'}}">Sala</a>
+			<ul class="nav nav-pills nav-stacked">
+				<li><a class="linkMenu" href="{{pathFor route= 'Inicio'}}"> Início</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Materia'}}"> Matéria</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Professor'}}">Professor</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Curso'}}">Curso</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Semestre'}}">Semestre</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Area'}}">Area</a></li>
+				<li><a class="linkMenu" href="{{pathFor route= 'Sala'}}">Sala</a></li>
+			</ul>
 		{{/if}}
-	</div>
+
 </template>

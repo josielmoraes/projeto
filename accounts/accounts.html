@@ -1,42 +1,51 @@
 
 <template name="cadastroUsuario" class="col-sm-9">
-	{{>menu}}
-	<p></p>
-	{{#if permissao currentUser.profile.permission}}
-			<div class="col-sm-9">
-
-				<form name="formCadastroUsuario" id="formCadastroUsuario" class="form-horizontal">
-					<div class="form-group row">
-						<label class="control-label col-sm-4" for="nomeUsuario">Nome </label>
-						<div class="col-sm-6">
-							<input type="text" name="nomeUsuario"  id="nomeUsuario" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="control-label col-sm-4" for="emailUsuario">Email</label>
-						<div class="col-sm-6">
-							<input type="email" name="emailUsuario" id="emailUsuario" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-					<label class="control-label col-sm-4" for="funcao">Função </label>
-						<div class="col-sm-6" >
-							<select name="funcao" id="funcao" class="form-control dropdown">
-								<option value="1">Diretor(a)</option>
-								<option value="2">Coordenador(a) de Curso</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-sm-offset-4 col-sm-10">
-							<input type="submit" class="btn" name="cadastrar" id="cadastrar" value="Cadastrar">
-						</div>
-					</div>
-				</form>
-
+<div class="container-fluid">
+	<div class="container-fluid navbar text-center">
+		{{>login}}
+	</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-2 sidenav ">
+				{{>menu}}
 			</div>
-		{{> tabular table=TabularTables.Usuario selector=select class="table  col-sm-9 "}}
-	{{/if}}
+			{{#if permissao currentUser.profile.permission}}
+					<div class="col-sm-10 text-center">
+
+						<form name="formCadastroUsuario" id="formCadastroUsuario" class="form-horizontal">
+							<div class="form-group row">
+								<label class="control-label col-sm-4" for="nomeUsuario">Nome </label>
+								<div class="col-sm-6">
+									<input type="text" name="nomeUsuario"  id="nomeUsuario" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="control-label col-sm-4" for="emailUsuario">Email</label>
+								<div class="col-sm-6">
+									<input type="email" name="emailUsuario" id="emailUsuario" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row">
+							<label class="control-label col-sm-4" for="funcao">Função </label>
+								<div class="col-sm-6" >
+									<select name="funcao" id="funcao" class="form-control dropdown">
+										<option value="1">Diretor(a)</option>
+										<option value="2">Coordenador(a) de Curso</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-offset-4 col-sm-10">
+									<input type="submit" class="btn" name="cadastrar" id="cadastrar" value="Cadastrar">
+								</div>
+							</div>
+						</form>
+						{{> tabular table=TabularTables.Usuario selector=select class="table  col-sm-10 text-center "}}
+					</div>
+			{{/if}}
+		</div>
+	</div>
+</div>
 </template>
 
 
@@ -72,6 +81,7 @@
 </template>
 
 <template name="login">
+	{{#if logado currentUser}}
 	<form class="form-inline" name="login" id="login">
 		<div class="row container">
 		  <div class="form-group">
@@ -86,6 +96,16 @@
 		  <a class="btn" id="esqueciSenha"  >Esqueci a senha</a>
 		</div>
 	</form>
+	{{else}}
+	<form class="form-inline" name="login" id="login">
+		<div class="row container">
+		  <div class="form-group">
+		    <label for="emailLogin">Bem vindo: {{currentUser.profile.name}}</label>
+		    <a class="linkMenu" id="sair">Sair</a>
+		  </div>
+		</div>
+	</form>
+	{{/if}}
 </template>
 
 

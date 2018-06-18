@@ -21,7 +21,7 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
-	//Processo.update({_id:"Tg42BY9uYFv2NBJfD"},{$set:{etapas:0}})
+	//Processo.update({_id:"5y3MJjBaTxTPMdt77"},{$set:{etapas:0}})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	//Meteor.users.remove("WS2aQotJje9JHBZh5");
 	//export MONGO_URL='mongodb://localhost:27017/admin';
