@@ -1,13 +1,10 @@
 <template name="alocarSala">
   <div class="container-fluid">
-    <div class="container-fluid navbar text-center">
-      {{>login}}
+    <div class="container-fluid navbar">
+        {{>menu}}
     </div>
-	  <div class="container-fluid text-center">
+	  <div class="container-fluid">
 			<div class="row content">
-				<div class="col-sm-2 sidenav">
-          {{>menu}}
-        </div>
         {{#if permissao currentUser.profile.permission}}
           {{> criarAlocarSala}}
         {{/if}}
@@ -17,23 +14,21 @@
 </template>
 
 <template name="criarAlocarSala">
-  <div class="col-sm-10 text-center" id="cadastroOferta">
+  <div class="col-sm-10" id="cadastroOferta">
     <p></p>
-			<label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
-			<div class="col-sm-4">
-				{{>buscaProcesso pro="3"}}
-			</div>
+
+      {{>buscaProcesso pro="3"}}
+
 	</div>
   {{#if mostrar}}
-  	<div class="col-sm-10 text-center">
+  	<div class="col-sm-10 col-sm-offset-1">
   		<div class="form-group row">
-  			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
+        <p></p>
+  			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso:</label>
   			<div class="col-sm-4">
   				{{>buscaCurso}}
   			</div>
-  		</div>
-  		<div class="form-group row">
-  			 <label  class="control-label col-sm-1" for="semestre">Semestre: </label>
+  			 <label  class="control-label col-sm-1" for="semestre">Semestre:</label>
   				<div class="col-sm-4">
   					<select id="semestre" class="form-control dropdown">
   					<option value=''> </option>

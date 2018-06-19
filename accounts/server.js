@@ -3,14 +3,13 @@ import { Accounts } from 'meteor/accounts-base'
 
 
 
-
 Meteor.startup(() => {
 if(Meteor.isClient){
 	$('input').attr('autocomplete','off');
 	console.log("inicio");
 
 	//Meteor.logout();
-	Meteor.loginWithPassword('root','root123', function(e,r){
+	Meteor.loginWithPassword('root','12', function(e,r){
 		if(e){
 			console.log(e);
 		}else{
@@ -23,11 +22,28 @@ if(Meteor.isClient){
 if(Meteor.isServer){
 	//Processo.update({_id:"5y3MJjBaTxTPMdt77"},{$set:{etapas:0}})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
-	//Meteor.users.remove("WS2aQotJje9JHBZh5");
-	//export MONGO_URL='mongodb://localhost:27017/admin';
+	smtp = {
+	 username: 'josielloureirodemoraes2@gmail.com',   // eg: server@gentlenode.com
+	 password: 'jlm134268759',   // eg: 3eeP1gtizk5eziohfervU
+	 server:   'smtp.gmail.com',  // eg: mail.gandi.net
+	 port: 465
+ }
+ process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
+ let templateEmailrecovery ={
+     from:function(){
+         return 'academicsystem@ufmt.com.br';
+     },
+     subject:function(user){
+         return 'Recuperação de Senha';
+     },
+     text:function(user, url){
+               var newUrl = url.replace('#/reset-password','reset');
+                return 'Olá,\nPara recuperar sua senha, clique no link...\n'+newUrl;;
+         }
+ }
+ Accounts.emailTemplates.resetPassword = templateEmailrecovery;
 
-  //process.env.MAIL_URL = 'smtp://jozeil@hotmail.com:jlm12345@smtp.live.com:25'
-	//MAIL_URL = 'smtp://jozeil@hotmail.com:jlm12345@smtp.live.com:25'
+
 		//console.log(us);
 		var us=Meteor.users.find({username:'root'}).fetch();
 	var r={

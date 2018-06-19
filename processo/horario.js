@@ -149,7 +149,7 @@ if(Meteor.isClient){
 
       if(a!=null){
       tmp=criarArrayOferta(a)
-      //console.log(tmp)
+      console.log(tmp)
           setTimeout(function(){
           for(dia=1;dia<7;dia++){
             for(aula=0;aula<12;aula++){
@@ -231,7 +231,7 @@ if(Meteor.isClient){
             }
           }
         }
-      },100)
+      },10)
     },
     buscarValido(dia,aula,turma){
       var pro=Session.get('processoSelecionado');
@@ -242,14 +242,16 @@ if(Meteor.isClient){
       aula=parseInt(aula)
       var array=new Array()
       var tmp=OfertaMateria.findOne({Processo:pro,'Curso._id':curso,Semestre:sem,Turma:turma,horario:{$elemMatch:{dia:dia,aula:aula}}});
+      console.log('validar ',tmp)
       if(tmp!=null){
         array.push(tmp)
-      }else{
-          tmp2=OfertaMateria.findOne({Processo:pro,'Ofertantes.semestre':sem,'Ofertantes.curso._id':curso,Turma:turma,horario:{$elemMatch:{dia:dia,aula:aula}}});
+      }
+          tmp2=OfertaMateria.findOne({Processo:pro,'Ofertantes.curso._id':curso,'Ofertantes.semestre':sem,horario:{$elemMatch:{dia:dia,aula:aula}}});
+          console.log('validar2 ',tmp2)
           if(tmp2!=null){
               array.push(tmp2)
           }
-        }
+
         return array
       },
   })
@@ -343,7 +345,7 @@ function validarSala(id,dia,aula,sala){
   var tmp= OfertaMateria.findOne({Processo:pro,horario:{$elemMatch:{dia:dia,aula:aula,'sala._id':sala } } })
   console.log('validar sala',sala)
   if(tmp!=null){
-    alert('Sala utilizada pela matéria '+tmp.Materia.nomeMateria+" do "+tmp.Semestre+"º semestre do curso "+tmp.Curso.nome)
+    alert('Sala utilizada pela disciplina '+tmp.Materia.nomeMateria+" do "+tmp.Semestre+"º semestre do curso "+tmp.Curso.nome)
     return false
   }else{
     return true

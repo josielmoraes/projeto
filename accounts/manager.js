@@ -1,17 +1,24 @@
 
-//Router.route('/reset-password', {name: 'resetPassword',template:'resetPassword'});
-
-Router.route('/#/reset-password/:token',
- {name: 'resetPassword',template:'resetPassword'}
- );
-/*
-AccountsTemplates.configureRoute('resetPwd',{
-		path: '/reset',
-    	template: 'resetPassword',
-
-    });
-*/
-
+Router.route('/reset/:token', {
+template: 'ResetPassword',
+name: 'resetPassword',
+onBeforeAction() {
+  if (!Meteor.userId()) {
+  Meteor.call('checkResetToken',this.params.token,(err)=>{
+    if(err){
+      console.log(err.message);
+      Bert.alert('Link de recuperação expirado.', 'danger', 'growl-top-right');
+      Router.go("/");
+    }
+  });
+    Accounts._resetPasswordToken = this.params.token;
+    this.next();
+  } else {
+    Accounts._resetPasswordToken = null;
+    Router.go("/");
+  }
+}
+});
 if(Meteor.isClient){
 	Template.login.onCreated(function(){
 		Session.set('showModal', false);
@@ -34,8 +41,7 @@ if(Meteor.isClient){
 	Template.login.events({
 		'click #esqueciSenha':function(event,template){
 			console.log("esquicisenha");
-			Modal.show('esqueceuSenha');
-
+			Modal.show('ForgotPassword');
 		},
 		'submit form':function(event){
 			event.preventDefault();
@@ -45,6 +51,9 @@ if(Meteor.isClient){
 			Meteor.loginWithPassword(email,senha, function(e,r){
 				if(e){
 					console.log(e);
+          $('#validarLogin').validate().showErrors({
+            erroLogin:"Email ou senha não confere",
+          })
 				}else{
 					console.log(r);
 					console.log('teste');
@@ -58,89 +67,82 @@ if(Meteor.isClient){
 			Meteor.logout()
 		}
 	})
-	Template.esqueceuSenha.helpers({
-		valida(){
-			var email=$('#email').val();
-			if(email==""){
-				$('#esqueceuSenha').validate().showErrors({
-					erro:"Digite um email"
-				})
-			}else{
-				var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-   				var v=re.test(String(email).toLowerCase());
-   				if(!v){
-   					$('#esqueceuSenha').validate().showErrors({
-					erro:"Digite um email valido"
-				})
-   				}
-			}
-		}
-	})
-	Template.esqueceuSenha.events({
-		'submit form': function(e){
-			e.preventDefault();
-			var email=$('#email').val();
-			Template.esqueceuSenha.__helpers.get('valida').call()
-			console.log(email);
-			//var user=Meteor.users.find({"emails[0].address":email.toString()}).fetch();
-			//console.log(user);
-			Meteor.call('esqueceuSenha',email)
-      	Modal.hide('esqueceuSenha');
-		}
-	})
 
-	Template.esqueceuSenha.onRendered(function(){
-		console.log("render")
-		$('#esqueceuSenha').validate({
-			rules:{
-				email:{
-					email:true,
-			    	required:true
-				}
-			},
-			messages:{
-				email:{
-					required:"Necessita de um Email",
-					email:"Digita um email valido"
-				}
-			}
-		})
-	});
-	Template.resetPassword.events({
-		'submit form': function(event){
-			event.preventDefault();
-			console.log("teste")
-			var a= Meteor.userId();
-			var s=$('#confirmarSenha').val();
-			//var t=Session.get('tokenReset');
-			console.log(Accounts._resetPasswordToken);
+  Template.ForgotPassword.events({
+    'submit #forgotPasswordForm': function(e, t) {
+      event.preventDefault();
+      let myEmail = event.target.email.value;
+      Accounts.forgotPassword({ email: myEmail }, function(error) {
+        if (error) {
+          if (error.message === 'User not found [403]'){
+            //alert(BertMsg.login.errorEmailNotFound, 'danger', 'growl-top-right');
+          }else{
+          //  Bert.alert(BertMsg.errorUnknown, 'danger', 'growl-top-right');
+            }
+        } else {
+          //Bert.alert(BertMsg.login.successRecover, 'success', 'growl-top-right');
+          //Router.go("home");
+        }
+      });
+      	Modal.hide('ForgotPassword');
+    },
+  });
+
+  Template.ResetPassword.events({
+    'submit #resetForm': function(event, t) {
+      event.preventDefault();
+      const newpassword = event.target.novaSenha.value;
+      const newpasswordconfirm = event.target.confirmarSenha.value;
       /*
-			Accounts.resetPassword(t.toString(),s,function(e,r){
-				if(e){
-					console.log(e)
-				}else{
-					console.log("senhatrocada")
-					Router.go('/Inicio')
-				}
-			})
+      const passcondition =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/;
+
+      if (!passcondition.test(newpassword)){
+        Bert.alert(BertMsg.password.errorIncorrectPassword, 'danger', 'growl-top-right');
+      } else if (newpassword != newpasswordconfirm) {
+        Bert.alert(BertMsg.password.errorMatchPasswords, 'danger', 'growl-top-right');
+      } else {
+        Accounts.resetPassword(Accounts._resetPasswordToken, newpassword, function(error) {
+          if (error) {
+            Bert.alert(BertMsg.errorUnknown, 'danger', 'growl-top-right');
+          } else {
+            Bert.alert(BertMsg.password.success, 'success', 'growl-top-right');
+            Meteor.call('changeFirstLogin');
+          }
+        });
+      }
       */
-		}
-	})
+      if(newpassword==newpasswordconfirm){
+          console.log(Accounts._resetPasswordToken, newpassword)
+          Accounts.resetPassword(Accounts._resetPasswordToken, newpassword)
+      }else{
+        alert("Senhas diferentes")
+      }
+    }
+  });
 
 
 }
 if(Meteor.isServer){
-	Meteor.methods({
-		'esqueceuSenha':function(user){
 
+  Meteor.methods({
+    checkResetToken(token) {
+        const user = Meteor.users.findOne({
+          "services.password.reset.token": token});
+        if (!user) {
+          throw new Meteor.Error(403, "Token expired");
+        }
 
-			var a=Accounts.findUserByEmail(user);
-			console.log('inicio:',a);
-			Accounts.sendResetPasswordEmail(a._id)
-		},
-		'resetarSenha':function(){
-
-		}
-	})
+        const when = user.services.password.reset.when;
+        const reason = user.services.password.reset.reason;
+        let tokenLifetimeMs = Accounts._getPasswordResetTokenLifetimeMs();
+        if (reason === "enroll") {
+          tokenLifetimeMs = Accounts._getPasswordEnrollTokenLifetimeMs();
+        }
+        const currentTimeMs = Date.now();
+        if ((currentTimeMs - when) > tokenLifetimeMs) { // timeout
+          throw new Meteor.Error(403, "Token expired");
+        }
+      }
+  });
 
 }

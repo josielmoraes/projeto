@@ -6,7 +6,7 @@ import { $ } from 'meteor/jquery';
 import dataTablesBootstrap from 'datatables.net-bs4';
 import OfertaMateria from "/imports/collections/ofertaMateria";
 
-Router.route('/Materia',{
+Router.route('/Disciplina',{
 	template: 'cadastroMateria'
 })
 

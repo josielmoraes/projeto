@@ -18,12 +18,10 @@ shell-server@0.3.1            # Server-side component of the `meteor shell` comm
 blaze-html-templates
 iron:router
 aldeed:tabular
-accounts-ui
 accounts-password
 session
 dburles:collection-helpers
 jquery
-mizzao:bootstrap-3
 useraccounts:iron-routing
 useraccounts:core
 peppelg:bootstrap-3-modal
@@ -31,3 +29,5 @@ themeteorchef:jquery-validation
 autopublish
 mizzao:autocomplete
 email
+accounts-base
+alexwine:bootstrap-4

@@ -1,13 +1,10 @@
 <template name="definirDisciplina">
 <div class="container-fluid">
-	<div class="container-fluid navbar text-center">
-		{{>login}}
+	<div class="container-fluid navbar">
+		{{>menu}}
 	</div>
-	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-sm-2 sidenav">
-				{{>menu}}
-			</div>
+	<div class="container-fluid">
+		<div class="row content col-sm-offset-1">
 			{{#if permissao currentUser.profile.permission}}
 				{{> ofertaDisciplina}}
 			{{/if}}
@@ -17,13 +14,9 @@
 </template>
 
 <template name="ofertaDisciplina">
-	<div class="col-sm-10 text-center" id="cadastroOferta">
-			<label for="processoSelecionado"  class="control-label col-sm-4" >Semestre</label>
-			<div class="col-sm-4">
+	<div class="col-sm-10" id="cadastroOferta">
 				{{>buscaProcesso pro="0"}}
-			</div>
 	</div>
-
 	{{> cadastroOfertaDisciplina}}
 </template>
 
@@ -32,7 +25,7 @@
 <template name="cadastroOfertaDisciplina">
 
 		{{#if mostrar}}
-			<div class="col-sm-10 text-center">
+			<div class="col-sm-10">
 				<p></p>
 				<form name="cadastroOfertaMateria" id="cadastroOfertaMateria" class="form-horizontal">
 					<div class="form-group row">
@@ -84,10 +77,10 @@
 		{{/if}}
 
 	{{#if mostrar}}
-		<div class="col-sm-10 text-center">
+		<div class="col-sm-10">
 			{{> tabular table=TabularTables.Oferta selector=select class="table table-striped table-bordered table-condensed"}}
 		</div>
-		<div class="col-sm-10 text-center">
+		<div class="col-sm-10">
 			<button class="col-sm-offset-9 col-sm-2 btn" type="submit" name="confirmaOferta" id="confirmaOferta" >Concluir Oferta </button>
 		</div>
 	{{/if}}
@@ -95,12 +88,15 @@
 </template>
 
 <template name="buscaProcesso">
-	<select id="processoSelecionado" class="form-control dropdown">
-		<option value=""></option>
-		{{#each val in buscaProcessos pro}}
-			<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
-		{{/each}}
-	</select>
+	<label for="processoSelecionado"  class="control-label col-sm-1 col-sm-offset-3" ><!--Semestre--></label>
+	<div class="col-sm-4">
+		<select id="processoSelecionado" class="form-control dropdown">
+			<option value=""></option>
+			{{#each val in buscaProcessos pro}}
+				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
+			{{/each}}
+		</select>
+	</div>
 </template>
 
 <template name="materiaAuto">

@@ -1,8 +1,7 @@
 accounts-base@1.4.2
 accounts-password@1.5.1
-accounts-ui@1.3.0
-accounts-ui-unstyled@1.4.1
 aldeed:tabular@2.1.1
+alexwine:bootstrap-4@4.1.0
 allow-deny@1.1.0
 autopublish@1.0.7
 autoupdate@1.4.0
@@ -52,7 +51,6 @@ iron:router@1.1.2
 iron:url@1.1.0
 jquery@1.11.11
 launch-screen@1.1.1
-less@2.7.12
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.20
@@ -62,7 +60,6 @@ minifier-css@1.3.1
 minifier-js@2.3.5
 minimongo@1.4.4
 mizzao:autocomplete@0.5.1
-mizzao:bootstrap-3@3.3.1_1
 mobile-experience@1.0.5
 mobile-status-bar@1.0.14
 modern-browsers@0.1.1
