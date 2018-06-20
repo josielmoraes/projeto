@@ -6,90 +6,95 @@
 </template>
 <template name="menu">
 	{{#if c currentUser.profile.permission}}
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{{pathFor route= 'Inicio'}}">Início</a>
-			</div>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="{{pathFor route= 'Inicio'}}">Início</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
+          <a class="nav-link" href="{{pathFor route= 'Usuario'}}">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Usuário</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
+          <a class="nav-link" href="{{pathFor route= 'Disciplina'}}">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Disciplina</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
+          <a class="nav-link" href="{{pathFor route= 'Professor'}}">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Professor</span>
+          </a>
+        </li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
+          <a class="nav-link" href="{{pathFor route= 'Curso'}}">
+            <i class="fa fa-fw fa-link"></i>
+            <span class="nav-link-text">Curso</span>
+          </a>
+        </li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
+          <a class="nav-link" href="{{pathFor route= 'Semestre'}}">
+            <i class="fa fa-fw fa-link"></i>
+            <span class="nav-link-text">Semestre</span>
+          </a>
+        </li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
+          <a class="nav-link" href="{{pathFor route= 'Area'}}">
+            <i class="fa fa-fw fa-link"></i>
+            <span class="nav-link-text">Area</span>
+          </a>
+        </li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
+          <a class="nav-link" href="{{pathFor route= 'Sala'}}">
+            <i class="fa fa-fw fa-link"></i>
+            <span class="nav-link-text">Sala</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-wrench"></i>
+            <span class="nav-link-text"> Horário</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+						<li>
+								<a href="{{pathFor route= 'Processo'}}">Definiar datas</a>
+						</li>
+						<li>
+							<a  href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a>
+						</li>
+						<li>
+							<a href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
+						</li>
+						<li>
+							<a href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
+						</li>
+						<li>
+							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restricao entre disciplina</a>
+						</li>
+						<li>
+							<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
+						</li>
+						<li>
+							<a  href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
+						</li>
+          </ul>
+        </li>
 
-			<!-- Top Menu Items -->
-			<ul class="nav navbar-right top-nav">
-					<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" > {{currentUser.profile.name}} <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-									<!--
-									<li>
-											<a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-									</li>
-									<li class="divider"></li> -->
-									<li>
-											<a  id="sair"> Sair</a>
-									</li>
-							</ul>
-					</li>
-			</ul>
-			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<ul class="nav navbar-nav side-nav">
-							<li>
-									<a href="{{pathFor route= 'Usuario'}}"><i class="fa fa-fw fa-dashboard"></i> Usuário</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Disciplina'}}"><i class="fa fa-fw fa-bar-chart-o"></i> Disciplina</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Professor'}}"><i class="fa fa-fw fa-table"></i> Professor</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Curso'}}"><i class="fa fa-fw fa-edit"></i> Curso</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Semestre'}}"><i class="fa fa-fw fa-desktop"></i> Semestre</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Area'}}"><i class="fa fa-fw fa-wrench"></i> Area</a>
-							</li>
-							<li>
-									<a href="{{pathFor route= 'Sala'}}"><i class="fa fa-fw fa-wrench"></i> Sala</a>
-							</li>
-							<li>
-									<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Horário <i class="fa fa-fw fa-caret-down"></i></a>
-									<ul id="demo" class="collapse">
-										<li>
-											<a href="{{pathFor route= 'Processo'}}">Definiar datas</a>
-										</li>
-										<li>
-											<a  href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a>
-										</li>
-										<li>
-											<a href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
-										</li>
-										<li>
-											<a href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
-										</li>
-										<li>
-											<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restricao entre disciplina</a>
-										</li>
-										<li>
-											<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
-										</li>
-										<li>
-											<a  href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
-										</li>
-									</ul>
-							</li>
-					</ul>
-			</div>
-			<!-- /.navbar-collapse -->
+      </ul>
 
-	</nav>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal" id="sair">
+            <i class="fa fa-fw fa-sign-out"></i>Sair</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 	{{else}}
 	{{>login}}
 {{/if}}

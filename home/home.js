@@ -5,10 +5,9 @@ Router.route('/Inicio',
 		onBeforeAction: function() {
 			var login=Meteor.userId();
 			if(login==null){
-				var element = document.getElementsByTagName("body");
-    		//element.classList.add("bg-dark");
 				$('body').addClass('bg-dark')
-				console.log(ocument.body.classList)
+			}else{
+				$('body').removeClass('bg-dark')
 			}
 			this.next();
 		}
@@ -20,10 +19,9 @@ Router.route('/',
 		onBeforeAction: function() {
 			var login=Meteor.userId();
 			if(login==null){
-				var element = document.getElementsByTagName("body");
 				$('body').addClass('bg-dark')
-				//document.body.classList.add='bg-dark';
-				console.log(document.body.classList)
+			}else{
+				$('body').removeClass('bg-dark')
 			}
 
 			 this.next();
