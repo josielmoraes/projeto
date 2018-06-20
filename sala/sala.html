@@ -1,38 +1,37 @@
 <template name='sala'>
+    {{>menu}}
 <div class="container-fluid">
-  <div class="container-fluid navbar ">
-      {{>menu}}
-  </div>
-  <div class="container-fluid">
-		<div class="row content">
+  <div class="mar">
+		<div class="row">
       {{>cadastrarSala}}
     </div>
   </div>
 </div>
 </template>
+
 <template name="cadastrarSala">
-  <div class="col-sm-10 col-sm-offset-1">
-    <form id="formCadastrosala" name="formCadastrosala" class="form-horizontal">
+  <div class="col-sm-10 offset-sm-1">
+    <form id="formCadastrosala" name="formCadastrosala" class="form-horizontal offset-sm-2">
       <div class="form-group row">
-        <label class="control-label col-sm-4" for="localSala">Local </label>
+        <label class="control-label col-sm-1" for="localSala">Local </label>
         <div class="col-sm-3">
           <input type="text" id="localSala" name="localSala" class="form-control">
         </div>
       </div>
       <div class="form-group row">
-        <label class="control-label col-sm-4" for="numeroSala">Número </label>
+        <label class="control-label col-sm-1" for="numeroSala">Número </label>
         <div class="col-sm-3">
           <input type="number" id="numeroSala" name="numeroSala" class="form-control">
         </div>
       </div>
       <div class="form-group row">
-        <label class="control-label col-sm-4" for="apelidoSala">Apelido </label>
+        <label class="control-label col-sm-1" for="apelidoSala">Apelido </label>
         <div class="col-sm-3">
           <input type="text" id="apelidoSala" name="apelidoSala" class="form-control">
         </div>
       </div>
       <div class="form-group row">
-        <div class="col-sm-10 text-center">
+        <div class="offset-sm-1">
           <input type="submit" class="input btn" id="Cadastrar" name="Cadastrar" value="Cadastrar">
           <input type="submit" class="input btn" id="Deletar" name="Deletar" value="Voltar">
           <input type="submit" class="input btn" name="Limpar" id="Limpar" value="Limpar Campos">
@@ -40,7 +39,7 @@
       </div>
     </form>
   </div>
-	<div class="col-sm-10 col-sm-offset-1">
+	<div class="col-sm-10 offset-sm-1">
     {{> tabular table=TabularTables.Sala class="table table-striped table-bordered table-condensed" }}
   </div>
 </template>

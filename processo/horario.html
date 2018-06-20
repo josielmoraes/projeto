@@ -1,13 +1,10 @@
 <template name="horario">
+	{{>menu}}
 	<div class="container-fluid">
-		<div class="container-fluid navbar">
-				{{>menu}}
-		</div>
-	  <div class="container-fluid ">
-			<div class="row content col-sm-offset-1">
-
+		<div class="mar">
+			<div class="row">
 				{{#if permissao currentUser.profile.permission}}
-					{{> criarHorario}}
+				{{> criarHorario}}
 				{{/if}}
 			</div>
 		</div>
@@ -15,41 +12,42 @@
 </template>
 
 <template name='criarHorario'>
-  <div class="col-sm-10 ">
-        {{>buscaProcesso pro="3"}}
-  </div>
+	<div class="col-sm-10 offset-sm-1">
+		{{>buscaProcesso pro="3"}}
+	</div>
+
 	{{#if mostrar}}
-	<div class="col-sm-10">
+	<div class="col-sm-10 offset-sm-1 ">
 		<div class="form-group row">
-			<p></p>
+
 			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso:</label>
 			<div class="col-sm-4">
 				{{>buscaCurso}}
 			</div>
 
-			 <label  class="control-label col-sm-1" for="semestre">Semestre: </label>
-				<div class="col-sm-4">
-					<select id="semestre" class="form-control dropdown">
+			<label  class="control-label col-sm-1" for="semestre">Semestre: </label>
+			<div class="col-sm-4">
+				<select id="semestre" class="form-control dropdown">
 					<option value=''> </option>
-					 <option value='1'>1</option>
-					 <option value='2'>2</option>
-					 <option value='3'>3</option>
-					 <option value='4'>4</option>
-					 <option value='5'>5</option>
-					 <option value='6'>6</option>
-					 <option value='7'>7</option>
-					 <option value='8'>8</option>
-					 <option value='9'>9</option>
-					 <option value='10'>10</option>
-				 </select>
-			 </div>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+					<option value='6'>6</option>
+					<option value='7'>7</option>
+					<option value='8'>8</option>
+					<option value='9'>9</option>
+					<option value='10'>10</option>
+				</select>
+			</div>
 		</div>
 		{{#if mostrarTabela}}
-			<div class="col-sm-10">
-				{{> tabelaHorario}}
-			</div>
-		{{/if}}
+		<div class="col-sm-12">
+			{{> tabelaHorario}}
 		</div>
+		{{/if}}
+	</div>
 
 	{{/if}}
 </template>
@@ -58,53 +56,53 @@
 	<select id="cursoSelecionado" class="form-control dropdown">
 		<option value=""></option>
 		{{#each val in buscaCurso}}
-			<option value="{{val._id}}">{{val.nome}}</option>
+		<option value="{{val._id}}">{{val.nome}}</option>
 		{{/each}}
 	</select>
 </template>
 
 <template name='tabelaHorario'>
 	{{#each tmp in turmasTabela}}
-		<p>Turma {{tmp}}</p>
+	<p>Turma {{tmp}}</p>
 
-			<table id='tableHorario{{tmp}}'>
-					<tr>
-					{{#each val in diasSemana}}
-							<th>{{val}}</th>
-					{{/each}}
-					</tr>
-					{{#each aux in aulas}}
-						{{#let a=@index}}
-							<tr>
-							{{#each val in diasSemana}}
-									{{#let d=@index }}
-										{{#if criarTabela d }}
-											<td>{{aux}}</td>
-										{{else}}
-											<td>
-													{{#if validarTemplate}}
-														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
-														</select>
-													{{else}}
-														{{#each saida in buscarValido d a tmp}}
-														<label id="{{saida._id}}">{{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
-														<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
-														</select>
-														{{/each}}
-													{{/if}}
-											</td>
-										{{/if}}
-									{{/let}}
-							{{/each}}
-								</tr>
-						{{/let}}
-					{{/each}}
-				</table>
+	<table id='tableHorario{{tmp}}' cellspacing="10" class="tableMargin">
+		<tr>
+			{{#each val in diasSemana}}
+			<th class="tamanho">{{val}}</th>
+			{{/each}}
+		</tr>
+		{{#each aux in aulas}}
+		{{#let a=@index}}
+		<tr>
+			{{#each val in diasSemana}}
+			{{#let d=@index }}
+			{{#if criarTabela d }}
+			<td class="tamanho">{{aux}}</td>
+			{{else}}
+			<td class="tamanho">
 				{{#if validarTemplate}}
-					{{buscaOferta tmp}}
+				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+				</select>
 				{{else}}
-					{{buscarSala tmp}}
+				{{#each saida in buscarValido d a tmp}}
+				<label id="{{saida._id}}">{{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
+				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+				</select>
+				{{/each}}
 				{{/if}}
-		<p></p>
+			</td>
+			{{/if}}
+			{{/let}}
+			{{/each}}
+		</tr>
+		{{/let}}
+		{{/each}}
+	</table>
+	{{#if validarTemplate}}
+	{{buscaOferta tmp}}
+	{{else}}
+	{{buscarSala tmp}}
+	{{/if}}
+	<p></p>
 	{{/each}}
 </template>

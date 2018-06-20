@@ -1,61 +1,14 @@
-/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 1500px}
-
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height: auto;}
-    }
-#group{
-	background-color: gray;
+.mar{
+  margin-top: 75px;
 }
-#menu{
-	height: 10%;
-	margin: 5px;
+.bot{
+  margin-bottom:20px;
 }
-.linkMenu{
-	margin: 5px;
+.tableMargin{
+  margin:25px;
 }
-.cadastro{
-	margin-bottom: 30px;
-	margin-left: 400px;
-	display: center;
-
-}
-
-.contTable{
-	padding:  20px;
-	text-align: center;
-	border:  2px solid #000000;
-}
-#table{
-	margin-left: 20%;
-
-}
-
-#busca{
-	margin-left: 15%;
-}
-#scroll {
-   overflow: auto;
-}
-
-#idShowProfessor{
-	opacity: 0; display: none;
+.tamanho{
+  width: 300px;
+  height: 60px;
+  border: 1px solid black;
 }

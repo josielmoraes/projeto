@@ -1,10 +1,8 @@
 <template name="confirmarProcesso">
+	{{>menu}}
 	<div class="container-fluid">
-		<div class="container-fluid navbar">
-			{{>menu}}
-		</div>
-	  <div class="container-fluid">
-			<div class="row content col-sm-offset-1 ">
+	  <div class="mar">
+			<div class="row">
 				{{#if permissao currentUser.profile.permission}}
 					{{> confirmar}}
 				{{/if}}
@@ -14,11 +12,11 @@
 </template>
 
 <template name="confirmar">
-	<div class="col-sm-10 " id="cadastroOferta">
+	<div class="col-sm-10 offset-sm-1 " id="cadastroOferta">
 				{{>buscaProcesso pro="2"}}
 	</div>
 	{{#if mostrar}}
-		<div class="col-sm-10">
+		<div class="col-sm-10 offset-sm-1">
 				<p></p>
 				<label>Visualização por: </label>
 				<label class="radio-inline"><input type="radio" name="optradio" class="radioB" id="radioArea">Area</label>
@@ -26,19 +24,20 @@
 
 		</div>
 		{{#if mostrarArea}}
-		<div class="col-sm-10" >
+		<div class="col-sm-10 offset-sm-1" >
 			{{> tabular table=TabularTables.OfertaConfirmarArea selector=selectProfessor class="table table-striped table-bordered table-condensed" id="Tabelar"}}
 		</div>
 		{{/if}}
 
 		{{#if mostrarProfessor}}
-			<div class="col-sm-10">
+			<div class="col-sm-10 offset-sm-1">
 				{{> tabular table=TabularTables.OfertaConfirmarProfessor selector=selectProfessor class="table table-striped table-bordered table-condensed" id="Tabelar"}}
 			</div>
 
 		{{/if}}
 			{{#if teste}}
-			<div class="col-sm-10">
+			<div class="col-sm-10 offset-sm-1">
+				<p></p>
 				<form id="formConfirmar" name="formConfirmar" class="form-horizontal">
 					<div class="form-group row">
 						<label class="control-label col-sm-1 col-sm-offset-1">Turma </label>
@@ -73,7 +72,7 @@
 			</div>
 			{{/if}}
 			{{#if mostrarFinalizar}}
-			<div class="col-sm-10 text-center">
+			<div class="col-sm-10 offset-sm-1">
 				<input class="btn col-sm-1 col-sm-offset-10" type="submit" id="finalizarConfimar" value="Finalizar">
 			</div>
 			{{/if}}

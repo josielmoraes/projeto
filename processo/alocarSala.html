@@ -1,10 +1,8 @@
 <template name="alocarSala">
-  <div class="container-fluid">
-    <div class="container-fluid navbar">
-        {{>menu}}
-    </div>
-	  <div class="container-fluid">
-			<div class="row content">
+    {{>menu}}
+    <div class="container-fluid">
+  		<div class="mar">
+  			<div class="row">
         {{#if permissao currentUser.profile.permission}}
           {{> criarAlocarSala}}
         {{/if}}
@@ -14,14 +12,11 @@
 </template>
 
 <template name="criarAlocarSala">
-  <div class="col-sm-10" id="cadastroOferta">
-    <p></p>
-
+  <div class="col-sm-10 offset-sm-1" id="cadastroOferta">
       {{>buscaProcesso pro="3"}}
-
 	</div>
   {{#if mostrar}}
-  	<div class="col-sm-10 col-sm-offset-1">
+  	<div class="col-sm-10 offset-sm-1">
   		<div class="form-group row">
         <p></p>
   			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso:</label>

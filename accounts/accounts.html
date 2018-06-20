@@ -1,52 +1,49 @@
+<template name="cadastroUsuario">
+	{{>menu}}
+	<div class="container-fluid">
+		<div class="mar">
+			<div class="row">
+				{{#if permissao currentUser.profile.permission}}
+				<div class="col-sm-10 offset-sm-1 ">
 
-<template name="cadastroUsuario" class="col-sm-9">
-<div class="container-fluid">
-	<div class="container-fluid navbar">
-		{{>menu}}
-	</div>
-	<div class="container-fluid col-sm-10 col-sm-offset-2 ">
-		<div class="row content">
-			{{#if permissao currentUser.profile.permission}}
-					<div class="col-sm-10 col-sm-offset-1 ">
-
-						<form name="formCadastroUsuario" id="formCadastroUsuario" class="form-horizontal">
-							<div class="form-group row">
-								<label class="control-label col-sm-4" for="nomeUsuario">Nome </label>
-								<div class="col-sm-4">
-									<input type="text" name="nomeUsuario"  id="nomeUsuario" class="form-control">
-								</div>
+					<form name="formCadastroUsuario" id="formCadastroUsuario" class="form-horizontal offset-sm-2">
+						<div class="form-group row">
+							<label class="control-label col-sm-2" for="nomeUsuario">Nome </label>
+							<div class="col-sm-4">
+								<input type="text" name="nomeUsuario"  id="nomeUsuario" class="form-control">
 							</div>
-							<div class="form-group row">
-								<label class="control-label col-sm-4" for="emailUsuario">Email</label>
-								<div class="col-sm-4">
-									<input type="email" name="emailUsuario" id="emailUsuario" class="form-control">
-								</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-2" for="emailUsuario">Email</label>
+							<div class="col-sm-4">
+								<input type="email" name="emailUsuario" id="emailUsuario" class="form-control">
 							</div>
-							<div class="form-group row">
-							<label class="control-label col-sm-4" for="funcao">Função </label>
-								<div class="col-sm-4" >
-									<select name="funcao" id="funcao" class="form-control dropdown">
-										<option value="1">Diretor(a)</option>
-										<option value="2">Coordenador(a) de Curso</option>
-									</select>
-								</div>
+						</div>
+						<div class="form-group row">
+							<label class="control-label col-sm-2" for="funcao">Função </label>
+							<div class="col-sm-4" >
+								<select name="funcao" id="funcao" class="form-control dropdown">
+									<option value="1">Diretor(a)</option>
+									<option value="2">Coordenador(a) de Curso</option>
+								</select>
 							</div>
-							<div class="form-group row">
-								<div class="col-sm-offset-4 col-sm-10">
-									<input type="submit" class="btn" name="cadastrar" id="cadastrar" value="Cadastrar">
-								</div>
+						</div>
+						<div class="form-group row">
+							<div class=" offset-sm-2 col-sm-10">
+								<input type="submit" class="btn" name="cadastrar" id="cadastrar" value="Cadastrar">
 							</div>
-						</form>
-						{{> tabular table=TabularTables.Usuario selector=select class="table  col-sm-10 text-center "}}
-					</div>
-			{{/if}}
+						</div>
+					</form>
+					{{> tabular table=TabularTables.Usuario selector=select class="table  col-sm-10 text-center "}}
+				</div>
+				{{/if}}
+			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 
-  <template name="ForgotPassword">
+<template name="ForgotPassword">
 	<div class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -57,14 +54,14 @@
 
 				<div class="modal-body">
 					<form action="/forgot" id="forgotPasswordForm" method="post" class="form-inline">
-					<div class="form-group row col-sm-offset-1">
-						<div class="form-group ">
-						    <label for="email">Email address:</label>
+						<div class="form-group row col-sm-offset-1">
+							<div class="form-group ">
+								<label for="email">Email address:</label>
 								<input id="forgotPasswordEmail" type="text" name="email" placeholder="Email Address">
-      					<input class="btn-submit" type="submit" value="Send">
-						    <label id="erro" name="erro"></label>
-						 </div>
-					</div>
+								<input class="btn-submit" type="submit" value="Send">
+								<label id="erro" name="erro"></label>
+							</div>
+						</div>
 					</form>
 				</div>
 
@@ -79,54 +76,54 @@
 
 <template name="login">
 	<div class="container col-sm-3" style="margin-top:200px;" >
-    <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Login</div>
-      <div class="card-body">
-        <form id="validarLogin" name="validarLogin">
-          <div class="form-group">
-            <label for="emailLogin">Email</label>
-            <input class="form-control" id="emailLogin" type="email" >
-          </div>
-          <div class="form-group">
-            <label for="pwdLogin">Senha</label>
-            <input class="form-control" id="pwdLogin" type="password">
-          </div>
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Login</div>
+			<div class="card-body">
+				<form id="validarLogin" name="validarLogin">
 					<div class="form-group">
-            <label name="erroLogin" id="erroLogin"></label>
-          </div>
-          <input type="submit" class="btn btn-block" value="Entrar">
-        </form>
-        <div class="text-center">
-          <a class="d-block small" href="#">Esqueceu a senha?</a>
-        </div>
-      </div>
-    </div>
-  </div>
+						<label for="emailLogin">Email</label>
+						<input class="form-control" id="emailLogin" type="email" >
+					</div>
+					<div class="form-group">
+						<label for="pwdLogin">Senha</label>
+						<input class="form-control" id="pwdLogin" type="password">
+					</div>
+					<div class="form-group">
+						<label name="erroLogin" id="erroLogin"></label>
+					</div>
+					<input type="submit" class="btn btn-block" value="Entrar">
+				</form>
+				<div class="text-center">
+					<a class="d-block small" href="#">Esqueceu a senha?</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 
 <template name="ResetPassword">
 	{{>menu}}
-		<div class="container">
-			<form name="resetForm" id="resetForm" class="form-horizontal">
-					<div class="form-group row">
-						<label class="control-label col-sm-4" for="novaSenha">Nova Senha </label>
-						<div class="col-sm-4">
-							<input type="password" name="novaSenha"  id="novaSenha" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="control-label col-sm-4" for="confirmarSenha">Confirmar senha</label>
-						<div class="col-sm-4">
-							<input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-sm-offset-4 col-sm-10">
-							<input type="submit" class="btn" name="confirmar" id="confirmar" value="Confirmar">
-							<input type="submit" class="btn" name="cancelar" id="cancelar" value="Cancelar">
-						</div>
-					</div>
-			</form>
-		</div>
+	<div class="container">
+		<form name="resetForm" id="resetForm" class="form-horizontal">
+			<div class="form-group row">
+				<label class="control-label col-sm-4" for="novaSenha">Nova Senha </label>
+				<div class="col-sm-4">
+					<input type="password" name="novaSenha"  id="novaSenha" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="control-label col-sm-4" for="confirmarSenha">Confirmar senha</label>
+				<div class="col-sm-4">
+					<input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-offset-4 col-sm-10">
+					<input type="submit" class="btn" name="confirmar" id="confirmar" value="Confirmar">
+					<input type="submit" class="btn" name="cancelar" id="cancelar" value="Cancelar">
+				</div>
+			</div>
+		</form>
+	</div>
 </template>

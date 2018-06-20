@@ -1,21 +1,19 @@
 <template name="definirDisciplina">
-<div class="container-fluid">
-	<div class="container-fluid navbar">
-		{{>menu}}
-	</div>
+	{{>menu}}
 	<div class="container-fluid">
-		<div class="row content col-sm-offset-1">
-			{{#if permissao currentUser.profile.permission}}
+		<div class="mar">
+			<div class="row">
+				{{#if permissao currentUser.profile.permission}}
 				{{> ofertaDisciplina}}
-			{{/if}}
+				{{/if}}
+			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <template name="ofertaDisciplina">
-	<div class="col-sm-10" id="cadastroOferta">
-				{{>buscaProcesso pro="0"}}
+	<div class="col-sm-10 offset-sm-1" id="cadastroOferta">
+		{{>buscaProcesso pro="0"}}
 	</div>
 	{{> cadastroOfertaDisciplina}}
 </template>
@@ -24,78 +22,80 @@
 
 <template name="cadastroOfertaDisciplina">
 
-		{{#if mostrar}}
-			<div class="col-sm-10">
-				<p></p>
-				<form name="cadastroOfertaMateria" id="cadastroOfertaMateria" class="form-horizontal">
-					<div class="form-group row">
-						<label  class="control-label col-sm-4" for="turmaMateria">Turma</label>
-						<div class="col-sm-4">
-						 	<input type="number" min="0" max="5" value="0" name="turmaMateria" id="turmaMateria" class="form-control">
-						 </div>
-					</div>
-					<div class="form-group row">
-						<label  class="control-label col-sm-4" for="materia">Matéria</label>
-						<div class="col-sm-4">
-						 	{{> inputAutocomplete settings=settings id='materia' name="materia" autocomplete="off" class="form-control"}}
-						 </div>
-					</div>
-					<div class="form-group row">
-						<label  class="control-label col-sm-4" for="area">Sugestão Area</label>
-						<div class="col-sm-4">
-							{{> inputAutocomplete settings=settings2 id='area' name="area" autocomplete="off" class="form-control"}}
-						</div>
-					</div>
-					<div class="form-group row">
-						<label  class="control-label col-sm-4" for="tipoAula">Tipo</label>
-						<div class="col-sm-4">
-							<select id="tipoAula" class="form-control dropdown">
-								<option value="teorica">Teórica</option>
-								<option value="pratica">Prática</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label  class="control-label col-sm-4" for="subMateria">SubTurmas</label>
-						<div class="col-sm-2">
-							<input type="number" name="subMateria" id='subMateria' min="0" max="5" value="0" class="form-control">
-						</div>
-					</div>
-					<div class="form-group row">
-						{{>subMateria}}
-					</div>
-					<div class="form-group row">
-						<div class="text-center col-sm-10">
-							<input class="btn input" type="submit" name="cadastrar" id="cadastrar" value="Ofertar">
-							<input class="btn input" type="submit" name="voltar" id="voltar" value="Voltar">
-							<input class="btn input" type="submit" name="limpar" id="limpar" value="Limpar Campos">
-						</div>
-					</div>
-				</form>
+	{{#if mostrar}}
+	<div class="col-sm-10 offset-sm-1">
+		<p></p>
+		<form name="cadastroOfertaMateria" id="cadastroOfertaMateria" class="form-horizontal offset-sm-2">
+			<div class="form-group row">
+				<label  class="control-label col-sm-2" for="turmaMateria">Turma</label>
+				<div class="col-sm-4">
+					<input type="number" min="0" max="5" value="0" name="turmaMateria" id="turmaMateria" class="form-control">
+				</div>
 			</div>
-			{{#if validar}}{{/if}}
-		{{/if}}
+			<div class="form-group row">
+				<label  class="control-label col-sm-2" for="materia">Matéria</label>
+				<div class="col-sm-4">
+					{{> inputAutocomplete settings=settings id='materia' name="materia" autocomplete="off" class="form-control"}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label  class="control-label col-sm-2" for="area">Sugestão Area</label>
+				<div class="col-sm-4">
+					{{> inputAutocomplete settings=settings2 id='area' name="area" autocomplete="off" class="form-control"}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label  class="control-label col-sm-2" for="tipoAula">Tipo</label>
+				<div class="col-sm-4">
+					<select id="tipoAula" class="form-control dropdown">
+						<option value="teorica">Teórica</option>
+						<option value="pratica">Prática</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label  class="control-label col-sm-2" for="subMateria">SubTurmas</label>
+				<div class="col-sm-2">
+					<input type="number" name="subMateria" id='subMateria' min="0" max="5" value="0" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				{{>subMateria}}
+			</div>
+			<div class="form-group row">
+				<div class="offset-sm-2">
+					<input class="btn  input" type="submit" name="cadastrar" id="cadastrar" value="Ofertar">
+					<input class="btn  input" type="submit" name="voltar" id="voltar" value="Voltar">
+					<input class="btn  input" type="submit" name="limpar" id="limpar" value="Limpar Campos">
+				</div>
+			</div>
+		</form>
+	</div>
+	{{#if validar}}{{/if}}
+	{{/if}}
 
 	{{#if mostrar}}
-		<div class="col-sm-10">
-			{{> tabular table=TabularTables.Oferta selector=select class="table table-striped table-bordered table-condensed"}}
-		</div>
-		<div class="col-sm-10">
-			<button class="col-sm-offset-9 col-sm-2 btn" type="submit" name="confirmaOferta" id="confirmaOferta" >Concluir Oferta </button>
-		</div>
+	<div class="col-sm-10 offset-sm-1">
+		{{> tabular table=TabularTables.Oferta selector=select class="table table-striped table-bordered table-condensed"}}
+	</div>
+	<div class="col-sm-10 offset-sm-1">
+		<button class="offset-sm-9 col-sm-2 btn " type="submit" name="confirmaOferta" id="confirmaOferta" >Concluir Oferta </button>
+	</div>
 	{{/if}}
 
 </template>
 
 <template name="buscaProcesso">
-	<label for="processoSelecionado"  class="control-label col-sm-1 col-sm-offset-3" ><!--Semestre--></label>
-	<div class="col-sm-4">
-		<select id="processoSelecionado" class="form-control dropdown">
-			<option value=""></option>
-			{{#each val in buscaProcessos pro}}
+	<div class="offset-sm-3 bot">
+		<label for="processoSelecionado"  class="control-label col-sm-1" ><!--Semestre--></label>
+		<div class="col-sm-4">
+			<select id="processoSelecionado" class="form-control dropdown">
+				<option value=""></option>
+				{{#each val in buscaProcessos pro}}
 				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
-			{{/each}}
-		</select>
+				{{/each}}
+			</select>
+		</div>
 	</div>
 </template>
 
@@ -112,37 +112,37 @@
 
 <template name="subMateria">
 
-		{{#each sub in habilitarSubMateria}}
+	{{#each sub in habilitarSubMateria}}
+	<div class="col-sm-4">
+		<label > Sub-Turma {{sub}}</label>
+		<div class="form-group row">
+			<label  class="control-label col-sm-4" for="subTurma{{sub}}">Turma </label>
 			<div class="col-sm-4">
-				<label > Sub-Turma {{sub}}</label>
-				<div class="form-group row">
-					<label  class="control-label col-sm-4" for="subTurma{{sub}}">Turma </label>
-					<div class="col-sm-4">
-						<input type="number" min="1" max="5" value="0" id="subTurma{{sub}}" name="subTurma{{sub}}" class="form-control" >
-					</div>
-				</div>
-				<div class="form-group row">
-					<label  class="control-label col-sm-4" for="cargaHoraria{{sub}}">Carga horária </label>
-					<div class="col-sm-4">
-						<input type="text" id="cargaHoraria{{sub}}" name="cargaHoraria{{sub}}" class="form-control" >
-					</div>
-				</div>
-				<div class="form-group row">
-					<label  class="control-label col-sm-4" for="aulasSemanal{{sub}}">Aulas semanal</label>
-					<div class="col-sm-4">
-						<input type="text" id="aulasSemanal{{sub}}" name="aulasSemanal{{sub}}" class="form-control" >
-					</div>
-				</div>
-				<div class="form-group row">
-					<label  class="control-label col-sm-4" for="subTipoAula{{sub}}">Tipo </label>
-					<div class="col-sm-4">
-							<select id="subTipoAula{{sub}}" class="form-control dropdown">
-								<option value="teorica">Teórica</option>
-								<option value="pratica">Prática</option>
-							</select>
-						</div>
-				</div>
+				<input type="number" min="1" max="5" value="0" id="subTurma{{sub}}" name="subTurma{{sub}}" class="form-control" >
 			</div>
-		{{/each}}
+		</div>
+		<div class="form-group row">
+			<label  class="control-label col-sm-4" for="cargaHoraria{{sub}}">Carga horária </label>
+			<div class="col-sm-4">
+				<input type="text" id="cargaHoraria{{sub}}" name="cargaHoraria{{sub}}" class="form-control" >
+			</div>
+		</div>
+		<div class="form-group row">
+			<label  class="control-label col-sm-4" for="aulasSemanal{{sub}}">Aulas semanal</label>
+			<div class="col-sm-4">
+				<input type="text" id="aulasSemanal{{sub}}" name="aulasSemanal{{sub}}" class="form-control" >
+			</div>
+		</div>
+		<div class="form-group row">
+			<label  class="control-label col-sm-4" for="subTipoAula{{sub}}">Tipo </label>
+			<div class="col-sm-4">
+				<select id="subTipoAula{{sub}}" class="form-control dropdown">
+					<option value="teorica">Teórica</option>
+					<option value="pratica">Prática</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	{{/each}}
 
 </template>

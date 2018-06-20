@@ -6,8 +6,12 @@ Router.route('/Inicio',
 			var login=Meteor.userId();
 			if(login==null){
 				$('body').addClass('bg-dark')
+				$('body').removeClass('fixed-nav')
+				$('body').removeClass('sticky-footer')
 			}else{
 				$('body').removeClass('bg-dark')
+				$('body').addClass('fixed-nav')
+				$('body').addClass('sticky-footer')
 			}
 			this.next();
 		}
@@ -20,8 +24,12 @@ Router.route('/',
 			var login=Meteor.userId();
 			if(login==null){
 				$('body').addClass('bg-dark')
+				$('body').removeClass('fixed-nav')
+				$('body').removeClass('sticky-footer')
 			}else{
 				$('body').removeClass('bg-dark')
+				$('body').addClass('fixed-nav')
+				$('body').addClass('sticky-footer')
 			}
 
 			 this.next();
