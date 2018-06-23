@@ -473,7 +473,7 @@ Template.cadastroOfertaDisciplina.events({
 				}else{
 					Session.set('aux',false);
 					Session.set('processoSelecionado',"");
-					alert("Pré-oferta realizada com sucesso")
+					Bert.alert("Pré-oferta realizada com sucesso",'default','growl-top-right','fa-bell')
 				}
 			})
 		},

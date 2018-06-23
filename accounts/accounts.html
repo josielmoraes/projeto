@@ -23,14 +23,18 @@
 							<label class="control-label col-sm-2" for="funcao">Função </label>
 							<div class="col-sm-4" >
 								<select name="funcao" id="funcao" class="form-control dropdown">
+									<option value="0">Super Usuário(a)</option>
 									<option value="1">Diretor(a)</option>
 									<option value="2">Coordenador(a) de Curso</option>
+									<option value="3">Usuario(a)</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group row">
 							<div class=" offset-sm-2 col-sm-10">
-								<input type="submit" class="btn" name="cadastrar" id="cadastrar" value="Cadastrar">
+								<input type="submit" class="btn input" name="cadastrar" id="cadastrar" value="Cadastrar">
+								<input type="submit" class="btn input" name="voltar" id="deletar" value="Voltar">
+								<input type="submit" class="btn input" name="limparCampos" id="limparCampos" value="Limpar Campos">
 							</div>
 						</div>
 					</form>
@@ -53,12 +57,12 @@
 				</div>
 
 				<div class="modal-body">
-					<form action="/forgot" id="forgotPasswordForm" method="post" class="form-inline">
+					<form  id="forgotPasswordForm" method="post" class="form-inline">
 						<div class="form-group row col-sm-offset-1">
-							<div class="form-group ">
-								<label for="email">Email address:</label>
-								<input id="forgotPasswordEmail" type="text" name="email" placeholder="Email Address">
-								<input class="btn-submit" type="submit" value="Send">
+							<div class="form-group">
+								<label class="control-label" for="email">Email:  </label>
+								<input id="forgotPasswordEmail" type="text" name="email" class="form-control">
+								<input class="btn btn-default" type="submit" value="Enviar">
 								<label id="erro" name="erro"></label>
 							</div>
 						</div>
@@ -94,7 +98,7 @@
 					<input type="submit" class="btn btn-block" value="Entrar">
 				</form>
 				<div class="text-center">
-					<a class="d-block small" href="#">Esqueceu a senha?</a>
+					<a class="d-block small" href="#" id="esqueciSenha">Esqueceu a senha?</a>
 				</div>
 			</div>
 		</div>
@@ -103,27 +107,31 @@
 
 
 <template name="ResetPassword">
-	{{>menu}}
-	<div class="container">
-		<form name="resetForm" id="resetForm" class="form-horizontal">
-			<div class="form-group row">
-				<label class="control-label col-sm-4" for="novaSenha">Nova Senha </label>
-				<div class="col-sm-4">
-					<input type="password" name="novaSenha"  id="novaSenha" class="form-control">
-				</div>
+	<div class="container col-sm-4" style="margin-top:200px;" >
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Recuperação de senha</div>
+			<div class="card-body">
+				<form name="resetForm" id="resetForm" class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label" for="novaSenha">Nova Senha </label>
+						<div class="">
+							<input type="password" name="novaSenha"  id="novaSenha" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="confirmarSenha">Confirmar senha</label>
+						<div class="">
+							<input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-offset-4 col-sm-10">
+							<input type="submit" class="btn" name="confirmar" id="confirmar" value="Confirmar">
+							<input type="submit" class="btn" name="cancelar" id="cancelar" value="Cancelar">
+						</div>
+					</div>
+				</form>
 			</div>
-			<div class="form-group row">
-				<label class="control-label col-sm-4" for="confirmarSenha">Confirmar senha</label>
-				<div class="col-sm-4">
-					<input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control">
-				</div>
-			</div>
-			<div class="form-group row">
-				<div class="col-sm-offset-4 col-sm-10">
-					<input type="submit" class="btn" name="confirmar" id="confirmar" value="Confirmar">
-					<input type="submit" class="btn" name="cancelar" id="cancelar" value="Cancelar">
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 </template>

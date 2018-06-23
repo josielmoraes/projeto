@@ -3,6 +3,7 @@ Router.route('/reset/:token', {
   template: 'ResetPassword',
   name: 'resetPassword',
   onBeforeAction() {
+    $('body').addClass('bg-dark')
     if (!Meteor.userId()) {
       Meteor.call('checkResetToken',this.params.token,(err)=>{
         if(err){
@@ -68,71 +69,78 @@ if(Meteor.isClient){
             td=ano+'-'+mes+"-"+mes;
             var processos=Processo.find().fetch();
             for(x=0;x<processos.length;x++){
-              console.log(processos[x].dataLimite);
+              //console.log(processos[x].etapas);
+              etapas=processos[x].etapas;
               //comparar data limite pra oferta
-              strData=processos[x].dataLimite;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data limite para pré-oferta')
-              }else{
-                console.log('menor data limite para pre-oferta')
-              }
-              //final de data limite
-              //comparar alocar professor
-              strData=processos[x].alocarProfessor;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data alocar professor')
-              }else{
-                console.log('menor data alocar professor')
-              }
-              //final alocar professor
-              //confirmar oferta
-              strData=processos[x].aprovarProcesso;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data para aprovar')
-              }else{
-                console.log('menor data para aprovar')
-              }
-              //fim confirmar
-              //restricao alocarProfessor
-              strData=processos[x].restricao;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data para restricao')
-              }else{
-                console.log('menor data para resrticao')
-              }
-              //fim restricao
-              //criar Horario
-              strData=processos[x].criarHorario;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data para criar Horario')
-              }else{
-                console.log('menor data para criar Horario')
-              }
-              //fim criar Horario
-              //alocar alocar
-              strData=processos[x].alocarSala;
-              parse=strData.split("-");
-              data= new Date(parse[0],parse[1]-1,parse[2]);
-              console.log(data);
-              if(data> new Date){
-                console.log('maior data para restricao')
-              }else{
-                console.log('menor data para resrticao')
+              if(etapas==0){
+                strData=processos[x].dataLimite;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                resu= data- new Date()
+                console.log(data,new Date())
+                console.log(data>= new Date())
+                if(data>= new Date()){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para realizar pré-oferta','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Pré-oferta finalizada','default','growl-top-right','fa-bell')
+                }
+              }else if(etapas==1){
+                //final de data limite
+                //comparar alocar professor
+                strData=processos[x].alocarProfessor;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                if(data>= new Date){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para alocar professor','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Alocacão de professores finalizada','default','growl-top-right','fa-bell')
+                }
+              }else if(etapas==2){
+                //final alocar professor
+                //confirmar oferta
+                strData=processos[x].aprovarProcesso;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                if(data>= new Date){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para aprovar','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Aprovação finalizada','default','growl-top-right','fa-bell')
+                }
+              }else if(etapas==3){
+                //fim confirmar
+                //restricao
+                strData=processos[x].restricao;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                console.log(data);
+                if(data>= new Date){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para realizar restricão de disciplinas','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Restrição entre disciplinas finalizadas','default','growl-top-right','fa-bell')
+                }
+              }else if(etapas==4){
+                //fim restricao
+                //criar Horario
+                strData=processos[x].criarHorario;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                if(data>= new Date){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para criar horário','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Criação de horário finalizada','default','growl-top-right','fa-bell')
+                }
+              }else if(etapas==5){
+                //fim criar Horario
+                //alocar sala
+                strData=processos[x].alocarSala;
+                parse=strData.split("-");
+                data= new Date(parse[0],parse[1]-1,parse[2]);
+                console.log(data);
+                if(data>= new Date){
+                  Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para alocar sala','default','growl-top-right','fa-bell')
+                }else{
+                  Bert.alert('Alocação de sala finalizada','default','growl-top-right','fa-bell')
+                }
               }
               //fim alocar
             }
@@ -176,28 +184,32 @@ if(Meteor.isClient){
       /*
       const passcondition =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}/;
 
-      if (!passcondition.test(newpassword)){
-      Bert.alert(BertMsg.password.errorIncorrectPassword, 'danger', 'growl-top-right');
-    } else if (newpassword != newpasswordconfirm) {
-    Bert.alert(BertMsg.password.errorMatchPasswords, 'danger', 'growl-top-right');
-  } else {
-  Accounts.resetPassword(Accounts._resetPasswordToken, newpassword, function(error) {
-  if (error) {
-  Bert.alert(BertMsg.errorUnknown, 'danger', 'growl-top-right');
-} else {
-Bert.alert(BertMsg.password.success, 'success', 'growl-top-right');
-Meteor.call('changeFirstLogin');
-}
-});
-}
-*/
-if(newpassword==newpasswordconfirm){
-  console.log(Accounts._resetPasswordToken, newpassword)
-  Accounts.resetPassword(Accounts._resetPasswordToken, newpassword)
-}else{
-  alert("Senhas diferentes")
-}
-}
+            if (!passcondition.test(newpassword)){
+            Bert.alert(BertMsg.password.errorIncorrectPassword, 'danger', 'growl-top-right');
+          } else if (newpassword != newpasswordconfirm) {
+          Bert.alert(BertMsg.password.errorMatchPasswords, 'danger', 'growl-top-right');
+        } else {
+        Accounts.resetPassword(Accounts._resetPasswordToken, newpassword, function(error) {
+        if (error) {
+        Bert.alert(BertMsg.errorUnknown, 'danger', 'growl-top-right');
+      } else {
+      Bert.alert(BertMsg.password.success, 'success', 'growl-top-right');
+      Meteor.call('changeFirstLogin');
+      }
+      });
+      }
+      */
+      if(newpassword==newpasswordconfirm){
+        console.log(Accounts._resetPasswordToken, newpassword)
+        Accounts.resetPassword(Accounts._resetPasswordToken, newpassword)
+      }else{
+        alert("Senhas diferentes")
+      }
+    },
+    'click #cancelar':function(event){
+      event.preventDefault;
+      Router.go('/')
+    }
 });
 
 

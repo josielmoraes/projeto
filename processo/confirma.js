@@ -301,7 +301,7 @@ if(Meteor.isClient){
 				if(e){
 
 				}else{
-					alert("Confirmação realizada com sucesso");
+					Bert.alert("Confirmação realizada com sucesso",'default','growl-top-right','fa-bell')
 					Session.set('processoSelecionado',"")
 					Session.set("aux",false)
 				}

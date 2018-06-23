@@ -26,8 +26,8 @@ useraccounts:iron-routing
 useraccounts:core
 peppelg:bootstrap-3-modal
 themeteorchef:jquery-validation
-autopublish
 mizzao:autocomplete
 email
 accounts-base
 alexwine:bootstrap-4
+themeteorchef:bert

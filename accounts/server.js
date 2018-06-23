@@ -18,7 +18,7 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
-	//Processo.update({_id:"5y3MJjBaTxTPMdt77"},{$set:{etapas:0}})
+	//Processo.remove({})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	smtp = {
 	 username: 'josielloureirodemoraes2@gmail.com',   // eg: server@gentlenode.com

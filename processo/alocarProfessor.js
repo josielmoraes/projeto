@@ -401,7 +401,7 @@ if(Meteor.isClient){
 		 			if(e){
 
 		 			}else{
-		 				alert("Alocação realizada com sucesso");
+						Bert.alert("Alocação de professor realizada com sucesso",'default','growl-top-right','fa-bell')
 		 				Session.set('processoSelecionado',"")
 		 				Session.set("aux",false)
 		 			}

@@ -3,7 +3,6 @@ accounts-password@1.5.1
 aldeed:tabular@2.1.1
 alexwine:bootstrap-4@4.1.0
 allow-deny@1.1.0
-autopublish@1.0.7
 autoupdate@1.4.0
 babel-compiler@7.1.0
 babel-runtime@1.2.2
@@ -35,6 +34,8 @@ ecmascript-runtime-server@0.7.0
 ejson@1.1.0
 email@1.2.3
 es5-shim@4.8.0
+fortawesome:fontawesome@4.4.0_1
+fourseven:scss@4.5.4
 geojson-utils@1.0.10
 hot-code-push@1.0.4
 html-tools@1.0.11
@@ -96,6 +97,7 @@ templating@1.3.2
 templating-compiler@1.3.3
 templating-runtime@1.3.2
 templating-tools@1.1.2
+themeteorchef:bert@2.1.3
 themeteorchef:jquery-validation@1.14.0
 tracker@1.2.0
 ui@1.0.13
