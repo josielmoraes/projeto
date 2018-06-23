@@ -5,9 +5,6 @@ import OfertaMateria from "/imports/collections/ofertaMateria";
 Router.route('/Processo',{
 	template:'processo'
 })
-
-
-
 new Tabular.Table({
  name: "Processo",
   collection:Processo,
@@ -16,7 +13,9 @@ new Tabular.Table({
   	{data:"dataLimite", title:"Dt para oferta"},
   	{data:"alocarProfessor", title:"Dt para alocar prof"},
   	{data:"aprovarProcesso", title:"Dt para aprovar"},
+		{data:"restricao", title:"Dt para restricao"},
   	{data:"criarHorario", title:"Dt criar Horario"},
+		{data:"alocarSala", title:"Dt para alocar sala"},
     ],
     extraFields:[
     	'semestreSelecionado'
@@ -83,6 +82,8 @@ if(Meteor.isClient){
 			$('#semestreSelecionado').prop('selectedIndex', 0);
 			$('#cadastrar').val("Cadastrar");
 			$('#deletar').val("Voltar");
+			$('#restricao').val(""),
+			$('#alocarSala').val("")
 			$('#formCadastroProcesso').validate().resetForm();
 		},
 		validarProcesso:function(){
@@ -147,6 +148,8 @@ if(Meteor.isClient){
 					criarHorario:$('#criarHorario').val(),
 					semestreSelecionado:$('#semestreSelecionado').val(),
 					etapas:0,
+					restricao:$('#restricao').val(),
+					alocarSala:$('#alocarSala').val()
 				}
 				var validar=$('#formCadastroProcesso').valid();
 				Session.set('num',dados.numeroProcesso);
@@ -183,6 +186,8 @@ if(Meteor.isClient){
 			$('#aprovarProcesso').val(rowData.aprovarProcesso);
 			$('#criarHorario').val(rowData.alocarProfessor);
 			$('#semestreSelecionado').val(rowData.semestreSelecionado);
+			$('#restricao').val(rowData.restricao);
+			$('#alocarSala').val(rowData.alocarSala);
 			$('#cadastrar').val("Atualizar");
 			$('#deletar').val("Deletar");
 			Session.set('processoTable',rowData);
@@ -239,7 +244,9 @@ if(Meteor.isServer){
 				aprovarProcesso:dadoProcesso.aprovarProcesso,
 				criarHorario: dadoProcesso.criarHorario,
 				semestreSelecionado: dadoProcesso.semestreSelecionado,
-				etapas:dadoProcesso.etapas
+				etapas:dadoProcesso.etapas,
+				restricao:dadoProcesso.restricao,
+				alocarSala:dadoProcesso.alocarSala,
 			})
 		},
 		'atualizarProcesso':function(id,dadoProcesso){
@@ -250,6 +257,8 @@ if(Meteor.isServer){
 				aprovarProcesso:dadoProcesso.aprovarProcesso,
 				criarHorario: dadoProcesso.criarHorario,
 				semestreSelecionado: dadoProcesso.semestreSelecionado,
+				restricao:dadoProcesso.restricao,
+				alocarSala:dadoProcesso.alocarSala,
 				}
 			})
 		},

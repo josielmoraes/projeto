@@ -6,15 +6,13 @@ import { Accounts } from 'meteor/accounts-base'
 Meteor.startup(() => {
 if(Meteor.isClient){
 	$('input').attr('autocomplete','off');
-	console.log("inicio");
 
-	//Meteor.logout();
 	Meteor.loginWithPassword('root','12', function(e,r){
 		if(e){
-			console.log(e);
+			//console.log(e);
 		}else{
-			console.log(r);
-			console.log('teste')
+			//console.log(r);
+		//	console.log('teste')
 		}
 	})
 }

@@ -41,7 +41,6 @@ new Tabular.Table({
 
 if(Meteor.isClient){
 function campos(){
-	
 	 		$('#anoLetivo').val("2018");
 		    $('#periodoLetivo').val("1");
 		    $('#dataInicio').val("dd/MM/yyyy");
@@ -62,20 +61,20 @@ function validarSemestre(){
 			boolean=false;
 	}
 		if(dataFinal<=dataInicio){
-					$('#formCadastroSemestre').validate().showErrors({			
-						dataFinal:"Data Final não pode ser menor que Inicial"	
+					$('#formCadastroSemestre').validate().showErrors({
+						dataFinal:"Data Final não pode ser menor que Inicial"
 					});
 			return false;
 		}else if(Semestre.findOne({anoLetivo:anoLetivo, periodoLetivo:periodoLetivo}) && boolean){
 					console.log("Ano letivo e periodoLetivo existentes");
-					$('#formCadastroSemestre').validate().showErrors({			
-						erro:"Semestre cadastrado no perido e ano letivo"	
+					$('#formCadastroSemestre').validate().showErrors({
+						erro:"Semestre cadastrado no perido e ano letivo"
 					});
 			return false;
 		}else{
 			return true;
 		}
-	
+
 }
 function validarDeletar(id){
 		var horarioSemanal= HorarioSemanal.find({idSemestre:id}).fetch();
@@ -87,7 +86,7 @@ function validarDeletar(id){
 		}else{
 			return true;
 		}
-		
+
 	}
 Template.cadastroSemestre.helpers({
 	'permissao':function(valor){
@@ -109,13 +108,13 @@ Template.cadastroSemestre.events({
 				periodoLetivo:$('#periodoLetivo').val(),
 			}
 
-			
+
 
 			var cadastrar=$('#cadastrar').val();
 			var validar=$('#formCadastroSemestre').valid();
 			if(validar==true)
 				validar=validarSemestre();
-			
+
 
 			if(cadastrar=="Cadastrar" && validar){
 				Meteor.call('cadastrarSemestre',dadoSemestre);
@@ -156,7 +155,7 @@ Template.cadastroSemestre.events({
 		    $('#deletar').val("Deletar");
 		    $('#formCadastroSemestre').valid();
 		    Session.set("semestre",rowData);
-	}	
+	}
 })
 
 Template.cadastroSemestre.onRendered(function(){
