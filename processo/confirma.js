@@ -11,7 +11,7 @@ new Tabular.Table({
 	  collection: OfertaMateria,
 		order:[[0,'asc']],
    	columns: [
-			{data:"Professor.nome", title:"Professor", className:"mostrar", visible:false },
+			{data:"Professor.profile.name", title:"Professor", className:"mostrar", visible:false },
 			{data:"Materia.nomeMateria", title:"Materia",orderable: false},
 			{data:"Turma", title:"Turma",orderable: false},
 			{data:"sub()", title:"SubTurma", orderable:false},

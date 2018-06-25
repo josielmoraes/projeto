@@ -118,7 +118,7 @@ if(Meteor.isClient){
   		$('#materia').val("");
 			$('#area').val("");
 			$('#subMateria').val(0);
-			$('#turmaMateria').val("");
+			$('#turmaMateria').val(1);
 			$('#turmaMateria').focus()
 			$('#subMateria').attr('disabled',false)
 			$('#subMateria').attr('min',0)

@@ -20,13 +20,20 @@
 							</div>
 						</div>
 						<div class="form-group row">
+							<label class="control-label col-sm-2" for="siape">Siape</label>
+							<div class="col-sm-4">
+								<input type="teste" name="Siape" id="siape" class="form-control">
+							</div>
+						</div>
+						<div class="form-group row">
 							<label class="control-label col-sm-2" for="funcao">Função </label>
 							<div class="col-sm-4" >
 								<select name="funcao" id="funcao" class="form-control dropdown">
 									<option value="0">Super Usuário(a)</option>
 									<option value="1">Diretor(a)</option>
 									<option value="2">Coordenador(a) de Curso</option>
-									<option value="3">Usuario(a)</option>
+									<option value="3">Professor(a)</option>
+									<option value="4">Técnico(a)</option>
 								</select>
 							</div>
 						</div>
@@ -99,6 +106,7 @@
 				</form>
 				<div class="text-center">
 					<a class="d-block small" href="#" id="esqueciSenha">Esqueceu a senha?</a>
+					<a class="d-block small" href="{{pathFor route= 'visualizarHorario'}}" >Visualizar horário</a>
 				</div>
 			</div>
 		</div>

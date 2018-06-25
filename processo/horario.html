@@ -62,6 +62,48 @@
 </template>
 
 <template name='tabelaHorario'>
+	{{#if mostrarHorario}}
+	{{#each tmp in turmasTabela}}
+	<p>Turma {{tmp}}</p>
+	<table id='tableHorario{{tmp}}' cellspacing="10" class="tableMargin">
+		<tr>
+			{{#each val in diasSemana}}
+			<th class="tamanho">{{val}}</th>
+			{{/each}}
+		</tr>
+		{{#each aux in aulas}}
+		{{#let a=@index}}
+		<tr>
+			{{#each val in diasSemana}}
+			{{#let d=@index }}
+			{{#if criarTabela d }}
+			<td class="tamanho">{{imprimir aux}}</td>
+			{{else}}
+			<td class="tamanho">
+				{{#if validarTemplate}}
+				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
+				</select>
+				{{else}}
+				{{#each saida in buscarValido d a tmp}}
+				<label id="{{saida._id}}">{{imprimirSala saida d a}} </label>
+				{{/each}}
+				{{/if}}
+			</td>
+			{{/if}}
+			{{/let}}
+			{{/each}}
+		</tr>
+		{{/let}}
+		{{/each}}
+	</table>
+
+	<p></p>
+	{{/each}}
+
+
+	{{else}}
+
+
 	{{#each tmp in turmasTabela}}
 	<p>Turma {{tmp}}</p>
 
@@ -77,7 +119,7 @@
 			{{#each val in diasSemana}}
 			{{#let d=@index }}
 			{{#if criarTabela d }}
-			<td class="tamanho">{{aux}}</td>
+			<td class="tamanho">{{imprimir aux}}</td>
 			{{else}}
 			<td class="tamanho">
 				{{#if validarTemplate}}
@@ -105,4 +147,5 @@
 	{{/if}}
 	<p></p>
 	{{/each}}
+	{{/if}}
 </template>

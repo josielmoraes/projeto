@@ -92,12 +92,55 @@ if(Meteor.isClient){
     }
   })
   Template.tabelaHorario.helpers({
+    imprimir(aux){
+      console.log(aux);
+      if(aux==0){
+        return "Matutino 1";
+      }else if(aux==1){
+        return "Matutino 2";
+      }else if(aux==2){
+        return "Matutino 3";
+      }else if(aux==3){
+        return "Matutino 4";
+      }else if(aux==4){
+        return "Matutino 5";
+      }else if(aux==5){
+        return "Vespertino 1";
+      }else if(aux==6){
+        return "Vespertino 2";
+      }else if(aux==7){
+        return "Vespertino 3";
+      }else if(aux==8){
+        return "Vespertino 4";
+      }else if(aux==9){
+        return "Vespertino 5";
+      }else if(aux==10){
+        return "Vespertino 6";
+      }else if(aux==11){
+        return "Noturno 1";
+      }else if(aux==12){
+        return "Noturno 2";
+      }else if(aux==13){
+        return "Noturno 3";
+      }else if(aux==14){
+        return "Noturno 4";
+      }
+    },
+    'mostrarHorario':function(){
+      var tmp=Session.get('validarTemplate')
+      console.log(tmp)
+      if(tmp=="tableHorario"){
+        return true
+      }else{
+        return false
+      }
+    },
     'diasSemana':function(){
       var dias=['Aulas','Segunda', 'Terca','Quarta','Quinta','Sexta','Sabado'];
       return dias
     },
     'aulas':function(){
-      var aulas=['0','1', '2','3','4','5','6','7','8','9','10','11'];
+      var aulas=['0','1', '2','3','4','5','6','7','8','9','10','11','12','13','14'];
 
       return aulas
     },
@@ -106,6 +149,14 @@ if(Meteor.isClient){
         return true;
       }else {
         return false
+      }
+    },
+    'imprimirSala':function(saida,d,a){
+      var horario=saida.horario;
+      for(x=0;x<horario.length;x++){
+        if(horario[x].dia==d && horario[x].aula==a){
+          return saida.Materia.nomeMateria+ " "+saida.Turma+" \n"+ horario[x].sala.local +" "+horario[x].sala.numero
+        }
       }
     },
     turmasTabela(){
@@ -144,6 +195,7 @@ if(Meteor.isClient){
         return false
       }
     },
+
     buscaOferta(a){
       var tmp;
 

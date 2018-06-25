@@ -4,14 +4,13 @@ import Tabular from 'meteor/aldeed:tabular';
 Router.route('/alocarProfessor',{
 	template:'alocarProfessor'
 })
-
 new Tabular.Table({
   name: "OfertaProfessor",
   collection: OfertaMateria,
   columns: [
   	{data:"Turma", title:"Turma"},
   	{data:"Materia.nomeMateria", title:"Materia"},
-  	{data:"Professor.nome", title:"Professor", className:"mostrar",
+  	{data:"Professor.profile.name", title:"Professor", className:"mostrar",
 	  	createdCell( cell, cellData, rowData, rowIndex, colIndex ){
 	  		//$(cell).attr('id',rowData.Professor);
 	  		if(rowData.Professor!=""){
@@ -163,6 +162,16 @@ if(Meteor.isClient){
 		 Session.set('aux',false);
 		 Session.set('plus',0);
 	})
+	Template.professorAuto.helpers({
+		validarProf(prof){
+			console.log(prof);
+			if(prof.profile.permission==1 || prof.profile.permission==2 || prof.profile.permission==3){
+				return true;
+			}else{
+				return false
+			}
+		}
+	})
 	Template.alocarProfessor.helpers({
 			'permissao':function(valor){
 				if(valor==0){
@@ -184,19 +193,19 @@ if(Meteor.isClient){
   		},
   		mostrar(){
   			var s=Session.get('aux');
-  			console.log("mo "+s)
-			return Session.get('aux');
+				return Session.get('aux');
   		},
 
 		settingsProfessor: function() {
-		    return {
+				console.log(Meteor.users)
+				return {
 		      position: Session.get("position"),
 		      limit: 10,
 		      rules: [
 		        {
 		          token: '',
-		          collection: Professor,
-		          field: 'nome',
+		          collection: Meteor.users,
+							field: 'profile.name',
 		          template: Template.professorAuto,
 		          noMatchTemplate:Template.vazio
 		        },

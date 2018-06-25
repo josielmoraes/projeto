@@ -2,7 +2,12 @@
 </head>
 
 <template name="home">
+	{{#if currentUser}}
 	{{>menu}}
+	{{>tableHorario}}
+	{{else}}
+	{{>menu}}
+	{{/if}}
 </template>
 <template name="menu">
 	{{#if c currentUser.profile.permission}}
@@ -65,7 +70,7 @@
 							<a href="{{pathFor route= 'Processo'}}">Definiar datas</a>
 						</li>
 						<li>
-							<a  href="{{pathFor route= 'definirDisciplina'}}">Pré-Oferta Disciplina</a>
+							<a  href="{{pathFor route= 'definirDisciplina'}}">Solitação Disciplina</a>
 						</li>
 						<li>
 							<a href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
@@ -74,7 +79,7 @@
 							<a href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
 						</li>
 						<li>
-							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restricao entre disciplina</a>
+							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restrição entre disciplina</a>
 						</li>
 						<li>
 							<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>

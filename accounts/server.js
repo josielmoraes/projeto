@@ -44,6 +44,7 @@ if(Meteor.isServer){
 
 		//console.log(us);
 		var us=Meteor.users.find({username:'root'}).fetch();
+		console.log(us);
 	var r={
 		username:'root',
 		email:'josielloureirodemoraes@gmail.com',

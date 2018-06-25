@@ -46,9 +46,8 @@ new Tabular.Table({
   })
 Processo.helpers({
 	'semestreLetivo':function(){
-		//var semestre= Semestre.findOne({_id:this.semestreSelecionado});
-		//return semestre.anoLetivo+"/"+semestre.periodoLetivo
-
+		var semestre= Semestre.findOne({_id:this.semestreSelecionado});
+		return semestre.anoLetivo+"/"+semestre.periodoLetivo
 	}
 })
 
@@ -65,7 +64,8 @@ if(Meteor.isClient){
 		})
 	Template.buscaSemestre.helpers({
 		'buscaTodosSemestres':function(){
-			var x=Meteor.subscribe("acharSemetre")
+			//var x=Meteor.subscribe("acharSemetre")
+			var x=Semestre.find({}).fetch()
 			console.log(x)
 			return x;
 			//const semestre= Meteor.subscribe('semestre')

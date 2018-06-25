@@ -214,7 +214,8 @@ if(Meteor.isClient){
 			 for(x=0;x<array.length;x++){
 				 Meteor.call('resgtrigirUnico', array[x]._id,id._id)
 			 }
-			 alert("Restrição realizada")
+			 Bert.alert("Restrição realizada",'default','growl-top-right','fa-bell')
+
        Session.set('mostrarRestricao',false)
       },
 })

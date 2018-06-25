@@ -82,10 +82,11 @@ if(Meteor.isClient){
                 if(data>= new Date()){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para realizar pré-oferta','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,1);
                   Bert.alert('Pré-oferta finalizada','default','growl-top-right','fa-bell')
                 }
-              }else if(etapas==1){
                 //final de data limite
+              }else if(etapas==1){
                 //comparar alocar professor
                 strData=processos[x].alocarProfessor;
                 parse=strData.split("-");
@@ -93,10 +94,11 @@ if(Meteor.isClient){
                 if(data>= new Date){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para alocar professor','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,2);
                   Bert.alert('Alocacão de professores finalizada','default','growl-top-right','fa-bell')
                 }
-              }else if(etapas==2){
                 //final alocar professor
+              }else if(etapas==2){
                 //confirmar oferta
                 strData=processos[x].aprovarProcesso;
                 parse=strData.split("-");
@@ -104,10 +106,11 @@ if(Meteor.isClient){
                 if(data>= new Date){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para aprovar','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,3);
                   Bert.alert('Aprovação finalizada','default','growl-top-right','fa-bell')
                 }
-              }else if(etapas==3){
                 //fim confirmar
+              }else if(etapas==3){
                 //restricao
                 strData=processos[x].restricao;
                 parse=strData.split("-");
@@ -116,10 +119,11 @@ if(Meteor.isClient){
                 if(data>= new Date){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para realizar restricão de disciplinas','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,4);
                   Bert.alert('Restrição entre disciplinas finalizadas','default','growl-top-right','fa-bell')
                 }
-              }else if(etapas==4){
                 //fim restricao
+              }else if(etapas==4){
                 //criar Horario
                 strData=processos[x].criarHorario;
                 parse=strData.split("-");
@@ -127,10 +131,11 @@ if(Meteor.isClient){
                 if(data>= new Date){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para criar horário','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,5);
                   Bert.alert('Criação de horário finalizada','default','growl-top-right','fa-bell')
                 }
-              }else if(etapas==5){
                 //fim criar Horario
+              }else if(etapas==5){
                 //alocar sala
                 strData=processos[x].alocarSala;
                 parse=strData.split("-");
@@ -139,6 +144,7 @@ if(Meteor.isClient){
                 if(data>= new Date){
                   Bert.alert('Tem até '+parse[2]+'/'+(parse[1])+'/'+parse[0]+ ' para alocar sala','default','growl-top-right','fa-bell')
                 }else{
+                  Meteor.call("mudarEtapa",processos[x]._id,6);
                   Bert.alert('Alocação de sala finalizada','default','growl-top-right','fa-bell')
                 }
               }
@@ -157,9 +163,10 @@ if(Meteor.isClient){
   })
 
   Template.ForgotPassword.events({
-    'submit #forgotPasswordForm': function(e, t) {
+    'submit #forgotPasswordForm': function(event, t) {
       event.preventDefault();
       let myEmail = event.target.email.value;
+      console.log(myEmail)
       Accounts.forgotPassword({ email: myEmail }, function(error) {
         if (error) {
           if (error.message === 'User not found [403]'){
@@ -202,9 +209,12 @@ if(Meteor.isClient){
       if(newpassword==newpasswordconfirm){
         console.log(Accounts._resetPasswordToken, newpassword)
         Accounts.resetPassword(Accounts._resetPasswordToken, newpassword)
+        Meteor.logout();
       }else{
         alert("Senhas diferentes")
       }
+      Meteor.logout();
+      Router.go('/')
     },
     'click #cancelar':function(event){
       event.preventDefault;

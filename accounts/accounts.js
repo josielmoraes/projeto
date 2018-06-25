@@ -12,7 +12,8 @@ new Tabular.Table({
 	columns: [
 		{data: "profile.name", title: "Usuário"},
 		{data: "emails[0].address", title: "Email"},
-		{data: "profile.permission", title: "Permissão"},
+		{data: "profile.siape", title: "Siape"},
+		{data: "funcao()", title: "Função"},
 	],
 	extraFields:[
 		'emails[0]',
@@ -41,7 +42,23 @@ new Tabular.Table({
 		},
 	}
 })
-
+Meteor.users.helpers({
+	'funcao':function(){
+		var a=Meteor.users.findOne({_id:this._id})
+		a=a.profile.permission;
+		if(a==0){
+			return "Super Usuário(a)";
+		}else if(a==1){
+			return "Diretor(a)";
+		}else if(a==2){
+			return "Coordenador(a) de Curso"
+		}else  if(a==3){
+			return "Professor(a)";
+		}else if (a==4){
+			return "Técnico(a)";
+		}
+	}
+})
 
 
 function validarUsuario(){
@@ -83,6 +100,7 @@ if(Meteor.isClient){
 			$('#nomeUsuario').val("");
 			$('#emailUsuario').val("");
 			$('#funcao').val(0);
+			$('#siape').val("");
 			$('#cadastrar').val("Cadastrar");
 			$('#deletar').val("Voltar")
 		},
@@ -118,7 +136,6 @@ if(Meteor.isClient){
 			}
 		})
 	})
-
 	Template.cadastroUsuario.events({
 		'click .input':function(event){
 			event.preventDefault();
@@ -132,6 +149,7 @@ if(Meteor.isClient){
 					profile:{
 						name:$('#nomeUsuario').val(),
 						permission:$('#funcao').val(),
+						siape:$("#siape").val()
 					}
 				}
 					var evento=  $('#cadastrar').val();
@@ -167,6 +185,7 @@ if(Meteor.isClient){
 					$('#nomeUsuario').val(rowData.profile.name);
 					$('#emailUsuario').val(rowData.emails[0].address);
 					$('#funcao').val(rowData.profile.permission);
+					$('#siape').val(rowData.profile.siape);
 					$('#cadastrar').val("Atualizar");
 					$('#deletar').val("Deletar")
 					Session.set("user",rowData);
@@ -198,8 +217,6 @@ if(Meteor.isServer){
 			})
 		}
 	})
-	Meteor.publish('usuarios',function(){
-		return Meteor.users.find({"profile.permission":{$not: 0}})
-	})
+
 
 }
