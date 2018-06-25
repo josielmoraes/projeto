@@ -4,7 +4,9 @@
 <template name="home">
 	{{#if currentUser}}
 	{{>menu}}
-	{{>tableHorario}}
+	<div class="mar">
+		{{>tableHorario}}
+	</div>
 	{{else}}
 	{{>menu}}
 	{{/if}}

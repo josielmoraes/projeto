@@ -42,6 +42,17 @@ if(Meteor.isClient){
 		// dataTablesBootstrap from 'datatables.net-bs4';
 	//import 'datatables.net-bs4/css/dataTables.bootstrap4.css';
 	//dataTablesBootstrap(window, $);
+	Template.menu.onCreated(function(){
+		console.log(Meteor.userId())
+		if(Meteor.userId()==null){
+			$('body').addClass('bg-dark');
+		}else{
+			$('body').removeClass('bg-dark');
+		}
+	})
+	Template.menu.onDestroyed(function(){
+		$('body').removeClass('bg-dark');
+	})
 	Template.menu.helpers({
 		'c':function(p){
 			console.log(p);

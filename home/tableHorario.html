@@ -1,0 +1,58 @@
+<template name="visualizarHorario">
+  <div class="container col-sm-12" style="margin-top:50px;" >
+		<div class="card card-login">
+			<div class="card-header text-center">Horário
+        <div class="text-center">
+          <a class="d-block small" href="{{pathFor route= 'Inicio'}}" >Voltar início</a>
+        </div>
+      </div>
+			<div class="card-body">
+        {{>tableHorario}}
+
+      </div>
+    </div>
+  </div>
+</template>
+<template name="tableHorario">
+  <div class="container-fluid" id="visualizar">
+      <div class="row">
+        <div class="col-sm-10 offset-sm-2 text-center">
+          {{>buscaProcesso pro="6"}}
+        </div>
+
+        {{#if mostrar}}
+        <div class="col-sm-10 offset-sm-1 ">
+          <div class="form-group row">
+
+            <label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
+            <div class="col-sm-4">
+              {{>buscaCurso}}
+            </div>
+
+            <label  class="control-label col-sm-1" for="semestre">Semestre</label>
+            <div class="col-sm-4">
+              <select id="semestre" class="form-control dropdown">
+                <option value=''> </option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+                <option value='6'>6</option>
+                <option value='7'>7</option>
+                <option value='8'>8</option>
+                <option value='9'>9</option>
+                <option value='10'>10</option>
+              </select>
+            </div>
+          </div>
+          {{#if mostrarTabela}}
+      		<div class="col-sm-12">
+      			{{> tabelaHorario}}
+      		</div>
+      		{{/if}}
+        </div>
+        {{/if}}
+    </div>
+  </div>
+</template>
