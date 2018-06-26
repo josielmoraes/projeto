@@ -143,7 +143,6 @@ if(Meteor.isClient){
     },
     'aulas':function(){
       var aulas=['0','1', '2','3','4','5','6','7','8','9','10','11','12','13','14'];
-
       return aulas
     },
     'criarTabela':function(params){
@@ -200,13 +199,12 @@ if(Meteor.isClient){
 
     buscaOferta(a){
       var tmp;
-
       if(a!=null){
       tmp=criarArrayOferta(a)
       //console.log(tmp)
           setTimeout(function(){
           for(dia=1;dia<7;dia++){
-            for(aula=0;aula<12;aula++){
+            for(aula=0;aula<15;aula++){
                 string=dia+'s'+aula+a;
                 aux=document.getElementById(string);
                 if(aux!=null){
@@ -224,7 +222,6 @@ if(Meteor.isClient){
                     }else{
                       option.text=tmp[x].Materia.nomeMateria+'/'+tmp[x].Turma
                       option.value=tmp[x]._id;
-
                       horario=tmp[x].horario;
                       for(y=0;y<horario.length;y++){
                         if(horario[y].dia==dia && horario[y].aula==aula){
@@ -321,7 +318,7 @@ function validarProfessor(id,dia,aula){
   }else{
     var string='Conflito:\n'
     for(x=0;x<mat.length;x++){
-      string+="Professor: "+mat[x].Professor.nome+"Curso: "+mat[x].Curso.nome+" Disc: "+mat[x].Materia.nomeMateria+'\n'
+      string+="Professor: "+mat[x].Professor.profile.name+" Curso: "+mat[x].Curso.nome+" Disc: "+mat[x].Materia.nomeMateria+'\n'
     }
     alert(string)
     return true;
@@ -344,7 +341,7 @@ function validarRestricao(id,dia,aula){
     if(aux.length!=0){
       var string='Conflito de restrição:\n'
       for(x=0;x<aux.length;x++){
-        string+="Professor: "+aux[x].Professor.nome+" Curso: "+aux[x].Curso.nome+" Disc: "+aux[x].Materia.nomeMateria+'\n'
+        string+="Professor: "+aux[x].Professor.profile.name+" Curso: "+aux[x].Curso.nome+" Disc: "+aux[x].Materia.nomeMateria+'\n'
       }
       alert(string)
       return true;

@@ -19,6 +19,7 @@ if(Meteor.isClient){
 
 if(Meteor.isServer){
 	//Processo.remove({})
+	//OfertaMateria.remove({});
 	//Meteor.users.remove({})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	smtp = {

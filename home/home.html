@@ -12,7 +12,7 @@
 	{{/if}}
 </template>
 <template name="menu">
-	{{#if c currentUser.profile.permission}}
+	{{#if currentUser}}
 	<div class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 		<a class="navbar-brand" href="{{pathFor route= 'Inicio'}}">Início</a>
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,78 +20,107 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+				{{#if perUsuario currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
 					<a class="nav-link" href="{{pathFor route= 'Usuario'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Usuário</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perDisci currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
 					<a class="nav-link" href="{{pathFor route= 'Disciplina'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Disciplina</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perProfessor currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
 					<a class="nav-link" href="{{pathFor route= 'Professor'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Professor</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perCurso currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Curso'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Curso</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perSemestre currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Semestre'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Semestre</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perArea currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Area'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Area</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perSala currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Sala'}}">
 						<i class=""></i>
 						<span class="nav-link-text">Sala</span>
 					</a>
 				</li>
+				{{/if}}
+				{{#if perHorario currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Components">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
 						<i class=""></i>
 						<span class="nav-link-text"> Horário</span>
 					</a>
 					<ul class="sidenav-second-level collapse" id="collapseComponents">
+						{{#if perData currentUser.profile}}
 						<li>
 							<a href="{{pathFor route= 'Processo'}}">Definir datas</a>
 						</li>
+						{{/if}}
+						{{#if perSolicitar currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'definirDisciplina'}}">Solitar Disciplina</a>
 						</li>
+						{{/if}}
+						{{#if perAlocarProfessor currentUser.profile}}
 						<li>
 							<a href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
 						</li>
+						{{/if}}
+						{{#if perConfirmar currentUser.profile}}
 						<li>
 							<a href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
 						</li>
+						{{/if}}
+						{{#if perRestricao currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restrição entre disciplina</a>
 						</li>
+						{{/if}}
+						{{#if perHorario currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
 						</li>
+						{{/if}}
+						{{#if perSala currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
 						</li>
+						{{/if}}
 					</ul>
 				</li>
-
+				{{/if}}
 			</ul>
 
 			<ul class="navbar-nav ml-auto">

@@ -114,7 +114,7 @@ if(Meteor.isClient){
           $('#criarHorario').addClass("center_verde");
           $('#alocarSala').addClass("center_verde");
         }
-      },100)
+      },10)
     }
   })
   Template.buscaTodosProcesso.helpers({

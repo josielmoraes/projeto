@@ -54,13 +54,112 @@ if(Meteor.isClient){
 		$('body').removeClass('bg-dark');
 	})
 	Template.menu.helpers({
-		'c':function(p){
+		'perUsuario':function(p){
 			//console.log(p);
-			if(p==0)
+			if(p.permission==0)
 				return true;
 			else
 				return false
-		}
+		},
+		'perDisci':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perProfessor':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perCurso':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perSemestre':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perArea':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perSala':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perHorario':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perData':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perSolicitar':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perAlocarProfessor':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perConfirmar':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perRestricao':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perHorario':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+		'perSala':function(p){
+			//console.log(p);
+			if(p.permission==0)
+				return true;
+			else
+				return false
+		},
+
 	})
 	Template.menu.events({
 		'click #sair':function(){

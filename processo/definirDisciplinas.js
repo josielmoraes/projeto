@@ -74,7 +74,11 @@ if(Meteor.isClient){
 		})
 
 	Template.cadastroOfertaDisciplina.helpers({
-
+		buscarArea(){
+			var tmp=Area.find().fetch();
+			console.log(tmp);
+			return tmp;
+		},
 		 settings: function() {
 		 	Session.get('processoSelecionado')
 		    return {
@@ -411,10 +415,7 @@ if(Meteor.isClient){
 						})
 			},100)
  	 		}
-
  	 	}
-
-
 	})
 
 
@@ -485,11 +486,21 @@ Template.cadastroOfertaDisciplina.events({
 		    Session.set('materiaSelecionada',doc)
 		    //console.log(doc);
 		},
+		'change #area':function(event){
+			event.preventDefault();
+			var valor=$('#area').val();
+			if(valor!=""){
+				var tmp=Area.findOne({_id:valor})
+				 Session.set('areaSelecionada',tmp)
+			}
+		},
+		/*
 		 "autocompleteselect #area": function(event, template, doc) {
 		  	event.preventDefault();
 		    Session.set('areaSelecionada',doc)
 		    //console.log(doc);
 		},
+		*/
 		'click tbody >tr': function (event,template) {
 		  	event.preventDefault();
 		  	var c=$(event.target).attr('class');
@@ -518,9 +529,9 @@ function atualizar(){
 		var m=rowData.Materia
 		var a=rowData.Area
 			$('#materia').val(m.nomeMateria);
-			$('#area').val(a.nome);
+			$('#area').val(a._id);
 			$('#subMateria').val(rowData.qtdeAuto);
-		    $('#turmaMateria').val(rowData.Turma);
+		  $('#turmaMateria').val(rowData.Turma);
 			Session.set('materiaSelecionada',m)
 			Session.set('areaSelecionada',a);
 			Session.set('setSubMateria',0);
@@ -537,7 +548,7 @@ function atualizar(){
 		var a=rowData.Area
 		 Session.set('areaSelecionada',a)
 		$('#materia').val(m.nomeMateria);
-		$('#area').val(a.nome);
+		$('#area').val(a._id);
 
 		$('#subMateria').val(rowData.qtdeAuto);
 		$('#turmaMateria').val(rowData.Turma);
