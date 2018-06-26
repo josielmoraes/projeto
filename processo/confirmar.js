@@ -157,8 +157,8 @@ if(Meteor.isClient){
 		      rules: [
 		        {
 		          token: '',
-		          collection: Professor,
-		          field: 'nome',
+							collection: Meteor.users,
+ 						 	field: 'profile.name',
 		          template: Template.professorAuto,
 		          noMatchTemplate:Template.vazio
 		        },
@@ -199,12 +199,12 @@ if(Meteor.isClient){
   		},
 		selectProfessor:function(){
   			var processo= Session.get('processoSelecionado');
-				console.log('select pro ',processo)
+				//console.log('select pro ',processo)
   			return {Processo:processo}
   		},
 		mostrar(){
   			var s=Session.get('aux');
-  			console.log("conf "+s)
+  			//console.log("conf "+s)
   			if(!s){
   				Session.set('mostrarArear',false)
 				Session.set('mostrarProfessor',false)
@@ -216,7 +216,7 @@ if(Meteor.isClient){
   			return Session.get('mostrarArear')
   		},
   		mostrarProfessor(){
-				console.log("snacipnsciancsaipn")
+				//console.log("snacipnsciancsaipn")
   			return Session.get('mostrarProfessor')
   		},
 			teste(){
@@ -233,7 +233,7 @@ if(Meteor.isClient){
 			},
 			setFields(){
 					var rowData=Session.get('rowDataConfirma');
-					console.log(rowData)
+					//console.log(rowData)
 					$('#valorTurmaConfirmar').text(rowData.Turma);
 					$('#valorMateriaConfirmar').text(rowData.Materia.nomeMateria);
 					var prof=rowData.Professor
@@ -259,7 +259,7 @@ if(Meteor.isClient){
 		'click .input':function(event){
 			event.preventDefault();
 			var id=event.currentTarget.id;
-			console.log(id);
+			//console.log(id);
 			if(id=="atualizarConfirmar"){
 				var curso=$('#curso').val();
 				if(curso!=""){
@@ -273,7 +273,7 @@ if(Meteor.isClient){
 				if(prof!=""){
 					prof=Session.get('professorSelecionado');
 				}
-				console.log(prof,area,curso)
+				//console.log(prof,area,curso)
 				if(area==null || area==""){
 					alert("Selecione uma area")
 				}else if(curso==null || curso==""){
@@ -283,12 +283,12 @@ if(Meteor.isClient){
 					Meteor.call('atualizarConfirmar',oferta,prof,area,curso)
 				}
 			}else if(id=="removerConfirmar"){
-				console.log('niaoncisaonc');
+				//console.log('niaoncisaonc');
 				var row= Session.get('rowDataConfirma');
-				console.log(row)
+				//console.log(row)
 				if(row.auto==""){
 					Meteor.call('removerById',row._id);
-						console.log('result rem ', r)
+						//console.log('result rem ', r)
 				}else{
 						Meteor.call('removerById',row._id);
 						Meteor.call('atualizarQtdeDesc',row.auto);
@@ -324,7 +324,7 @@ if(Meteor.isClient){
 			var id=event.currentTarget.id;
 			var dataTable = $(event.target).closest('table').DataTable();
 			var rowData = dataTable.row(event.currentTarget).data();
-			console.log(rowData)
+			//console.log(rowData)
 			if(rowData!=null){
 				Session.set('rowDataConfirma',rowData)
 				Session.set('mostrarForm',true);
@@ -353,7 +353,7 @@ if(Meteor.isClient){
 if(Meteor.isServer){
 	Meteor.methods({
 			teste(s){
-				console.log(s)
+				//console.log(s)
 			},
 			atualizarConfirmar(oferta,professor,area,curso){
 				OfertaMateria.update({_id:oferta._id},{$set:{Professor:professor,Area:area,Curso:curso}})

@@ -29,13 +29,23 @@
 							<div class="col-sm-4" >
 								<select name="funcao" id="funcao" class="form-control dropdown">
 									<option value="0">Super Usuário(a)</option>
-									<option value="1">Diretor(a)</option>
-									<option value="2">Coordenador(a) de Curso</option>
-									<option value="3">Professor(a)</option>
-									<option value="4">Técnico(a)</option>
+									<option value="1">Professor(a)</option>
+									<option value="2">Técnico(a)</option>
 								</select>
 							</div>
 						</div>
+						{{#if mostrarSubFuncao}}
+						<div class="form-group row">
+							<label class="control-label col-sm-2" for="funcao">SubFunção </label>
+							<div class="col-sm-4" >
+								<select name="funcao" id="subFuncao" class="form-control dropdown">
+									<option value="0">Diretor(a)</option>
+									<option value="1">Coordenador(a) de Curso</option>
+									<option value="2">PCDE</option>
+								</select>
+							</div>
+						</div>
+						{{/if}}
 						<div class="form-group row">
 							<div class=" offset-sm-2 col-sm-10">
 								<input type="submit" class="btn input" name="cadastrar" id="cadastrar" value="Cadastrar">
@@ -44,7 +54,7 @@
 							</div>
 						</div>
 					</form>
-					{{> tabular table=TabularTables.Usuario selector=select class="table  col-sm-10 text-center "}}
+					{{> tabular table=TabularTables.Usuario selector=select class="table table-striped table-bordered table-condensed"}}
 				</div>
 				{{/if}}
 			</div>

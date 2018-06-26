@@ -19,6 +19,7 @@ if(Meteor.isClient){
 
 if(Meteor.isServer){
 	//Processo.remove({})
+	//Meteor.users.remove({})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	smtp = {
 	 username: 'josielloureirodemoraes2@gmail.com',   // eg: server@gentlenode.com
@@ -44,7 +45,7 @@ if(Meteor.isServer){
 
 		//console.log(us);
 		var us=Meteor.users.find({username:'root'}).fetch();
-		console.log(us);
+		//console.log(us);
 	var r={
 		username:'root',
 		email:'josielloureirodemoraes@gmail.com',

@@ -87,14 +87,14 @@ if(Meteor.isClient){
 			var c;
 			var a;
 			var cod=Session.get('materia');
-			console.log('cod anti '+cod.codMateria);
-			console.log('cod novo '+$('#codMateria').val());
+			//console.log('cod anti '+cod.codMateria);
+			//console.log('cod novo '+$('#codMateria').val());
 			if(cod.codMateria==$('#codMateria').val()){
-				console.log("codAtualizar");
+				//console.log("codAtualizar");
 				return true;
 			}else{
 				cod=$('#codMateria').val();
-				console.log(cod);
+				//console.log(cod);
 				a=Materia.find({codMateria:cod}).fetch();
 				if(a.length>0){
 					$('#formCadastroMateria').validate().showErrors({
@@ -111,7 +111,7 @@ if(Meteor.isClient){
 		},
 		validarCodigoCadastro:function(){
 			var cod=$('#codMateria').val();
-			console.log(cod);
+			//console.log(cod);
 			//var a=Meteor.subscribe('MateriaBuscaCodigo',cod)
 			var a=Materia.find({codMateria:cod}).fetch();
 				if(a.length>0){
@@ -120,7 +120,7 @@ if(Meteor.isClient){
 					})
 					return false;
 				}else{
-					console.log("true");
+					//console.log("true");
 					return true;
 				}
 
@@ -163,7 +163,7 @@ if(Meteor.isClient){
 				}
 			}else if(id=="Deletar"){
 				var evento=  $('#Deletar').val();
-				console.log(evento);
+				//console.log(evento);
 				if(evento=="Voltar"){
 					$('#formCadastroMateria').validate().resetForm();
 					Template.cadastroMateria.__helpers.get('campos').call();
@@ -210,7 +210,7 @@ if(Meteor.isClient){
 	});
 
 	Template.cadastroMateria.onRendered(function(){
-		console.log("redn")
+		//console.log("redn")
 			$('#formCadastroMateria').validate({
 				rules:{
 					codMateria:{
@@ -264,17 +264,17 @@ if(Meteor.isServer){
 				dividirMateria:dadosMateria.dividirMateria
 			},function(e,r){
 				if(e){
-					console.log(e)
+					//console.log(e)
 				}else{
-					console.log(r);
+					//console.log(r);
 				}
 			});
 
 		},
 		'main':async function(dados){
-			console.log("entrou");
+			//console.log("entrou");
 			let res = await criarMateria(dados);
-			console.log(res);
+			//console.log(res);
 		},
 		'atualizarMateria': function(id,dadosMateria){
 			Materia.update({_id:id},{
@@ -292,7 +292,7 @@ if(Meteor.isServer){
 	Meteor.publish(
 		'MateriaBuscaCodigo',function (cod){
 			var t=Materia.find({codMateria:cod},{sort:{ordem:1}});;
-			console.log(t);
+			//console.log(t);
 			return t;
 		}
 	)

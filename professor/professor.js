@@ -67,7 +67,7 @@ function validarDeletar(id){
 			$('#Deletar').val("Voltar");
 		},
 		'permissao':function(valor){
-			console.log(valor);
+			//console.log(valor);
 			if(valor==0)
 				return true
 
@@ -79,7 +79,7 @@ function validarDeletar(id){
 			event.preventDefault();
 
 			var id=$(event.target).prop('id');
-			console.log(id);
+			//console.log(id);
 			if(id=="Cadastrar"){
 				var evento=  $('#Cadastrar').val();
 				var dadosProfessor={
@@ -89,7 +89,7 @@ function validarDeletar(id){
 						email: $('#emailProfessor').val(),
 						telefone: $('#telefoneProfessor').val(),
 					}
-					console.log(dadosProfessor)
+					//console.log(dadosProfessor)
 				var validar=$( '#formCadastroProfessor' ).valid();
 				if(evento=="Cadastrar" && validar==true){
 					Meteor.call('cadastrarProfessor',dadosProfessor);
@@ -120,9 +120,9 @@ function validarDeletar(id){
 		'click tbody > tr': function (event,template) {
 		    var dataTable = $(event.target).closest('table').DataTable();
 		    var rowData = dataTable.row(event.currentTarget).data();
-		    console.log(rowData._id)
+		    //console.log(rowData._id)
 		    var prof=Professor.findOne({_id:rowData._id})// Meteor.call('procurarProfessor',rowData._id);
-		    console.log(prof);
+		    //console.log(prof);
 		    $('#nomeProfessor').val(prof.nome);
 		    $('#siape').val(prof.siape);
 		    $('#formacaoProfessor').val(prof.formacao);
@@ -189,7 +189,7 @@ function validarDeletar(id){
 if(Meteor.isServer){
 	Meteor.methods({
 		'cadastrarProfessor':function(dadosProfessor){
-			console.log(dadosProfessor)
+			//console.log(dadosProfessor)
 			Professor.insert({
 				nome: dadosProfessor.nome,
 				formacao: dadosProfessor.formacao,

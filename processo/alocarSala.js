@@ -26,13 +26,13 @@ if(Meteor.isClient){
   Template.criarAlocarSala.helpers({
     mostrar(){
       var s=Session.get('aux');
-      console.log("mo "+s)
+
       return Session.get('aux');
     },
     mostrarTabela(){
       var curso=  Session.get("cursoSelecionado");
       var sem=Session.get('periodoSelecionado');
-      console.log(curso)
+      //console.log(curso)
       if(curso==""){
         Session.set('sairOption',false)
         return false;

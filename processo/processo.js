@@ -66,7 +66,7 @@ if(Meteor.isClient){
 		'buscaTodosSemestres':function(){
 			//var x=Meteor.subscribe("acharSemetre")
 			var x=Semestre.find({}).fetch()
-			console.log(x)
+			//console.log(x)
 			return x;
 			//const semestre= Meteor.subscribe('semestre')
 			//return Meteor.call('semestre');
@@ -94,7 +94,7 @@ if(Meteor.isClient){
 			var drop= $('#semestreSelecionado').prop('value');
 			if(drop==""){
 				var StringSem="Campo obrigatório";
-				console.log(StringSem)
+				//console.log(StringSem)
 				sair=false;
 			}else{
 				sair=true;
@@ -120,13 +120,13 @@ if(Meteor.isClient){
 			var id=Session.get('processoTable')
 			var sair;
 				if(OfertaMateria.findOne({Processo:id._id})){
-					console.log("entrou");
+					//console.log("entrou");
 					var StringErro="Processo iniciado"
 					sair=false
 				}else{
 					sair=true;
 				}
-			console.log(StringErro)
+			//console.log(StringErro)
 			$('#formCadastroProcesso').validate().showErrors({
 					erro:StringErro
 				})

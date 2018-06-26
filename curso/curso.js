@@ -77,8 +77,8 @@ if(Meteor.isClient){
 						nome: $('#nomeCurso').val(),
 						sigla:$('#siglaCurso').val()
 					}
-				console.log(dadosCurso.nome);
-				console.log(dadosCurso.sigla);
+				//console.log(dadosCurso.nome);
+				//console.log(dadosCurso.sigla);
 				if(evento=="Cadastrar" && validar){
 					Meteor.call('criarCurso', dadosCurso);
 					Template.cadastroCurso.__helpers.get('campos').call();

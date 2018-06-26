@@ -86,7 +86,7 @@ if(Meteor.isClient){
     'click .input':function(event){
       event.preventDefault()
       var id=$(event.target).prop('id');
-      console.log(id);
+      //console.log(id);
       if(id=="Cadastrar"){
         var local=$('#localSala').val();
         var num=$('#numeroSala').val();
@@ -118,7 +118,7 @@ if(Meteor.isClient){
 		'click tbody > tr': function (event,template) {
 			var dataTable = $(event.target).closest('table').DataTable();
 			var rowData = dataTable.row(event.currentTarget).data();
-			console.log(rowData)
+			//console.log(rowData)
 			$('#localSala').val(rowData.local);
 			$('#numeroSala').val(rowData.numero);
 			$('#apelidoSala').val(rowData.apelido)

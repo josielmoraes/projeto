@@ -63,7 +63,7 @@ new Tabular.Table({
       for(x=0;x<tmp.restricao.length;x++){
         if(data._id==tmp.restricao[x]){
           var t=row.firstChild.firstChild
-          console.log(t);
+          //console.log(t);
           $(t).prop('checked', true);
           $(row).css('color','red');
         }
@@ -111,7 +111,7 @@ if(Meteor.isClient){
     Session.set('rgba',"a")
   })
 	Template.restricaoTurma.onDestroyed(function(){
-		console.log("entrou")
+		//console.log("entrou")
 		Session.set('aux',false);
 	})
   Template.restricaoTurma.helpers({
@@ -141,7 +141,6 @@ if(Meteor.isClient){
       	},
     mostrar(){
       var s=Session.get('aux');
-      console.log("mo "+s)
       return Session.get('aux');
     },
     turma(){
@@ -169,7 +168,7 @@ if(Meteor.isClient){
             $(t).css('background-color','gray')
             $(t).attr('id','temp')
             var rowData = dataTable.row(t).data();
-						console.log(rowData	)
+						//console.log(rowData	)
             Session.set('mostrarRestricao',true);
             Session.set('turmaSelecionada',rowData)
     },
@@ -187,7 +186,7 @@ if(Meteor.isClient){
     },
     'click #restringir':function(event){
       event.preventDefault();
-      console.log("teste")
+      //console.log("teste")
       var array= new Array;
        var cont=0;
       var table=$("#OfertaRestricaoSelect2").DataTable();
@@ -202,7 +201,7 @@ if(Meteor.isClient){
 			 Meteor.call('retirar',id._id,id.restricao)
        Meteor.call('restrigir',id._id,array,function(e,r){
          if(e){
-           console.log(e)
+           //console.log(e)
          }else{
           var r= Session.get('rgba');
            var st= document.getElementById('temp');

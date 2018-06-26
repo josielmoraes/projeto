@@ -57,16 +57,16 @@ if(Meteor.isClient){
 		'click .input':function(event){
 		event.preventDefault();
 		var id=$(event.target).prop('id');
-		console.log(id);
+		//console.log(id);
 		if(id=="cadastrar"){
 			var dadosArea={
 				nome: $('#areaNome').val(),
 		    	sigla:$('#areaSigla').val()
 			}
-			console.log(dadosArea)
+			//console.log(dadosArea)
 			var cadastrar=$('#cadastrar').val();
 			var validar=$('#formCadastroArea').valid();
-			console.log(validar);
+			//console.log(validar);
 			if(cadastrar=="Cadastrar" && validar){
 				Template.cadastroArea.__helpers.get('campos').call();
 				Meteor.call('cadastrarArea',dadosArea);

@@ -21,7 +21,7 @@ if(Meteor.isClient){
     mostrarTabela(){
       var curso=  Session.get("cursoSelecionado");
       var sem=Session.get('periodoSelecionado');
-      console.log(curso)
+      //console.log(curso)
       if(curso==""){
         Session.set('sairOption',false)
         return false;

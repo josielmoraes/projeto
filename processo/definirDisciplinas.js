@@ -439,7 +439,7 @@ Template.cadastroOfertaDisciplina.events({
 				if(evento=="Ofertar" && sair){
 					Meteor.call('cadastrarOfertaMateria',turma,mat,mat.cargaHoraria,mat.aulaSemanal,processo,area,tipo,sub,function(e,r){
 						if(e)
-							console.log(e)
+							//console.log(e)
 						else{
 							Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
 						}
@@ -480,12 +480,12 @@ Template.cadastroOfertaDisciplina.events({
 		"autocompleteselect #materia": function(event, template, doc) {
 			event.preventDefault();
 		    Session.set('materiaSelecionada',doc)
-		    console.log(doc);
+		    //console.log(doc);
 		},
 		 "autocompleteselect #area": function(event, template, doc) {
 		  	event.preventDefault();
 		    Session.set('areaSelecionada',doc)
-		    console.log(doc);
+		    //console.log(doc);
 		},
 		'click tbody >tr': function (event,template) {
 		  	event.preventDefault();
@@ -510,7 +510,7 @@ Template.cadastroOfertaDisciplina.events({
 	});
 function atualizar(){
 	var rowData=Session.get('rowData');
-	console.log(rowData)
+	//console.log(rowData)
 	if(rowData.qtdeAuto==0 && rowData.auto==""){
 		var m=rowData.Materia
 		var a=rowData.Area
@@ -527,7 +527,7 @@ function atualizar(){
 			rowData=OfertaMateria.findOne({_id:temp.auto});
 			Session.set('rowData',rowData);
 		}
-		console.log(rowData);
+		//console.log(rowData);
 		$('#subMateria').attr('min',rowData.qtdeAuto)
 		var m=rowData.Materia
 		 Session.set('materiaSelecionada',m)
@@ -642,7 +642,7 @@ if(Meteor.isServer){
 								if(e){
 									console(e)
 								}else{
-									console.log("cadastro sub ",c)
+									//console.log("cadastro sub ",c)
 								}
 							})
 						}
@@ -686,7 +686,7 @@ if(Meteor.isServer){
 			},
 
 		'removerOfertaMateria':function(id){
-			console.log(id);
+			//console.log(id);
 			var mat=OfertaMateria.findOne({_id:id})
 			//OfertaMateria.remove({})
 			if(mat.qtdeAuto==0){
@@ -700,7 +700,7 @@ if(Meteor.isServer){
 				}
 			}else{
 				var sub=OfertaMateria.find({auto:id}).fetch()
-				console.log(sub);
+				//console.log(sub);
 				for(i=0;i<sub;i++){
 					OfertaMateria.remove({
 						_id:sub[i]._id

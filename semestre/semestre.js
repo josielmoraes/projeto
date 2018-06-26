@@ -66,7 +66,7 @@ function validarSemestre(){
 					});
 			return false;
 		}else if(Semestre.findOne({anoLetivo:anoLetivo, periodoLetivo:periodoLetivo}) && boolean){
-					console.log("Ano letivo e periodoLetivo existentes");
+					//console.log("Ano letivo e periodoLetivo existentes");
 					$('#formCadastroSemestre').validate().showErrors({
 						erro:"Semestre cadastrado no perido e ano letivo"
 					});
@@ -98,8 +98,8 @@ Template.cadastroSemestre.events({
 	'click .input':function(event){
 		event.preventDefault();
 		var id=$(event.target).prop('id');
-		console.log("entrou");
-		console.log(id);
+		//console.log("entrou");
+		//console.log(id);
 		if(id=="cadastrar"){
 			var dadoSemestre={
 				anoLetivo: 	$('#anoLetivo').val(),

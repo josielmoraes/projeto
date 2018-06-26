@@ -15,11 +15,11 @@ new Tabular.Table({
 	  		//$(cell).attr('id',rowData.Professor);
 	  		if(rowData.Professor!=""){
 		  		var f=OfertaMateria.find({Professor:rowData.Professor}).fetch();
-		  		console.log(f.length);
+		  		//console.log(f.length);
 		  		var horas=parseInt(0)
 		  		var aulas=parseInt(0)
 		  		for(x=0;x<f.length;x++){
-		  			console.log(f[x].cargaHoraria);
+		  			//console.log(f[x].cargaHoraria);
 		  			horas+=parseInt(f[x].cargaHoraria);
 		  			aulas+=parseInt(f[x].aulaSemanal);
 		  		}
@@ -79,7 +79,7 @@ new Tabular.Table({
     	'Materia','Area','auto','Professor','Curso','Ofertantes'
     ],
   	 createdRow( row, data, dataIndex ) {
-    	console.log(row);
+    	//console.log(row);
     	$(row).attr('id', 'escolha')
   	},
 	responsive: true,
@@ -164,8 +164,8 @@ if(Meteor.isClient){
 	})
 	Template.professorAuto.helpers({
 		validarProf(prof){
-			console.log(prof);
-			if(prof.profile.permission==1 || prof.profile.permission==2 || prof.profile.permission==3){
+			//console.log(prof);
+			if(prof.profile.permission==1){
 				return true;
 			}else{
 				return false
@@ -197,7 +197,7 @@ if(Meteor.isClient){
   		},
 
 		settingsProfessor: function() {
-				console.log(Meteor.users)
+				//console.log(Meteor.users)
 				return {
 		      position: Session.get("position"),
 		      limit: 10,
@@ -259,7 +259,7 @@ if(Meteor.isClient){
   			var rowData=Session.get('setRowDataProfessor');
   			$('#valorTurma').text(rowData.Turma);
   			var m= rowData.Materia;
-				console.log(m)
+				//console.log(m)
   			$('#valorMateria').text(m.nomeMateria);
   			var prof=Session.get('professorSelecionado');
   			$("#professor").val(prof.nome)
@@ -273,7 +273,7 @@ if(Meteor.isClient){
   		},
   		tbodyNameOfertaEscolha:function() {
   			var dt=$('tbody').DataTable();
-  			console.log(dt);
+  			//console.log(dt);
   		},
 			plus(){
 				var cont= Session.get('plus');
@@ -301,9 +301,9 @@ if(Meteor.isClient){
 		},
 		setCursoOfertantes(){
 			var rowData=Session.get('setRowDataProfessor');
-			console.log(rowData)
+			//console.log(rowData)
 			var ofertantes=rowData.Ofertantes;
-			console.log(ofertantes);
+			//console.log(ofertantes);
 			if(ofertantes!=null){
 				Session.set('plus',ofertantes.length)
 				setTimeout(function(){
@@ -358,10 +358,10 @@ if(Meteor.isClient){
 		 },
 		 'submit form':function(event){
 		 	event.preventDefault();
-		 	console.log("submit")
+		 	//console.log("submit")
 		 	var a=$("#professor").val();
 		 	var rowData=Session.get('setRowDataProfessor');
-		 	console.log(a);
+		 	//console.log(a);
 		 	var professor;
 		 	if(a!=""){
 		 		professor=Session.get('professorSelecionado');
@@ -388,10 +388,10 @@ if(Meteor.isClient){
 			 		$('#erro').text("");
 					var cursoOfertantes=Template.cadastroAlocarProfessor.__helpers.get('getCursoOfertante').call()
 					var semestre=$('#semestreAlocar').val();
-					console.log('cursos oferta ',cursoOfertantes)
+					//console.log('cursos oferta ',cursoOfertantes)
 					if(rowData.Turma.length==1){
 						var novaTurma=curso.sigla+rowData.Turma;
-						console.log(novaTurma)
+						//console.log(novaTurma)
 					}else if(rowData.Turma.length==3){
 						novaTurma=rowData.Turma
 					}
@@ -402,7 +402,7 @@ if(Meteor.isClient){
 		 'click #finalizar':function(event){
 		 	event.preventDefault();
 		 	var oferta=OfertaMateria.findOne({Processo:Session.get('processoSelecionado'),  Curso:""})
-		 	console.log(oferta);
+		 	//console.log(oferta);
 		 	if(oferta!=null){
 		 		alert("Necessita alocar pelo menos curso em todas disciplinas")
 		 	}else{
@@ -418,11 +418,11 @@ if(Meteor.isClient){
 		 	}
 		},
 			'click #plus':function(event){
-				console.log("plusss")
+				//console.log("plusss")
 				event.preventDefault();
 				var tmp=Session.get('plus');
 				Session.set('plus',tmp+1)
-				console.log(Session.get('plus'))
+				//console.log(Session.get('plus'))
 			},
 			'click #less':function(event){
 				event.preventDefault();
