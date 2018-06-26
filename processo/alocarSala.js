@@ -8,6 +8,9 @@ Router.route('/alocarSala',{
 
 
 if(Meteor.isClient){
+	Template.alocarSala.onDestroyed(function(){
+		Session.set('aux',false);
+	})
 	Template.alocarSala.helpers({
 			'permissao':function(valor){
 				if(valor==0){

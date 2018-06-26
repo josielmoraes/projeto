@@ -17,7 +17,7 @@ new Tabular.Table({
   collection: OfertaMateria,
   columns: [
   	{data:"Turma", title:"Turma"},
-  	{data:"Materia.nomeMateria", title:"Materia"},
+  	{data:"Materia.nomeMateria", title:"Disciplina"},
   	{data:"Area.nome", title:"Area"},
   	{data:"Tipo", title:"Tipo"},
   	{data:"aulaSemanal", title:"Aulas"},
@@ -58,6 +58,9 @@ if(Meteor.isClient){
 		Session.set('processoSelecionado',"");
 		Session.set('aux',false);
 		Session.set('setSubMateria',0);
+	})
+	Template.cadastroOfertaDisciplina.onDestroyed(function(){
+		Session.set('aux',false);
 	})
 	Template.definirDisciplina.helpers({
 			'permissao':function(valor){
@@ -438,9 +441,9 @@ Template.cadastroOfertaDisciplina.events({
 					var turma=$('#turmaMateria').val()
 				if(evento=="Ofertar" && sair){
 					Meteor.call('cadastrarOfertaMateria',turma,mat,mat.cargaHoraria,mat.aulaSemanal,processo,area,tipo,sub,function(e,r){
-						if(e)
+						if(e){
 							//console.log(e)
-						else{
+						}else{
 							Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
 						}
 					});

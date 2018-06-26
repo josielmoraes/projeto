@@ -156,7 +156,9 @@ OfertaMateria.helpers({
 
 
 if(Meteor.isClient){
-
+	Template.cadastroAlocarProfessor.onDestroyed(function(){
+		Session.set('aux',false);
+	})
 	Template.cadastroAlocarProfessor.onCreated(function(){
 		 Session.set('setRowDataProfessor',"");
 		 Session.set('aux',false);

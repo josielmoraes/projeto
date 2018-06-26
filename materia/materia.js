@@ -17,7 +17,7 @@ new Tabular.Table({
   collection: Materia,
   columns: [
  	{data: "codMateria", title: "Código"},
-    {data: "nomeMateria", title: "Matéria"},
+    {data: "nomeMateria", title: "Disciplina"},
     {data: "cargaHoraria", title: "C. Horaria"},
     {data: "aulaSemanal", title: "Aulas Semanal"},
     {data: "dividirMateria", title: "Qtde de submateria"}

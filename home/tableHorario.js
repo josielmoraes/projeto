@@ -9,6 +9,7 @@ if(Meteor.isClient){
   })
   Template.visualizarHorario.onDestroyed(function(){
       $('body').removeClass('bg-dark')
+      Session.set("aux",false)
   })
   Template.tableHorario.onCreated(function(){
     Session.set('validarTemplate','tableHorario')
@@ -41,6 +42,99 @@ if(Meteor.isClient){
       var tmp =$('#semestre').val();
       Session.set('periodoSelecionado',tmp)
 
+    }
+  })
+
+  Template.barra.helpers({
+    mostrar(){
+      var s=Session.get('aux');
+      return Session.get('aux');
+    },
+    colorir(){
+      setTimeout(function(){
+        var processo=Session.get("processoSelecionado");
+        console.log(processo)
+        var tmp=Processo.findOne({_id:processo});
+        var etapa=tmp.etapas;
+        console.log(etapa)
+        if(etapa==0){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_amarelo");
+          $('#alocarProfessor').addClass("center_vermelho");
+          $('#confirmarProcesso').addClass("center_vermelho");
+          $('#restricaoDisciplina').addClass("center_vermelho");
+          $('#criarHorario').addClass("center_vermelho");
+          $('#alocarSala').addClass("center_vermelho");
+        }else if(etapa==1){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_amarelo");
+          $('#confirmarProcesso').addClass("center_vermelho");
+          $('#restricaoDisciplina').addClass("center_vermelho");
+          $('#criarHorario').addClass("center_vermelho");
+          $('#alocarSala').addClass("center_vermelho");
+        }else if(etapa==2){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_amarelo");
+          $('#restricaoDisciplina').addClass("center_vermelho");
+          $('#criarHorario').addClass("center_vermelho");
+          $('#alocarSala').addClass("center_vermelho");
+        }else if(etapa==3){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_verde");
+          $('#restricaoDisciplina').addClass("center_amarelo");
+          $('#criarHorario').addClass("center_vermelho");
+          $('#alocarSala').addClass("center_vermelho");
+        }else if(etapa==4){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_verde");
+          $('#restricaoDisciplina').addClass("center_verde");
+          $('#criarHorario').addClass("center_amarelo");
+          $('#alocarSala').addClass("center_vermelho");
+        }else if(etapa==5){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_verde");
+          $('#restricaoDisciplina').addClass("center_verde");
+          $('#criarHorario').addClass("center_verde");
+          $('#alocarSala').addClass("center_amarelo");
+        }else if(etapa==6){
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_verde");
+          $('#restricaoDisciplina').addClass("center_verde");
+          $('#criarHorario').addClass("center_verde");
+          $('#alocarSala').addClass("center_verde");
+        }
+      },100)
+    }
+  })
+  Template.buscaTodosProcesso.helpers({
+		'buscaProcessos':function(){
+			return Processo.find();
+		},
+		'buscaAnoSemestres':function(proc){
+			var a=Semestre.findOne({_id:proc.semestreSelecionado});
+			return a.anoLetivo+"/"+a.periodoLetivo
+		},
+	})
+  Template.buscaTodosProcesso.events({
+		'click #processoSelecionado':function(event){
+			var sem= $('#processoSelecionado').val();
+			if(sem==""){
+				Session.set('aux',false);
+			}else{
+				Session.set('aux',true);
+				Session.set('processoSelecionado',sem);
+			}
     }
   })
 }

@@ -24,6 +24,9 @@ function criarArrayOferta(turma){
 }
 
 if(Meteor.isClient){
+  Template.horario.onDestroyed(function(){
+    Session.set('aux',false);
+  })
   Template.horario.helpers({
     'permissao':function(valor){
         if(valor==0){

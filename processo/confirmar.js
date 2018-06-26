@@ -133,6 +133,9 @@ OfertaMateria.helpers({
 })
 
 if(Meteor.isClient){
+	Template.confirmarProcesso.onDestroyed(function(){
+		Session.set('aux',false);
+	})
 	Template.confirmarProcesso.helpers({
 			'permissao':function(valor){
 				if(valor==0){

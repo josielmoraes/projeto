@@ -1,12 +1,12 @@
 <template name="visualizarHorario">
   <div class="container col-sm-12" style="margin-top:50px;" >
-		<div class="card card-login">
-			<div class="card-header text-center">Horário
+    <div class="card card-login">
+      <div class="card-header text-center">Horário
         <div class="text-center">
           <a class="d-block small" href="{{pathFor route= 'Inicio'}}" >Voltar início</a>
         </div>
       </div>
-			<div class="card-body">
+      <div class="card-body">
         {{>tableHorario}}
 
       </div>
@@ -15,49 +15,150 @@
 </template>
 <template name="tableHorario">
   <div class="container-fluid" id="visualizar">
-      <div class="row">
-        <div class="col-sm-10 offset-sm-2 text-center">
-          {{>buscaProcesso pro="6"}}
-        </div>
+    <div class="row">
+      <div class="col-sm-10 offset-sm-2 text-center">
+        {{>buscaProcesso pro="6"}}
+      </div>
 
-        {{#if mostrar}}
-        <div class="col-sm-10 offset-sm-1 ">
-          <div class="form-group row">
+      {{#if mostrar}}
+      <div class="col-sm-10 offset-sm-1 ">
+        <div class="form-group row">
 
-            <label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
-            <div class="col-sm-4">
-              {{>buscaCurso}}
-            </div>
-
-            <label  class="control-label col-sm-1" for="semestre">Semestre</label>
-            <div class="col-sm-4">
-              <select id="semestre" class="form-control dropdown">
-                <option value=''> </option>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-                <option value='4'>4</option>
-                <option value='5'>5</option>
-                <option value='6'>6</option>
-                <option value='7'>7</option>
-                <option value='8'>8</option>
-                <option value='9'>9</option>
-                <option value='10'>10</option>
-              </select>
-            </div>
+          <label for="cursoSelecionado"  class="control-label col-sm-1" >Curso</label>
+          <div class="col-sm-4">
+            {{>buscaCurso}}
           </div>
-          {{#if mostrarTabela}}
-      		<div class="col-sm-12">
-      			{{> tabelaHorario}}
-      		</div>
-      		{{/if}}
+
+          <label  class="control-label col-sm-1" for="semestre">Semestre</label>
+          <div class="col-sm-4">
+            <select id="semestre" class="form-control dropdown">
+              <option value=''> </option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
+            </select>
+          </div>
+        </div>
+        {{#if mostrarTabela}}
+        <div class="col-sm-12">
+          {{> tabelaHorario}}
         </div>
         {{/if}}
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>
+
 <template name="barra">
-  <div>
-    
+  <div class="container-fluid" id="visualizar">
+    <div class="row">
+      <div class="col-sm-10 offset-sm-2 text-center">
+        {{>buscaTodosProcesso}}
+      </div>
+      {{#if mostrar}}
+      <div class="text-center col-sm-10 offset-sm-1">
+        <table align="center_verde" border="0px" width="70%">
+          <tr>
+            <td>
+              <div class="container_text">
+                <div class="tamanhoBarra">
+                  <p >Definir datas</p>
+                </div>
+                <div class="tamanhoBarra">
+                  <p >Solicitar disciplinas</p>
+                </div>
+                <div  class="tamanhoBarra">
+                  <p >Alocar professor</p>
+                </div>
+                <div class="tamanhoBarra">
+                  <p>Confirmar Processo</p>
+                </div>
+                <div  class="tamanhoBarra">
+                  <p >Restrição entre disciplina</p>
+                </div>
+                <div  class="tamanhoBarra">
+                  <p >Criar horário</p>
+                </div>
+                <div class="tamanhoBarra">
+                  <p >Alocar sala</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="container_text">
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="definirDatas"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="solicitarDisciplina"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="alocarProfessor"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="confirmarProcesso"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="restricaoDisciplina"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="criarHorario"></div>
+                    <div class="linha_cinza"></div>
+                  </div>
+                </div>
+                <div class="tamanhoBarra container1">
+                  <div class="board1">
+                    <div class="circle" id="alocarSala"></div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      {{colorir}}
+      {{/if}}
+    </div>
   </div>
+
+</template>
+
+<template name="buscaTodosProcesso">
+	<div class="offset-sm-3 bot">
+		<label for="processoSelecionado"  class="control-label col-sm-1" ><!--Semestre--></label>
+		<div class="col-sm-4">
+			<select id="processoSelecionado" class="form-control dropdown">
+				<option value=""></option>
+				{{#each val in buscaProcessos}}
+				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
+				{{/each}}
+			</select>
+		</div>
+	</div>
 </template>

@@ -12,3 +12,156 @@
   height: 60px;
   border: 1px solid black;
 }
+.tamanhoBarra{
+  width: 160px;
+  height: 60px;
+  align-items: center;
+}
+.container1 {
+  display: flex;
+  align-items: center;
+}
+
+.board1 {
+  display: flex;
+  align-items: center;
+}
+
+.container_text {
+  display: flex;
+  justify-content: left;
+}
+
+.espaco_texto {
+  width: 150px;
+  height: 0px;
+  background: #000;
+}
+
+.circle {
+  border-radius:50%;
+  margin-left: 60px;
+  border:3px solid #000;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.botao {
+  border:3px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.outer_amarelo {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  border: 3px solid #BA9500;
+  background-color: rgba(10,23,55,0.0);
+}
+
+.outer_verde {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  border: 3px solid #006633;
+  background-color: rgba(10,23,55,0.0);
+}
+
+.linha_verde {
+  width: 60px;
+  height: 3px;
+  background: #006633;
+}
+
+.linha_amarela {
+  width: 60px;
+  height: 3px;
+  background: #ffcc00;
+}
+
+.linha_cinza {
+  width: 120px;
+  height: 3px;
+  background: #000;
+}
+
+.linha_producao {
+  width: 200px;
+  height: 3px;
+  background: #006633;
+}
+
+.center_amarelo {
+  border-radius: 50%;
+
+  background-color: #FFCC00;
+  height: 40px;
+  width: 40px;
+  /*box-shadow: inset 10px -10px 10px #BA9500, inset 3px 3px 5px #FFCC00;*/
+}
+.center_vermelho {
+  border-radius: 50%;
+  background-color: #ff0000;
+  height: 40px;
+  width: 40px;
+  /*box-shadow: inset 10px -10px 10px #BA9500, inset 3px 3px 5px #FFCC00;*/
+}
+
+.center_verde {
+  border-radius: 50%;
+  background-color: #009424;
+  height: 40px;
+  width: 40px;
+  /*box-shadow: inset 10px -10px 10px #070, inset 3px 3px 5px #00f205;*/
+}
+
+.center_botao_verde {
+  height: 20px;
+  width: 70px;
+  border: 2px solid #006633;
+  background-color: #009424;
+  box-shadow: inset 10px -10px 10px #070, inset 3px 3px 5px #00f205;
+}
+
+.center_botao_amarelo {
+  height: 20px;
+  width: 70px;
+  border: 2px solid #006633;
+  background-color: #009424;
+  box-shadow: inset 10px -10px 10px #070, inset 3px 3px 5px #00f205;
+}
+
+.p1 {
+  font-family: verdana;
+  font-size: 11px;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+}
+
+.p2 {
+  font-family: verdana;
+  font-size: 9px;
+  text-align: center;
+  color: grey;
+  font-weight: bold;
+}
+
+.p3 {
+  font-family: verdana;
+  font-size: 9px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.espaco_circulo {
+  width: 114px;
+  height: 0px;
+  background: #000;
+}

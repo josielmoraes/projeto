@@ -52,6 +52,9 @@ Processo.helpers({
 })
 
 if(Meteor.isClient){
+	Template.processo.onDestroyed(function(){
+		Session.set('aux',false);
+	})
 	Template.processo.helpers({
 			'permissao':function(valor){
 				if(valor==0){

@@ -95,6 +95,9 @@ new Tabular.Table({
 
 
 if(Meteor.isClient){
+	Template.restricao.onDestroyed(function(){
+		Session.set('aux',false);
+	})
 	Template.restricao.helpers({
 			'permissao':function(valor){
 				if(valor==0){
