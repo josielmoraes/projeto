@@ -55,7 +55,7 @@ if(Meteor.isClient){
 	Template.cadastroCurso.helpers({
 
 		 campos(){
-			 	$('#nomeCurso').focus()
+			$('#nomeCurso').focus()
 			$('#nomeCurso').val("");
 			$('#siglaCurso').val("");
 			$('#cadastrarCurso').val("Cadastrar");
@@ -65,6 +65,9 @@ if(Meteor.isClient){
 			if(valor==0)
 				return true;
 		},
+		homeGo(){
+			Router.go('/')
+		}
 	})
 	Template.cadastroCurso.events({
 		'click .input':function(event){
@@ -160,4 +163,7 @@ if(Meteor.isServer){
 			Curso.remove({_id:idDeletar})
 		}
 	});
+	Meteor.publish("curso",function(){
+		return Curso.find();
+	})
 }

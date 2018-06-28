@@ -38,9 +38,9 @@
 				{{/if}}
 				{{#if perProfessor currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
-					<a class="nav-link" href="{{pathFor route= 'Professor'}}">
+					<a class="nav-link" href="{{pathFor route= 'restricaoProfessor'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Professor</span>
+						<span class="nav-link-text"> Restricao para Professor</span>
 					</a>
 				</li>
 				{{/if}}
@@ -60,6 +60,7 @@
 					</a>
 				</li>
 				{{/if}}
+
 				{{#if perArea currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Area'}}">
@@ -68,6 +69,7 @@
 					</a>
 				</li>
 				{{/if}}
+
 				{{#if perSala currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Sala'}}">
@@ -76,6 +78,7 @@
 					</a>
 				</li>
 				{{/if}}
+
 				{{#if perHorario currentUser.profile}}
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Components">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
@@ -108,12 +111,12 @@
 							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restrição entre disciplina</a>
 						</li>
 						{{/if}}
-						{{#if perHorario currentUser.profile}}
+						{{#if perCriarHorario currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
 						</li>
 						{{/if}}
-						{{#if perSala currentUser.profile}}
+						{{#if perAlocarSala currentUser.profile}}
 						<li>
 							<a  href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
 						</li>

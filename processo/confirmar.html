@@ -54,13 +54,25 @@
 						 <div class="form-group row">
 							<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Area: </label>
 							 <div class="col-sm-4">
-									{{> inputAutocomplete settings=settingsArea id='area' name="area" autocomplete="off" class="form-control"}}
+									<!--{{> inputAutocomplete settings=settingsArea id='area' name="area" autocomplete="off" class="form-control"}}-->
+									<select id="area" name="area" class="form-control dropdown">
+										<option val=""></option>
+										{{#each val in buscarArea}}
+											<option value="{{val._id}}">{{val.nome}}</option>
+										{{/each}}
+									</select>
 							</div>
 					</div>
 					 <div class="form-group row">
 							<label  class="control-label col-sm-1 col-sm-offset-1" for="professor">Curso: </label>
 							 <div class="col-sm-4">
-									{{> inputAutocomplete settings=settingsCurso id='curso' name="curso" autocomplete="off" class="form-control"}}
+									<!--{{> inputAutocomplete settings=settingsCurso id='curso' name="curso" autocomplete="off" class="form-control"}}-->
+									<select id="curso" name="curso" class="form-control dropdown">
+										<option val=""></option>
+										{{#each val in buscarCurso}}
+											<option value="{{val._id}}">{{val.nome}}</option>
+										{{/each}}
+									</select>
 							</div>
 					</div>
 					<div class="form-group row">

@@ -29,9 +29,7 @@ if(Meteor.isClient){
       return Session.get('showModal')
     },
     logado(current){
-      console.log(current)
       if(current!=null){
-        console.log('true')
         return false;
       }else{
         console.log(false)
@@ -48,7 +46,6 @@ if(Meteor.isClient){
       event.preventDefault();
       var email=$('#emailLogin').val();
       var senha=$("#pwdLogin").val();
-      console.log(email,senha);
       Meteor.loginWithPassword(email,senha, function(e,r){
         if(e){
           //console.log(e);
@@ -56,7 +53,6 @@ if(Meteor.isClient){
             erroLogin:"Email ou senha não confere",
           })
         }else{
-          console.log(Meteor.user)
           if(Meteor.userId!=null){
             //data current
             var td= new Date();

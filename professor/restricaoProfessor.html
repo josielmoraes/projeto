@@ -1,0 +1,37 @@
+<template name="restricaoProfessor">
+  {{>menu}}
+  <div class="container-fluid">
+    <div class="mar">
+      <div class="row offset-sm-1" >
+        {{#if perRestricaoProfessor currentUser.profile}}
+          <table>
+            <tr>
+              {{#each val in diasSemana}}
+              <th class="tamanho1">{{val}}</th>
+              {{/each}}
+            </tr>
+            {{#each aux in aulas}}
+              {{#let a=@index}}
+              <tr>
+                {{#each val in diasSemana}}
+                  {{#let d=@index }}
+                    {{#if criarTabela d }}
+                      <td class="tamanho1">{{imprimir aux}}</td>
+                      {{else}}
+                      <td class="tamanho1 restricao" id="{{d}};{{a}}">
+                      </td>
+                    {{/if}}
+                  {{/let}}
+                {{/each}}
+              </tr>
+              {{/let}}
+            {{/each}}
+          </table>
+          {{preencherTabela}}
+          {{else}}
+          {{home}}
+         {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

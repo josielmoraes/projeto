@@ -36,6 +36,16 @@ new Tabular.Table({
   })
 
 if(Meteor.isClient){
+	Template.sala.helpers({
+		'permissao':function(valor){
+			if(valor==0){
+				return true;
+			}else {
+				Router.go('/')
+				return false
+			}
+		},
+	})
   Template.cadastrarSala.helpers({
     campos(){
       $('#localSala').val("");
@@ -44,7 +54,8 @@ if(Meteor.isClient){
 			$('#Cadastrar').val("Cadastrar");
 			$('#Deletar').val("Voltar");
 			  $('#localSala').focus()
-    }
+    },
+
   })
 	Template.cadastrarSala.onCreated(function(){
 		Session.set('salaSelcionada', "");
@@ -140,4 +151,7 @@ if(Meteor.isServer){
       Sala.update({_id:id},{$set:{local:local,numero:num,apelido:ape}})
     }
   })
+	Meteor.publish("sala",function(){
+		return Sala.find();
+	})
 }

@@ -47,6 +47,7 @@ Meteor.users.helpers({
 	'funcao':function(){
 		var a=Meteor.users.findOne({_id:this._id})
 		a=a.profile.permission;
+
 		if(a==0){
 			return "Super Usuário(a)";
 		}else if(a==1){
@@ -58,12 +59,15 @@ Meteor.users.helpers({
 	'subFuncao':function(){
 		var a=Meteor.users.findOne({_id:this._id})
 		a=a.profile.subFuncao;
+		console.log(a);
 		if(a==0){
 			return "Diretor(a)";
 		}else if(a==1){
 			return "Coordenador(a) de Curso";
 		}else if(a==2){
 			return "PCDE"
+		}else if(a==4){
+			return "";
 		}
 	}
 
@@ -113,7 +117,8 @@ if(Meteor.isClient){
 			$('#funcao').val(0);
 			$('#siape').val("");
 			$('#cadastrar').val("Cadastrar");
-			$('#deletar').val("Voltar")
+			$('#deletar').val("Voltar");
+				Session.set('mostrarSubFuncao',false);
 		},
 		'permissao':function(valor){
 			if(valor==0){
@@ -125,6 +130,9 @@ if(Meteor.isClient){
 		},
 		mostrarSubFuncao(){
 			return Session.get('mostrarSubFuncao');
+		},
+		homeGo(){
+			Router.go('/')
 		}
 	})
 	Template.cadastroUsuario.onRendered(function(){
@@ -156,7 +164,7 @@ if(Meteor.isClient){
 			var id=$(event.target).prop('id');
 			if(id=="cadastrar"){
 				var validar=$('#formCadastroUsuario').valid()
-				var sair=validarUsuario();
+
 				////console.log(sair,validar);
 				var dados={
 					email:$('#emailUsuario').val(),
@@ -169,13 +177,16 @@ if(Meteor.isClient){
 				}
 					var evento=  $('#cadastrar').val();
 					////console.log(evento)
-					if(evento=="Cadastrar" && sair && validar){
-						Meteor.call('cadastrarUsuario',dados,function(e,r){
-							if(e){
-							}else{
-								Accounts.forgotPassword({ email: dados.email })
-							}
-						})
+					if(evento=="Cadastrar" && validar){
+						var sair=validarUsuario();
+						if(sair){
+							Meteor.call('cadastrarUsuario',dados,function(e,r){
+								if(e){
+								}else{
+									Accounts.forgotPassword({ email: dados.email })
+								}
+							})
+						}
 						Template.cadastroUsuario.__helpers.get("campos").call()
 					}else if(evento=="Atualizar" && validar){
 							////console.log('atualizar')
@@ -205,6 +216,15 @@ if(Meteor.isClient){
 					$('#emailUsuario').val(rowData.emails[0].address);
 					$('#funcao').val(rowData.profile.permission);
 					$('#siape').val(rowData.profile.siape);
+					if(rowData.profile.subFuncao!=null){
+						Session.set('mostrarSubFuncao',true);
+						console.log(rowData.profile.subFuncao)
+						setTimeout(function(){
+							$('#subFuncao').val(rowData.profile.subFuncao)
+						},10)
+					}else{
+						Session.set('mostrarSubFuncao',false);
+					}
 					$('#cadastrar').val("Atualizar");
 					$('#deletar').val("Deletar")
 					Session.set("user",rowData);
@@ -247,6 +267,8 @@ if(Meteor.isServer){
 			Meteor.users.remove({_id:user._id})
 		}
 	})
-
+	Meteor.publish("usuarioProfessor",function(){
+		return Meteor.users.find({'profile.permission':1});
+	})
 
 }

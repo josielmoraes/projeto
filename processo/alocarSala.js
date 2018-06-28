@@ -8,6 +8,17 @@ Router.route('/alocarSala',{
 
 
 if(Meteor.isClient){
+	Template.alocarSala.onCreated(function(){
+		var self=this;
+		self.autorun(function(){
+			self.subscribe("sala");
+			self.subscribe("acharSemetre");
+			self.subscribe("buscaProcesso");
+			self.subscribe("area");
+			self.subscribe("curso");
+			self.subscribe("usuarioProfessor");
+		})
+	})
 	Template.alocarSala.onDestroyed(function(){
 		Session.set('aux',false);
 	})

@@ -50,7 +50,11 @@ if(Meteor.isClient){
 			$('#cadastrar').val("Cadastrar");
 			 $('#deletar').val("Voltar");
 			 $('#formCadastroArea').validate().resetForm();
+		},
+		homeGo(){
+			Router.go('/')
 		}
+
 
 	})
 	Template.cadastroArea.events({
@@ -149,6 +153,9 @@ Meteor.methods({
 	'deletarArea':function(id){
 		Area.remove({_id:id})
 	}
+})
+Meteor.publish("area",function(){
+	return Area.find();
 })
 
 }

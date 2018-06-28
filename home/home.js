@@ -56,21 +56,21 @@ if(Meteor.isClient){
 	Template.menu.helpers({
 		'perUsuario':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0 )
 				return true;
 			else
 				return false
 		},
 		'perDisci':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0 )
 				return true;
 			else
 				return false
 		},
 		'perProfessor':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==1 /*||p.permission==0*/)
 				return true;
 			else
 				return false
@@ -91,79 +91,103 @@ if(Meteor.isClient){
 		},
 		'perArea':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0 )
 				return true;
 			else
 				return false
 		},
 		'perSala':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0 )
 				return true;
 			else
 				return false
 		},
 		'perHorario':function(p){
-			//console.log(p);
-			if(p.permission==0)
+			console.log(p);
+			if(p.permission==1 && p.subFuncao!=4){
+				return true;
+			}else if(p.permission==0 || p.permission==2)
 				return true;
 			else
 				return false
 		},
 		'perData':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==0){
+				return true;
+			}else{
+				return false;
+			}
 		},
 		'perSolicitar':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==1){
+				return true;
+			}else{
+				return false;
+			}
 		},
 		'perAlocarProfessor':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
+			}else if(p.permission==1 && p.subFuncao==1){
+				return true;
+			}else{
 				return false
+			}
 		},
 		'perConfirmar':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==0){
+				return true;
+			}else{
+				return false;
+			}
 		},
 		'perRestricao':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==1){
+				return true;
+			}else{
+				return false;
+			}
 		},
-		'perHorario':function(p){
+		'perCriarHorario':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==1){
+				return true;
+			}else{
+				return false;
+			}
 		},
-		'perSala':function(p){
+		'perAlocarSala':function(p){
 			//console.log(p);
-			if(p.permission==0)
+			if(p.permission==0){
 				return true;
-			else
-				return false
+			}else if(p.permission==1 && p.subFuncao==2){
+				return true;
+			}else{
+				return false;
+			}
 		},
 
 	})
 	Template.menu.events({
 		'click #sair':function(){
 			//console.log('sair')
+			Router.go('/')
 			Meteor.logout();
 		}
 	})

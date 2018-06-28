@@ -20,7 +20,6 @@ new Tabular.Table({
     {data: "nomeMateria", title: "Disciplina"},
     {data: "cargaHoraria", title: "C. Horaria"},
     {data: "aulaSemanal", title: "Aulas Semanal"},
-    {data: "dividirMateria", title: "Qtde de submateria"}
     ],
    responsive: true,
 	autoWidth: false,
@@ -61,7 +60,9 @@ if(Meteor.isClient){
 		  $('#formCadastroMateria').validate().resetForm();
 		  $('#erro').val("");
 		},
-
+		homeGo(){
+			Router.go('/')
+		},
 		'permissao':function(valor){
 			if(valor==0)
 				return true;
@@ -138,11 +139,14 @@ if(Meteor.isClient){
 			event.preventDefault();
 			var id=$(event.target).prop('id');
 			if(id=="Cadastrar"){
+				var carga=parseInt($('#cargaHorariaMateria').val());
+				console.log(carga);
+				var aula=parseInt(carga/16);
 				var dadosMateria={
 					codMateria:$('#codMateria').val(),
 				    nomeMateria:$('#nomeMateria').val(),
 				    cargaHoraria:$('#cargaHorariaMateria').val(),
-				    aulaSemanal:$('#aulaSemanal').val(),
+				    aulaSemanal:aula,
 				    dividirMateria:$('#divisao').val()
 				}
 				Session.set('codMateria',dadosMateria.codMateria);
@@ -296,6 +300,8 @@ if(Meteor.isServer){
 			return t;
 		}
 	)
-
+	Meteor.publish('materia',function(){
+		return Materia.find();
+	})
 
 }

@@ -27,6 +27,15 @@ if(Meteor.isClient){
   Template.horario.onDestroyed(function(){
     Session.set('aux',false);
   })
+  Template.horario.onCreated(function(){
+    Session.set('aux',false);
+    var self=this;
+    self.autorun(function(){
+      self.subscribe("acharSemetre");
+      self.subscribe("buscaProcesso");
+  		self.subscribe("curso");
+    })
+  })
   Template.horario.helpers({
     'permissao':function(valor){
         if(valor==0){
@@ -156,7 +165,11 @@ if(Meteor.isClient){
       var horario=saida.horario;
       for(x=0;x<horario.length;x++){
         if(horario[x].dia==d && horario[x].aula==a){
-          return saida.Materia.nomeMateria+ " "+saida.Turma+" \n"+ horario[x].sala.local +" "+horario[x].sala.numero
+          if(horario[x].sala!=""){
+            return saida.Materia.nomeMateria+ " "+saida.Turma+" \n"+ horario[x].sala.local +" "+horario[x].sala.numero
+          }else{
+              return saida.Materia.nomeMateria+ " "+saida.Turma;
+          }
         }
       }
     },
@@ -239,8 +252,11 @@ if(Meteor.isClient){
       }
     },
     buscarSala(a){
+
+      Session.get('periodoSelecionado')
       var tmp=[" "]
       var aux=Sala.find().fetch()
+      console.log(aux)
       for(x=0;x<aux.length;x++){
         tmp.push(aux[x])
       }
@@ -282,7 +298,7 @@ if(Meteor.isClient){
             }
           }
         }
-      },10)
+      },100)
     },
     buscarValido(dia,aula,turma){
       var pro=Session.get('processoSelecionado');
@@ -324,6 +340,22 @@ function validarProfessor(id,dia,aula){
     return true;
   }
 };
+function validarRestricaoProfessor(id,dia,aula){
+  var tmpOferta=OfertaMateria.findOne({_id:id});
+  console.log(tmpOferta);
+  var horario=tmpOferta.Professor.profile.horario;
+  if(horario!=null){
+    for(x=0;x<horario.length;x++){
+        if(horario[x].dia==dia && horario[x].aula==aula){
+          console.log("entrou");
+          var tmp=confirm("Horário que o professor nao gostaria de ministrar aula. Deseja manter a disciplina nesse horário?");
+          console.log(tmp);
+          return tmp
+        }
+    }
+  }
+  return true;
+}
 function validarRestricao(id,dia,aula){
   var pro=Session.get('processoSelecionado');
   dia=parseInt(dia);
@@ -417,7 +449,9 @@ function validarSala(id,dia,aula,sala){
           var aula=id[1];
 
             if(ant==""){
-              if(validarProfessor(val ,dia, aula)){
+              if(!validarRestricaoProfessor(val,dia,aula)){
+                event.target.options[0].selected=true;
+              }else if(validarProfessor(val ,dia, aula)){
                 event.target.options[0].selected=true;
               }else if(validarRestricao(val ,dia, aula)){
 
@@ -439,10 +473,11 @@ function validarSala(id,dia,aula,sala){
                       posicao=x;
                     }
                   }
-                  if(validarProfessor(val ,dia, aula)){
+                  if(!validarRestricaoProfessor(val,dia,aula)){
+                      event.target.options[posicao].selected=true;
+                  }if(validarProfessor(val ,dia, aula)){
                     event.target.options[posicao].selected=true;
                   }else if(validarRestricao(val ,dia, aula)){
-
                     event.target.options[posicao].selected=true;
                   }else if(validarMaterias(val ,dia, aula)){
                       event.target.options[posicao].selected=true;;

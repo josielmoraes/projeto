@@ -6,10 +6,18 @@ if(Meteor.isClient){
   Template.visualizarHorario.onCreated(function(){
     $('body').addClass('bg-dark');
     Session.set('validarTemplate','tableHorario')
+    var self=this;
+    self.autorun(function(){
+      self.subscribe("acharSemetre");
+  		self.subscribe("buscaProcesso");
+      self.subscribe('curso');
+    })
+    //Meteor.subscribe()
   })
   Template.visualizarHorario.onDestroyed(function(){
       $('body').removeClass('bg-dark')
       Session.set("aux",false)
+      console.log(this);
   })
   Template.tableHorario.onCreated(function(){
     Session.set('validarTemplate','tableHorario')
@@ -43,6 +51,17 @@ if(Meteor.isClient){
       Session.set('periodoSelecionado',tmp)
 
     }
+  })
+  Template.barra.onCreated(function(){
+    var self=this;
+    self.autorun(function(){
+      self.subscribe("acharSemetre");
+		  self.subscribe("buscaProcesso");
+    })
+    //Meteor.subscribe()
+  })
+  Template.barra.onDestroyed(function(){
+    Session.set('aux',false);
   })
 
   Template.barra.helpers({

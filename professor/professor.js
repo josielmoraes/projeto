@@ -1,9 +1,10 @@
 import Professor from "../imports/collections/professor";
 import Tabular from 'meteor/aldeed:tabular';
+/*
 Router.route('/Professor',{
 	template: 'cadastroProfessor'
 })
-
+*/
 
 
 new Tabular.Table({

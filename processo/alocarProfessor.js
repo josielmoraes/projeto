@@ -157,6 +157,16 @@ OfertaMateria.helpers({
 
 
 if(Meteor.isClient){
+	Template.alocarProfessor.onCreated(function(){
+		var self=this;
+		self.autorun(function(){
+			self.subscribe("buscaProcesso");
+			self.subscribe("acharSemetre");
+			self.subscribe("area");
+			self.subscribe("curso");
+			self.subscribe("usuarioProfessor");
+		})
+	})
 	Template.cadastroAlocarProfessor.onDestroyed(function(){
 		Session.set('aux',false);
 	})

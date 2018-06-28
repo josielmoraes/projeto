@@ -136,6 +136,9 @@ if(Meteor.isClient){
 	Template.confirmarProcesso.onDestroyed(function(){
 		Session.set('aux',false);
 	})
+	Template.confirmarProcesso.onCreated(function(){
+
+	})
 	Template.confirmarProcesso.helpers({
 			'permissao':function(valor){
 				if(valor==0){
@@ -151,8 +154,25 @@ if(Meteor.isClient){
 		Session.set('mostrarProfessor',false)
 		Session.set('mostrarForm',false);
 		Session.set('aux',false);
+		var self=this;
+		self.autorun(function(){
+			self.subscribe("buscaProcesso");
+			self.subscribe("acharSemetre");
+			self.subscribe("area");
+			self.subscribe("curso");
+			self.subscribe("usuarioProfessor");
+		})
 	})
 	Template.confirmar.helpers({
+		buscarArea(){
+			var tmp=Area.find().fetch();
+			return tmp;
+		},
+		buscarCurso(){
+			var tmp=Curso.find().fetch();
+			return tmp;
+		},
+
 		settingsProfessor: function() {
 		    return {
 		      position: Session.get("position"),
@@ -241,12 +261,12 @@ if(Meteor.isClient){
 					$('#valorMateriaConfirmar').text(rowData.Materia.nomeMateria);
 					var prof=rowData.Professor
 					Session.set('professorSelecionado',prof);
-					$("#professor").val(prof.nome)
+					$("#professor").val(prof.profile.name)
 					var area=rowData.Area;
 					Session.set('areaSelecionada',area)
-					$('#area').val(area.nome);
+					$('#area').val(area._id);
 					var curso=rowData.Curso
-					$('#curso').val(curso.nome)
+					$('#curso').val(curso._id)
 					Session.set('cursoSelecionado',curso);
 					if(rowData.qtdeAuto==0){
 						$('#removerConfirmar').attr('disabled',false);
@@ -276,7 +296,7 @@ if(Meteor.isClient){
 				if(prof!=""){
 					prof=Session.get('professorSelecionado');
 				}
-				//console.log(prof,area,curso)
+				console.log(prof,area,curso)
 				if(area==null || area==""){
 					alert("Selecione uma area")
 				}else if(curso==null || curso==""){
@@ -302,7 +322,6 @@ if(Meteor.isClient){
 			event.preventDefault();
 			Meteor.call('mudarEtapa',Session.get('processoSelecionado'),3,function(e,r){
 				if(e){
-
 				}else{
 					Bert.alert("Confirmação realizada com sucesso",'default','growl-top-right','fa-bell')
 					Session.set('processoSelecionado',"")
@@ -338,14 +357,32 @@ if(Meteor.isClient){
 					Session.set('mostrarForm',false);
 			}
 		},
+
 		"autocompleteselect #professor": function(event, template, doc) {
 		  	event.preventDefault();
 		  	Session.set('professorSelecionado',doc);
 		 },
+		 'change #area':function(event){
+			 event.preventDefault();
+			 var valor=$('#area').val();
+ 			if(valor!=""){
+ 				var tmp=Area.findOne({_id:valor})
+ 				 Session.set('areaSelecionada',tmp)
+ 			}
+		},
+		/*
 		 "autocompleteselect #area": function(event, template, doc) {
 		  	event.preventDefault();
 		  	Session.set('areaSelecionada',doc);
-		 },
+		 },*/
+		 'change #curso':function(event){
+			 event.preventDefault();
+			 var valor=$('#curso').val();
+ 			if(valor!=""){
+ 				var tmp=Curso.findOne({_id:valor})
+ 				 Session.set('cursoSelecionado',tmp)
+ 			}
+		},
 		 "autocompleteselect #curso": function(event, template, doc) {
 		  	event.preventDefault();
 		  	Session.set('cursoSelecionado',doc);
@@ -359,7 +396,9 @@ if(Meteor.isServer){
 				//console.log(s)
 			},
 			atualizarConfirmar(oferta,professor,area,curso){
-				OfertaMateria.update({_id:oferta._id},{$set:{Professor:professor,Area:area,Curso:curso}})
+				var t=OfertaMateria.update({_id:oferta._id},{$set:{Professor:professor,Area:area,Curso:curso}})
+				console.log(oferta._id);
+				console.log(OfertaMateria.findOne({_id:oferta._id}))
 			},
 			'atualizarQtdeDesc':function(id) {
 				OfertaMateria.update({_id:id},{ $inc:{qtdeAuto:-1} })

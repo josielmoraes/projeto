@@ -3,7 +3,9 @@
 <div class="container-fluid">
   <div class="mar">
 		<div class="row">
-      {{>cadastrarSala}}
+      {{#if permissao currentUser.profile.permission}}
+        {{>cadastrarSala}}
+      {{/if}}
     </div>
   </div>
 </div>

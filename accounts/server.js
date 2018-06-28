@@ -18,7 +18,9 @@ if(Meteor.isClient){
 }
 
 if(Meteor.isServer){
+	//Meteor.users.remove({})
 	//Processo.remove({})
+	//Processo.update({_id:"cxNpkmdtj5JHrTK5z"},{etapas:4})
 	//OfertaMateria.remove({});
 	//Meteor.users.remove({})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
@@ -31,7 +33,7 @@ if(Meteor.isServer){
  process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
  let templateEmailrecovery ={
      from:function(){
-         return 'academicsystem@ufmt.com.br';
+         return smtp.username;
      },
      subject:function(user){
          return 'Recuperação de Senha';

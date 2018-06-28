@@ -12,6 +12,14 @@
   height: 60px;
   border: 1px solid black;
 }
+.tamanho1{
+  width: 150px;
+  height: 60px;
+  border: 1px solid black;
+}
+.red{
+    background-color: #ff0000;
+}
 .tamanhoBarra{
   width: 160px;
   height: 60px;

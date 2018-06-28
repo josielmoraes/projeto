@@ -1,9 +1,9 @@
-import Semestre from "../imports/collections/semestre";
-import Materia from "../imports/collections/materia";
+//import Semestre from "../imports/collections/semestre";
+//import Materia from "../imports/collections/materia";
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
 import Area from '../imports/collections/area';
-import Processo from "../imports/collections/processo";
+//import Processo from "../imports/collections/processo";
 import SubTurma from '../imports/collections/subTurma'
 
 
@@ -53,6 +53,18 @@ new Tabular.Table({
   })
 
 if(Meteor.isClient){
+	Template.definirDisciplina.onCreated(function(){
+		var self=this;
+		self.autorun(function(){
+			self.subscribe("acharSemetre");
+			self.subscribe("buscaProcesso");
+			self.subscribe("materia");
+			self.subscribe("area");
+		})
+	})
+	Template.definirDisciplina.onDestroyed(function(){
+
+		})
 	Template.cadastroOfertaDisciplina.onCreated(function(){
 		Session.set('mostrar',"");
 		Session.set('processoSelecionado',"");
@@ -71,6 +83,14 @@ if(Meteor.isClient){
 						return false
 					}
 			},
+		})
+		Template.cadastroOfertaDisciplina.onRendered(function(){
+			var self=this;
+			var sem=Session.get('processoSelecionado')
+			console.log(sem)
+			self.autorun(function(){
+				self.subscribe("buscaOferta",sem)
+			})
 		})
 
 	Template.cadastroOfertaDisciplina.helpers({
@@ -109,7 +129,6 @@ if(Meteor.isClient){
 		          noMatchTemplate:Template.vazio
 		        }
 		      ],
-
 		    }
   		},
 
@@ -119,7 +138,7 @@ if(Meteor.isClient){
   		},
   		mostrar(){
   			var s=Session.get('aux');
-			return Session.get('aux');
+				return Session.get('aux');
   		},
   		campos(){
   		$('#materia').val("");
@@ -208,7 +227,6 @@ if(Meteor.isClient){
 		  		}
 	  		}
   			return true
-
   		}
   		,
   		completarSub(){
@@ -232,7 +250,6 @@ if(Meteor.isClient){
 	  					aula:$(aula).val(),
 	  				}
 	  				sub[x-1]=aux;
-
 	  			}
 	  			return sub
 	  		}
@@ -581,6 +598,7 @@ function atualizar(){
 		},
 		'buscaAnoSemestres':function(proc){
 			var a=Semestre.findOne({_id:proc.semestreSelecionado});
+			console.log(a);
 			return a.anoLetivo+"/"+a.periodoLetivo
 		},
 	})
@@ -592,6 +610,7 @@ function atualizar(){
 			}else{
 				Session.set('aux',true);
 				Session.set('processoSelecionado',sem);
+
 			}
 			$('#materia').val("");
 			$('#area').val("");
@@ -753,7 +772,11 @@ if(Meteor.isServer){
 			OfertaMateria.update({_id:id},{ $inc:{qtdeAuto:1} })
 		}
 	})
-
-
+	Meteor.publish("buscaProcesso",function(){
+		return Processo.find();
+	})
+	Meteor.publish("buscaOferta",function(processo){
+		return OfertaMateria.find({Processo:processo})
+	})
 
 }

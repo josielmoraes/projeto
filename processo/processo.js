@@ -1,6 +1,6 @@
 import Tabular from 'meteor/aldeed:tabular';
 import Processo from '/imports/collections/processo'
-import Semestre from "/imports/collections/semestre";
+//import Semestre from "/imports/collections/semestre";
 import OfertaMateria from "/imports/collections/ofertaMateria";
 Router.route('/Processo',{
 	template:'processo'
@@ -20,8 +20,7 @@ new Tabular.Table({
     extraFields:[
     	'semestreSelecionado'
     ],
-
-   	responsive: true,
+  responsive: true,
 	autoWidth: false,
 	language:{
 			"decimal":        "",
@@ -52,8 +51,17 @@ Processo.helpers({
 })
 
 if(Meteor.isClient){
+
 	Template.processo.onDestroyed(function(){
 		Session.set('aux',false);
+		var tmp=Session.get("subSemestre");
+		//Meteor.unsubscribe("acharSemetre");
+	})
+	Template.processo.onCreated(function(){
+			var tmp=Meteor.subscribe("acharSemetre")
+		this.autorun(function(){
+			Session.set("subSemestre",tmp);
+			})
 	})
 	Template.processo.helpers({
 			'permissao':function(valor){
@@ -270,8 +278,7 @@ if(Meteor.isServer){
 		},
 
 	})
-	Meteor.publish('acharSemetre',function acharSemestre(){
-			return Semestre.find({}).fetch()
-		}
-	)
+	Meteor.publish("acharSemetre",function(){
+		return Semestre.find();
+	})
 }
