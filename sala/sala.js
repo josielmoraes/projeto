@@ -53,7 +53,8 @@ if(Meteor.isClient){
       $('#apelidoSala').val("")
 			$('#Cadastrar').val("Cadastrar");
 			$('#Deletar').val("Voltar");
-			  $('#localSala').focus()
+			$('#localSala').focus()
+			//$("#formCadastrosala").validate().resetForm();
     },
 
   })
@@ -71,10 +72,7 @@ if(Meteor.isClient){
 				numeroSala:{
 					required:true,
 				},
-				apelidoSala:{
-					required:true,
-					minlength:4
-				}
+
 			},
 			messages:{
 				localSala:{
@@ -84,10 +82,7 @@ if(Meteor.isClient){
 				numeroSala:{
 					required:" Campo obrigatório",
 				},
-				apelidoSala:{
-					required:" Campo obrigatório",
-					minlength:"Mínimo de 4 letras"
-				}
+
 			}
 		})
 
@@ -103,10 +98,10 @@ if(Meteor.isClient){
         var num=$('#numeroSala').val();
         var apelido=$('#apelidoSala').val()
         var evento=  $('#Cadastrar').val();
-				$('#formCadastrosala').valid();
-        if(evento=="Cadastrar"){
+				var sair=$('#formCadastrosala').valid();
+        if(evento=="Cadastrar" && sair){
             Meteor.call('cadastrarSala',local,num,apelido);
-        }else{
+        }else if(evento=="Atualizar" && sair){
 						var sala=Session.get('salaSelcionada');
 					Meteor.call('atualizarSala',sala._id.toString(),local,num,apelido);
 				}
