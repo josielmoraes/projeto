@@ -285,7 +285,9 @@ if(Meteor.isClient){
 			//console.log(m)
 			$('#valorMateria').text(m.nomeMateria);
 			var prof=Session.get('professorSelecionado');
-			$("#professor").val(prof.nome)
+			if(prof!=""){
+				$("#professor").val(prof.profile.name)
+			}
 			var area=rowData.Area;
 			Session.set('areaSelecionada',area)
 			$('#area').val(area._id);

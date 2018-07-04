@@ -150,15 +150,15 @@
 </template>
 
 <template name="buscaTodosProcesso">
-	<div class="offset-sm-3 bot col-sm-7  ">
-		<!--<label for="processoSelecionado"  class="control-label col-sm-4" >Processos em andamento</label>-->
-		<div class="col-sm-5">
-			<select id="processoSelecionado" class="form-control dropdown">
-				<option value=""></option>
-				{{#each val in buscaProcessos}}
-				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
-				{{/each}}
-			</select>
-		</div>
-	</div>
+  <div class="offset-sm-3 bot col-sm-7  ">
+    <!--<label for="processoSelecionado"  class="control-label col-sm-4" >Processos em andamento</label>-->
+    <div class="col-sm-5">
+      <select id="processoSelecionado" class="form-control dropdown">
+        <option value=""></option>
+        {{#each val in buscaProcessos}}
+        <option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
 </template>

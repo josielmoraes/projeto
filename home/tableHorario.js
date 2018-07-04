@@ -21,6 +21,7 @@ if(Meteor.isClient){
   })
   Template.tableHorario.onCreated(function(){
     Session.set('validarTemplate','tableHorario')
+    Session.set("aux",false)
   })
   Template.tableHorario.helpers({
     mostrar(){

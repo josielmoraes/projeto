@@ -215,7 +215,7 @@ if(Meteor.isClient){
 					////console.log(rowData)
 					$('#nomeUsuario').val(rowData.profile.name);
 					$('#emailUsuario').val(rowData.emails[0].address);
-					$('#funcao').val(rowData.profile.permission);
+					$('#funcao').val( rowData.profile.permission);
 					$('#siape').val(rowData.profile.siape);
 					if(rowData.profile.subFuncao!=null){
 						Session.set('mostrarSubFuncao',true);
@@ -285,7 +285,11 @@ if(Meteor.isServer){
 		}
 	})
 	Meteor.publish("usuarioProfessor",function(){
-		return Meteor.users.find({'profile.permission':1});
+		var tmp=Meteor.users.find({'profile.permission':"1"})
+		for(x=0;x<tmp.length;x++){
+			console.log('novo ', tmp[x].profile)
+		}
+		return tmp//Meteor.users.find({'profile.permission':0});
 	})
 
 }

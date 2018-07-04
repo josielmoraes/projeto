@@ -598,7 +598,7 @@ function atualizar(){
 		},
 		'buscaAnoSemestres':function(proc){
 			var a=Semestre.findOne({_id:proc.semestreSelecionado});
-			console.log(a);
+			console.log(a.anoLetivo);
 			return a.anoLetivo+"/"+a.periodoLetivo
 		},
 	})
