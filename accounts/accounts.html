@@ -67,31 +67,20 @@
 
 
 <template name="ForgotPassword">
-	<div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<h4 class="modal-title">Esqueceu a senha</h4>
+	<div class="container col-sm-3" style="margin-top:200px;" >
+		<div class="card card-login mx-auto mt-5">
+			<div class="card-header">Esqueceu a senha</div>
+			<div class="card-body">
+				<form id="forgotPasswordForm" name="validarLogin">
+					<div class="form-group">
+						<label for="emailLogin">Email:</label>
+						<input id="forgotPasswordEmail" type="text" name="email" class="form-control">
+					</div>
+					<input type="submit" class="btn btn-block" value="Enviar">
+				</form>
+				<div class="text-center">
+					<a class="d-block small" href="{{pathFor route= 'Inicio'}}" >Voltar para inicio</a>
 				</div>
-
-				<div class="modal-body">
-					<form  id="forgotPasswordForm" method="post" class="form-inline">
-						<div class="form-group row col-sm-offset-1">
-							<div class="form-group">
-								<label class="control-label" for="email">Email:  </label>
-								<input id="forgotPasswordEmail" type="text" name="email" class="form-control">
-								<input class="btn btn-default" type="submit" value="Enviar">
-								<label id="erro" name="erro"></label>
-							</div>
-						</div>
-					</form>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
-				</div>
-
 			</div>
 		</div>
 	</div>
@@ -117,7 +106,7 @@
 					<input type="submit" class="btn btn-block" value="Entrar">
 				</form>
 				<div class="text-center">
-					<a class="d-block small" href="#" id="esqueciSenha">Esqueceu a senha?</a>
+					<a class="d-block small" href="{{pathFor route= 'esqueciSenha'}}" id="esqueciSenha">Esqueceu a senha?</a>
 					<a class="d-block small" href="{{pathFor route= 'visualizarHorario'}}" >Visualizar horário</a>
 				</div>
 			</div>

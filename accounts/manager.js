@@ -1,4 +1,6 @@
-
+Router.route('/esqueciSenha',{
+  template:'ForgotPassword',
+})
 Router.route('/reset/:token', {
   template: 'ResetPassword',
   name: 'resetPassword',
@@ -21,6 +23,9 @@ Router.route('/reset/:token', {
   }
 });
 if(Meteor.isClient){
+  Template.ForgotPassword.onCreated(function(){
+    $('body').addClass('bg-dark')
+  })
   Template.login.onCreated(function(){
     Session.set('showModal', false);
   })
@@ -40,7 +45,8 @@ if(Meteor.isClient){
   Template.login.events({
     'click #esqueciSenha':function(event,template){
       console.log("esquicisenha");
-      Modal.show('ForgotPassword');
+      //Modal.show('ForgotPassword');
+      //Router.go('/esqueciSenha')
     },
     'submit form':function(event){
       event.preventDefault();
@@ -163,6 +169,7 @@ if(Meteor.isClient){
       event.preventDefault();
       let myEmail = event.target.email.value;
       console.log(myEmail)
+      Meteor.call("resetEmail");
       Accounts.forgotPassword({ email: myEmail }, function(error) {
         if (error) {
           if (error.message === 'User not found [403]'){
@@ -175,7 +182,8 @@ if(Meteor.isClient){
           //Router.go("home");
         }
       });
-      Modal.hide('ForgotPassword');
+      //Modal.hide('ForgotPassword');
+      Router.go('/')
     },
   });
 
@@ -240,6 +248,22 @@ if(Meteor.isServer){
         if ((currentTimeMs - when) > tokenLifetimeMs) { // timeout
           throw new Meteor.Error(403, "Token expired");
         }
+      },
+      'resetEmail':function(){
+        let templateEmailrecovery ={
+            from:function(){
+                return smtp.username;
+            },
+            subject:function(user){
+                return 'Recuperação de Senha';
+            },
+            text:function(user, url){
+                      var newUrl = url.replace('#/reset-password','reset');
+                       return 'Olá,\nPara recuperar sua senha, clique no link...\n'+newUrl;;
+                }
+        }
+        Accounts.emailTemplates.resetPassword = templateEmailrecovery;
+        console.log(templateEmailrecovery)
       }
     });
 

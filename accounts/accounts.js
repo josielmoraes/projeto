@@ -183,7 +183,8 @@ if(Meteor.isClient){
 							Meteor.call('cadastrarUsuario',dados,function(e,r){
 								if(e){
 								}else{
-									Accounts.forgotPassword({ email: dados.email })
+									Meteor.call("emailCadastro");
+										Accounts.forgotPassword({ email: dados.email })
 								}
 							})
 						}
@@ -258,13 +259,29 @@ if(Meteor.isServer){
 			//console.log(id)
 		},
 		atualizarUsuario:function(id,user){
-			 Meteor.users.update({_id:id}, {
+			 Meteor.users.update({_id:id}, {$set:{
 				email:user.email,
 				profile:user.profile
+			}
 			})
 		},
 		removerUsuario:function(user){
 			Meteor.users.remove({_id:user._id})
+		},
+		'emailCadastro':function(){
+			let templateEmailEnroll ={
+					from:function(){
+							return smtp.username;
+					},
+					subject:function(user){
+							return 'Cadastro ';
+					},
+					text:function(user, url){
+										var newUrl = url.replace('#/reset-password','reset');
+										 return 'Olá,\nVocê foi cadastro no sistema para criar horario do campus. Para gerar sua senha, clique no link...\n'+newUrl;;
+							}
+			}
+			Accounts.emailTemplates.resetPassword =templateEmailEnroll;
 		}
 	})
 	Meteor.publish("usuarioProfessor",function(){

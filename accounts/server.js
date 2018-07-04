@@ -27,8 +27,8 @@ if(Meteor.isServer){
 	smtp = {
 	 username: 'josielloureirodemoraes2@gmail.com',   // eg: server@gentlenode.com
 	 password: 'jlm134268759',   // eg: 3eeP1gtizk5eziohfervU
-	 server:   'smtp.gmail.com',  // eg: mail.gandi.net
-	 port: 465
+	 server:   'smtp.gmail.com',  // 200.17.60.216
+	 port: 465 //465 SSL
  }
  process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
  let templateEmailrecovery ={
@@ -43,8 +43,20 @@ if(Meteor.isServer){
                 return 'Olá,\nPara recuperar sua senha, clique no link...\n'+newUrl;;
          }
  }
- Accounts.emailTemplates.resetPassword = templateEmailrecovery;
-
+ let templateEmailEnroll ={
+     from:function(){
+         return smtp.username;
+     },
+     subject:function(user){
+         return 'Cadastro ';
+     },
+     text:function(user, url){
+               var newUrl = url.replace('#/reset-password','reset');
+                return 'Olá,\n Você foi cadastro no sistema. Para recuperar sua senha, clique no link...\n'+newUrl;;
+         }
+ }
+ //Accounts.emailTemplates.resetPassword = templateEmailrecovery;
+//Accounts.emailTemplates.enrollAccount=templateEmailEnroll;
 
 		//console.log(us);
 		var us=Meteor.users.find({username:'root'}).fetch();
