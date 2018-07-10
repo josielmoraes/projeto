@@ -25,11 +25,12 @@ if(Meteor.isServer){
 	//Meteor.users.remove({})
 	//ROOT_URL="http://192.168.0.108:3000" meteor run
 	smtp = {
-	 username: 'josielloureirodemoraes2@gmail.com',   // eg: server@gentlenode.com
-	 password: 'jlm134268759',   // eg: 3eeP1gtizk5eziohfervU
-	 server:   'smtp.gmail.com',  // 200.17.60.216
+	 username: 'sistemasieng@ufmt.br',   // eg: server@gentlenode.com
+	 password: 'teste123',   // eg: 3eeP1gtizk5eziohfervU
+	 server:   '200.17.60.216',  // 200.17.60.216
 	 port: 465 //465 SSL
  }
+ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
  process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
  let templateEmailrecovery ={
      from:function(){
