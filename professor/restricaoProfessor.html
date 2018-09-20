@@ -2,12 +2,16 @@
   {{>menu}}
   <div class="container-fluid">
     <div class="mar">
+      <div class="d-inline p-2 bg-danger text-white">Horário bloqueado</div>
+      <div class="d-inline p-2 bg-success text-white">Horário livre</div>
+      <hr>
+      
       <div class="row offset-sm-1" >
         {{#if perRestricaoProfessor currentUser.profile}}
           <table>
             <tr>
               {{#each val in diasSemana}}
-              <th class="tamanho1">{{val}}</th>
+              <th class="tamanho1 cabecalho">{{val}}</th>
               {{/each}}
             </tr>
             {{#each aux in aulas}}
@@ -16,7 +20,7 @@
                 {{#each val in diasSemana}}
                   {{#let d=@index }}
                     {{#if criarTabela d }}
-                      <td class="tamanho1">{{imprimir aux}}</td>
+                      <td class="tamanho1 td_label">{{imprimir aux}}</td>
                       {{else}}
                       <td class="tamanho1 restricao" id="{{d}};{{a}}">
                       </td>

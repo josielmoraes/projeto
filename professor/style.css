@@ -19,8 +19,9 @@
 
 .tamanho1 {
   width: 150px;
-  height: 60px;
+  height: 40px;
   border: 1px solid black;
+  background: #00f559;
 }
 
 .red {
@@ -211,3 +212,17 @@
 
 }
 
+/* Table de restrição */
+
+.cabecalho {
+  height: 30px;
+  text-align: center;
+  background: #444;
+  color: #fff;
+}
+
+.td_label {
+  padding-right: 10px;
+  text-align: right;
+  background: #e3e3e3;
+}
