@@ -1,13 +1,14 @@
+
 Router.route('/Inicio', {
   template: 'home',
   onBeforeAction: function() {
     var login = Meteor.userId();
     if (login == null) {
-      $('body').addClass('bg-dark')
+      $('body').addClass('bg-blue')
       $('body').removeClass('fixed-nav')
       $('body').removeClass('sticky-footer')
     } else {
-      $('body').removeClass('bg-dark')
+      $('body').removeClass('bg-blue')
       $('body').addClass('fixed-nav')
       $('body').addClass('sticky-footer')
     }
@@ -19,11 +20,11 @@ Router.route('/', {
   onBeforeAction: function() {
     var login = Meteor.userId();
     if (login == null) {
-      $('body').addClass('bg-dark')
+      $('body').addClass('bg-blue')
       $('body').removeClass('fixed-nav')
       $('body').removeClass('sticky-footer')
     } else {
-      $('body').removeClass('bg-dark')
+      $('body').removeClass('bg-blue')
       $('body').addClass('fixed-nav')
       $('body').addClass('sticky-footer')
     }
@@ -40,13 +41,13 @@ if (Meteor.isClient) {
   Template.menu.onCreated(function() {
     //console.log(Meteor.userId())
     if (Meteor.userId() == null) {
-      $('body').addClass('bg-dark');
+      $('body').addClass('bg-blue');
     } else {
-      $('body').removeClass('bg-dark');
+      $('body').removeClass('bg-blue');
     }
   })
   Template.menu.onDestroyed(function() {
-    $('body').removeClass('bg-dark');
+    $('body').removeClass('bg-blue');
   })
   Template.menu.helpers({
     'perUsuario': function(p) {

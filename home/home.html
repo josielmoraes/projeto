@@ -13,7 +13,7 @@
 </template>
 <template name="menu">
 	{{#if currentUser}}
-	<div class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+	<div class="navbar navbar-expand-lg navbar-dark bg-blue fixed-top" id="mainNav">
 		<a class="navbar-brand" href="{{pathFor route= 'Inicio'}}">Início</a>
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
 					<a class="nav-link" href="{{pathFor route= 'Usuario'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Usuário</span>
+						<span class="nav-link-text text-white">Usuário</span>
 					</a>
 				</li>
 				{{/if}}
@@ -32,7 +32,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Charts">
 					<a class="nav-link" href="{{pathFor route= 'Disciplina'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Disciplina</span>
+						<span class="nav-link-text text-white">Disciplina</span>
 					</a>
 				</li>
 				{{/if}}
@@ -40,7 +40,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tables">
 					<a class="nav-link" href="{{pathFor route= 'restricaoProfessor'}}">
 						<i class=""></i>
-						<span class="nav-link-text"> Restricao para Professor</span>
+						<span class="nav-link-text text-white"> Restricao para Professor</span>
 					</a>
 				</li>
 				{{/if}}
@@ -48,7 +48,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Curso'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Curso</span>
+						<span class="nav-link-text text-white">Curso</span>
 					</a>
 				</li>
 				{{/if}}
@@ -56,7 +56,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Semestre'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Semestre</span>
+						<span class="nav-link-text text-white">Semestre</span>
 					</a>
 				</li>
 				{{/if}}
@@ -65,7 +65,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Area'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Area</span>
+						<span class="nav-link-text text-white">Area</span>
 					</a>
 				</li>
 				{{/if}}
@@ -74,7 +74,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
 					<a class="nav-link" href="{{pathFor route= 'Sala'}}">
 						<i class=""></i>
-						<span class="nav-link-text">Sala</span>
+						<span class="nav-link-text text-white">Sala</span>
 					</a>
 				</li>
 				{{/if}}
@@ -83,42 +83,42 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Components">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
 						<i class=""></i>
-						<span class="nav-link-text"> Horário</span>
+						<span class="nav-link-text text-white"> Horário</span>
 					</a>
 					<ul class="sidenav-second-level collapse" id="collapseComponents">
 						{{#if perData currentUser.profile}}
 						<li>
-							<a href="{{pathFor route= 'Processo'}}">Definir datas</a>
+							<a href="{{pathFor route= 'Processo'}}" class="text-white">Definir datas</a>
 						</li>
 						{{/if}}
 						{{#if perSolicitar currentUser.profile}}
 						<li>
-							<a  href="{{pathFor route= 'definirDisciplina'}}">Solitar Disciplina</a>
+							<a  href="{{pathFor route= 'definirDisciplina'}}" class="text-white">Solitar Disciplina</a>
 						</li>
 						{{/if}}
 						{{#if perAlocarProfessor currentUser.profile}}
 						<li>
-							<a href="{{pathFor route= 'alocarProfessor'}}">Alocar Professor</a>
+							<a href="{{pathFor route= 'alocarProfessor'}}" class="text-white">Alocar Professor</a>
 						</li>
 						{{/if}}
 						{{#if perConfirmar currentUser.profile}}
 						<li>
-							<a href="{{pathFor route= 'confirmarProcesso'}}">Confirmar Processo</a>
+							<a href="{{pathFor route= 'confirmarProcesso'}}" class="text-white">Confirmar Processo</a>
 						</li>
 						{{/if}}
 						{{#if perRestricao currentUser.profile}}
 						<li>
-							<a  href="{{pathFor route= 'restricaoDisciplina'}}">Restrição entre disciplina</a>
+							<a  href="{{pathFor route= 'restricaoDisciplina'}}" class="text-white">Restrição entre disciplina</a>
 						</li>
 						{{/if}}
 						{{#if perCriarHorario currentUser.profile}}
 						<li>
-							<a  href="{{pathFor route= 'criarHorario'}}">Criar horario</a>
+							<a  href="{{pathFor route= 'criarHorario'}}" class="text-white">Criar horario</a>
 						</li>
 						{{/if}}
 						{{#if perAlocarSala currentUser.profile}}
 						<li>
-							<a  href="{{pathFor route= 'alocarSala'}}">Alocar Sala</a>
+							<a  href="{{pathFor route= 'alocarSala'}}" class="text-white">Alocar Sala</a>
 						</li>
 						{{/if}}
 					</ul>
@@ -128,8 +128,8 @@
 
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="modal" data-target="#exampleModal" id="sair">
-						<i class="fa fa-fw fa-sign-out"></i>Sair</a>
+					<a class="nav-link text-white" data-toggle="modal" data-target="#exampleModal" id="sair">
+						<i class="fa fa-fw fa-sign-out text-white"></i>Sair</a>
 					</li>
 				</ul>
 			</div>

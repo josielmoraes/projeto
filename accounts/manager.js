@@ -5,7 +5,7 @@ Router.route('/reset/:token', {
   template: 'ResetPassword',
   name: 'resetPassword',
   onBeforeAction() {
-    $('body').addClass('bg-dark')
+    $('body').addClass('bg-blue')
     if (!Meteor.userId()) {
       Meteor.call('checkResetToken', this.params.token, (err) => {
         if (err) {
