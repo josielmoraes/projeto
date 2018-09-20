@@ -2,19 +2,25 @@
 	{{>menu}}
 	<div class="container-fluid">
 		<div class="mar">
-			<div class="row">
-				{{#if permissao currentUser.profile.permission}}
-				{{> criarHorario}}
-				{{/if}}
-			</div>
+
+
+			 <div class="row">
+		        <div class="col-md-4">
+		          <h5>Criar horário</h5>
+		        </div>
+
+		        {{#if permissao currentUser.profile.permission}}
+		          <div class="col-md-8">{{>buscaProcesso pro="4"}}</div>
+		          {{> criarHorario}}
+		        {{/if}}
+		      </div>
+
 		</div>
 	</div>
 </template>
 
 <template name='criarHorario'>
-	<div class="col-sm-10 offset-sm-1">
-		{{>buscaProcesso pro="4"}}
-	</div>
+
 
 	{{#if mostrar}}
 	<div class="col-sm-10 offset-sm-1 ">

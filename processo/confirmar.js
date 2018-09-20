@@ -209,7 +209,10 @@ if (Meteor.isClient) {
     Session.set('aux', false);
   })
   Template.confirmarProcesso.onCreated(function() {
-
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
   })
   Template.confirmarProcesso.helpers({
     'permissao': function(valor) {

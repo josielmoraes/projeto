@@ -2,19 +2,27 @@
 	{{>menu}}
 	<div class="container-fluid">
 		<div class="mar">
+		
+
 			<div class="row">
+				<div class="col-md-4">
+					<h5>Alocar professor</h5>
+				</div>
+
 				{{#if permissao currentUser.profile.permission}}
-				{{> cadastroAlocarProfessor}}
+					<div class="col-md-8">{{>buscaProcesso pro="1"}}</div>
+					{{> cadastroAlocarProfessor}}
 				{{/if}}
 			</div>
+
 		</div>
+
+
 	</div>
 </template>
 
 <template name="cadastroAlocarProfessor">
-	<div class="col-sm-10 offset-sm-1" id="cadastroOferta">
-		{{>buscaProcesso pro="1"}}
-	</div>
+	
 	{{#if mostrar}}
 
 	<div class="col-sm-10 offset-sm-1" >

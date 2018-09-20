@@ -1,7 +1,7 @@
 import Sala from "../imports/collections/sala";
 import Tabular from 'meteor/aldeed:tabular';
 Router.route('/Sala', {
-  template: 'sala'
+  template: 'sala',
 })
 new Tabular.Table({
   name: "Sala",
@@ -44,6 +44,12 @@ new Tabular.Table({
 })
 
 if (Meteor.isClient) {
+  Template.sala.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+      $("#menu_sala").addClass("active");
+      });
+  })
   Template.sala.helpers({
     'permissao': function(valor) {
       if (valor == 0) {

@@ -2,7 +2,7 @@ import Semestre from "../imports/collections/semestre";
 import Tabular from 'meteor/aldeed:tabular';
 import dataTablesBootstrap from 'datatables.net-bs4';
 Router.route('/Semestre', {
-  template: 'cadastroSemestre'
+  template: 'cadastroSemestre',
 })
 
 new Tabular.Table({
@@ -98,6 +98,12 @@ if (Meteor.isClient) {
     }
 
   }
+  Template.cadastroSemestre.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+      $("#menu_semestre").addClass("active");
+      });
+  })
   Template.cadastroSemestre.helpers({
     homeGo() {
       Router.go('/')

@@ -38,6 +38,10 @@ if (Meteor.isClient) {
   })
   Template.horario.onCreated(function() {
     Session.set('aux', false);
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");

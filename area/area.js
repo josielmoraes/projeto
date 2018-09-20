@@ -1,7 +1,7 @@
 import Area from '../imports/collections/area'
 import Tabular from 'meteor/aldeed:tabular';
 Router.route('/Area', {
-  template: 'cadastroArea'
+  template: 'cadastroArea',
 })
 
 
@@ -42,7 +42,12 @@ new Tabular.Table({
 })
 
 if (Meteor.isClient) {
-
+  Template.cadastroArea.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+      $("#menu_area").addClass("active");
+      });
+  })
   Template.cadastroArea.helpers({
     'permissao': function(valor) {
       if (valor == 0)

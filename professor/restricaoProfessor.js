@@ -1,11 +1,17 @@
 Router.route('/restricaoProfessor', {
-  template: 'restricaoProfessor'
+  template: 'restricaoProfessor',
 })
 
 if (Meteor.isClient) {
+  Template.restricaoProfessor.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+      $("#menu_professor").addClass("active");
+      });
+  })
   Template.restricaoProfessor.helpers({
     'perRestricaoProfessor': function(p) {
-      if (p.permission == 1 /*||p.permission==0*/ )
+      if (p.permission == 1 ||p.permission==0 )
         return true;
       else
         return false;

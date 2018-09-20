@@ -200,6 +200,10 @@ OfertaMateria.helpers({
 
 if (Meteor.isClient) {
   Template.alocarProfessor.onCreated(function() {
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
     var self = this;
     self.autorun(function() {
       self.subscribe("buscaProcesso");

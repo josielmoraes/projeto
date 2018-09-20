@@ -4,7 +4,7 @@ import Tabular from 'meteor/aldeed:tabular';
 
 
 Router.route('/Curso', {
-  template: 'cadastroCurso'
+  template: 'cadastroCurso',
 });
 new Tabular.Table({
   name: "Curso",
@@ -59,8 +59,18 @@ if (Meteor.isClient) {
     }
 
   }
-  Template.cadastroCurso.helpers({
+  Template.cadastroCurso.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+      $("#menu_curso").addClass("active");
+      });
+  })
 
+  Template.cadastroCurso.helpers({
+    colorirMenu(){
+     
+      
+    },
     campos() {
       $('#nomeCurso').focus()
       $('#nomeCurso').val("");

@@ -10,7 +10,7 @@ import SubTurma from '../imports/collections/subTurma'
 
 
 Router.route('/definirDisciplina', {
-  template: 'definirDisciplina'
+  template: 'definirDisciplina',
 })
 new Tabular.Table({
   name: "Oferta",
@@ -74,6 +74,10 @@ new Tabular.Table({
 
 if (Meteor.isClient) {
   Template.definirDisciplina.onCreated(function() {
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");

@@ -2,18 +2,24 @@
 		{{>menu}}
 	<div class="container-fluid">
 	  <div class="mar ">
-			<div class="row">
-			{{#if permissao currentUser.profile.permission}}
-				{{> restricaoTurma}}
-			{{/if}}
-		</div>
+			
+
+		<div class="row">
+	        <div class="col-md-4">
+	          <h5>Restrição entre disciplina</h5>
+	        </div>
+
+	        {{#if permissao currentUser.profile.permission}}
+	          <div class="col-md-8">{{>buscaProcesso pro="3"}}</div>
+	          {{> restricaoTurma}}
+	        {{/if}}
+      	</div>
+
 	</div>
 </div>
 </template>
 <template name="restricaoTurma">
-  <div class="col-sm-10 offset-sm-1">
-        {{>buscaProcesso pro="3"}}
-  </div>
+
   {{#if mostrar}}
 		<div class="col-sm-10 offset-sm-1" >
 			<p></p>

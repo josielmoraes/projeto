@@ -2,19 +2,26 @@
     {{>menu}}
     <div class="container-fluid">
   		<div class="mar">
-  			<div class="row">
+  		
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Alocar sala</h5>
+        </div>
+
         {{#if permissao currentUser.profile.permission}}
+          <div class="col-md-8">{{>buscaProcesso pro="5"}}</div>
           {{> criarAlocarSala}}
         {{/if}}
       </div>
+
+
     </div>
   </div>
 </template>
 
 <template name="criarAlocarSala">
-  <div class="col-sm-10 offset-sm-1" id="cadastroOferta">
-      {{>buscaProcesso pro="5"}}
-	</div>
+
   {{#if mostrar}}
   	<div class="col-sm-10 offset-sm-1">
   		<div class="form-group row">

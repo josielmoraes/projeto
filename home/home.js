@@ -1,4 +1,5 @@
 
+
 Router.route('/Inicio', {
   template: 'home',
   onBeforeAction: function() {
@@ -66,7 +67,7 @@ if (Meteor.isClient) {
     },
     'perProfessor': function(p) {
       //console.log(p);
-      if (p.permission == 1 /*||p.permission==0*/ )
+      if (p.permission == 1 ||p.permission==0 )
         return true;
       else
         return false
@@ -185,6 +186,19 @@ if (Meteor.isClient) {
       //console.log('sair')
       Router.go('/')
       Meteor.logout();
+    },
+
+    'click .nav-link': function(event){
+      //event.preventDefault();
+      //$(".nav-link").removeClass("active")
+      //$(event.currentTarget).addClass("active")
+    },
+
+    'click .menu_horario a': function(event){
+     // event.preventDefault();
+      //$(".nav-link").removeClass("active")
+     // $('.menu_horario').addClass("active")
     }
+
   })
 }

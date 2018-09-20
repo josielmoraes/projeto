@@ -73,7 +73,12 @@ Processo.helpers({
 })
 
 if (Meteor.isClient) {
-
+  Template.processo.onCreated(function(){
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
+  })
   Template.processo.onDestroyed(function() {
     Session.set('aux', false);
     var tmp = Session.get("subSemestre");

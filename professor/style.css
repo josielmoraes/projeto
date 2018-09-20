@@ -1,5 +1,6 @@
 .mar {
   margin-top: 75px;
+
 }
 
 .bot {
@@ -183,3 +184,30 @@
 .bg-blue{
   background:#0A2470;
 }
+
+
+/* Menu */
+
+.dropdown-menu .dropdown-item:hover {
+  background: #ddd;
+}
+.active {
+  background: #757575;
+}
+
+.navbar-expand-lg {
+  padding: 0;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+/* Barra titulo */
+
+.titulo_pagina {
+  background: #fefefe;
+  padding: 8px 15px;
+
+}
+

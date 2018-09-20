@@ -2,9 +2,15 @@
 	{{>menu}}
 	<div class="container-fluid">
 		<div class="mar">
+
 			<div class="row">
+				<div class="col-md-4">
+					<h5>Solicitar Disciplina</h5>
+				</div>
+
 				{{#if permissao currentUser.profile.permission}}
-				{{> ofertaDisciplina}}
+					<div class="col-md-8">{{>buscaProcesso pro="0"}}</div>
+					{{> cadastroOfertaDisciplina}}
 				{{/if}}
 			</div>
 		</div>
@@ -70,7 +76,7 @@
 			</div>
 			<div class="form-group row">
 				<div class="offset-sm-2">
-					<input class="btn  input" type="submit" name="cadastrar" id="cadastrar" value="Ofertar">
+					<input class="input btn btn-primary" type="submit" name="cadastrar" id="cadastrar" value="Ofertar">
 					<input class="btn  input" type="submit" name="voltar" id="voltar" value="Voltar">
 					<input class="btn  input" type="submit" name="limpar" id="limpar" value="Limpar Campos">
 				</div>
@@ -92,15 +98,17 @@
 </template>
 
 <template name="buscaProcesso">
-	<div class="offset-sm-3 bot">
-		<label for="processoSelecionado"  class="control-label col-sm-1" ><!--Semestre--></label>
-		<div class="col-sm-4">
+	<div class="form-group row bot">
+		<label for="processoSelecionado"  class="control-label col-sm-3" >Selecione o semestre:</label>
+
+		<div class="col-sm-9">
 			<select id="processoSelecionado" class="form-control dropdown">
 				<option value=""></option>
 				{{#each val in buscaProcessos pro}}
 				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
 				{{/each}}
 			</select>
+		
 		</div>
 	</div>
 </template>

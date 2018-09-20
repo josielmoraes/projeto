@@ -13,7 +13,8 @@ import dataTablesBootstrap from 'datatables.net-bs4';
 import OfertaMateria from "/imports/collections/ofertaMateria";
 
 Router.route('/Disciplina', {
-  template: 'cadastroMateria'
+  template: 'cadastroMateria',
+ 
 })
 
 
@@ -65,6 +66,12 @@ new Tabular.Table({
 })
 
 if (Meteor.isClient) {
+  Template.cadastroMateria.onCreated(function(){
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+        $("#menu_disciplina").addClass("active");
+      });
+  })
   Template.cadastroMateria.helpers({
     'campos': function() {
       $('#codMateria').focus()

@@ -110,6 +110,10 @@ new Tabular.Table({
 
 if (Meteor.isClient) {
   Template.restricao.onCreated(function() {
+     $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_horario").addClass("active");
+      });
     var self = this;
     self.autorun(function() {
       self.subscribe("buscaProcesso");

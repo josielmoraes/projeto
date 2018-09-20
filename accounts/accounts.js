@@ -1,7 +1,7 @@
 import Tabular from 'meteor/aldeed:tabular';
 
 Router.route('/Usuario', {
-  template: 'cadastroUsuario'
+  template: 'cadastroUsuario',
 })
 
 
@@ -110,7 +110,11 @@ function validarUsuario() {
 };
 if (Meteor.isClient) {
   Template.cadastroUsuario.onCreated(function() {
-    Session.set('mostrarSubFuncao', false)
+    Session.set('mostrarSubFuncao', false);
+     $( document ).ready(function() {
+        $(".nav-link").removeClass("active")
+        $("#menu_usuario").addClass("active");
+      });
   })
   Template.cadastroUsuario.helpers({
     'logado': function(l) {
