@@ -14,7 +14,6 @@ import OfertaMateria from "/imports/collections/ofertaMateria";
 
 Router.route('/Disciplina', {
   template: 'cadastroMateria',
-
 })
 
 

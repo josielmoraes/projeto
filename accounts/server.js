@@ -22,7 +22,6 @@ Meteor.startup(() => {
   }
 
   if (Meteor.isServer) {
-
     //Meteor.users.remove({})
     //Processo.remove({})
     //Processo.update({_id:"cxNpkmdtj5JHrTK5z"},{etapas:4})
