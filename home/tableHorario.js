@@ -4,13 +4,14 @@ Router.route('/visualizarHorario', {
 
 if (Meteor.isClient) {
   Template.visualizarHorario.onCreated(function() {
-    $('body').addClass('bg-dark');
+    $('body').addClass('bg-blue');
     Session.set('validarTemplate', 'tableHorario')
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");
       self.subscribe("buscaProcesso");
       self.subscribe('curso');
+      self.subscribe("buscaTodasOferta");
     })
     //Meteor.subscribe()
   })
