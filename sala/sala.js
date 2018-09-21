@@ -67,6 +67,8 @@ if (Meteor.isClient) {
       $('#apelidoSala').val("")
       $('#Cadastrar').val("Cadastrar");
       $('#Deletar').val("Voltar");
+      $('#Deletar').addClass("btn-success");
+      $('#Deletar').removeClass("btn-danger");
       $('#localSala').focus()
       //$("#formCadastrosala").validate().resetForm();
     },
@@ -144,6 +146,8 @@ if (Meteor.isClient) {
       $('#apelidoSala').val(rowData.apelido)
       $('#Cadastrar').val("Atualizar");
       $('#Deletar').val("Deletar");
+      $('#deletar').addClass("btn-danger");
+      $('#deletar').removeClass("btn-success");
       Session.set('salaSelcionada', rowData)
     }
   })

@@ -132,6 +132,8 @@ if (Meteor.isClient) {
       $('#dataFinal').val("");
       $('#cadastrar').val("Cadastrar");
       $('#deletar').val("Voltar");
+      $('#deletar').addClass("btn-success");
+      $('#deletar').removeClass("btn-danger");
     }
   })
   Template.cadastroSemestre.events({
@@ -196,6 +198,8 @@ if (Meteor.isClient) {
       $('#dataFinal').val(rowData.dataFinal);
       $('#cadastrar').val("Atualizar");
       $('#deletar').val("Deletar");
+      $('#deletar').addClass("btn-danger");
+      $('#deletar').removeClass("btn-success");
       $('#formCadastroSemestre').valid();
       Session.set("semestre", rowData);
     }

@@ -121,7 +121,9 @@ if (Meteor.isClient) {
       $('#cadastrar').val("Cadastrar");
       $('#deletar').val("Voltar");
       $('#restricao').val(""),
-        $('#alocarSala').val("")
+        $('#alocarSala').val("");
+        $('#deletar').addClass("btn-success");
+        $('#deletar').removeClass("btn-danger");
       $('#formCadastroProcesso').validate().resetForm();
     },
     validarProcesso: function() {
@@ -232,6 +234,8 @@ if (Meteor.isClient) {
       $('#alocarSala').val(rowData.alocarSala);
       $('#cadastrar').val("Atualizar");
       $('#deletar').val("Deletar");
+      $('#deletar').addClass("btn-danger");
+      $('#deletar').removeClass("btn-success");
       Session.set('processoTable', rowData);
     }
   });

@@ -20,6 +20,7 @@ if (Meteor.isClient) {
       self.subscribe("buscaProcesso");
       self.subscribe("area");
       self.subscribe("curso");
+      self.subscribe("buscaTodasOferta");
       self.subscribe("usuarioProfessor");
     })
   })

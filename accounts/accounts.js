@@ -144,6 +144,8 @@ if (Meteor.isClient) {
       $('#siape').val("");
       $('#cadastrar').val("Cadastrar");
       $('#deletar').val("Voltar");
+      $('#deletar').addClass("btn-success");
+      $('#deletar').removeClass("btn-danger");
       Session.set('mostrarSubFuncao', false);
     },
     'permissao': function(valor) {
@@ -254,7 +256,9 @@ if (Meteor.isClient) {
         Session.set('mostrarSubFuncao', false);
       }
       $('#cadastrar').val("Atualizar");
-      $('#deletar').val("Deletar")
+      $('#deletar').val("Deletar");
+      $('#deletar').addClass("btn-danger");
+      $('#deletar').removeClass("btn-success");
       Session.set("user", rowData);
     },
     'change #funcao': function(event) {
