@@ -116,6 +116,33 @@ if (Meteor.isClient) {
       self.subscribe("buscaOferta", sem)
     })
   })
+  Template.ListaOfertas.helpers({
+     mostrar() {
+      var s = Session.get('aux');
+      return Session.get('aux');
+    },
+  })
+
+  Template.ListaOfertas.events({
+    'click tbody >tr': function(event, template) {
+      event.preventDefault();
+      $("tr").removeClass("tr_active");
+      $(event.target).closest('tr').addClass("tr_active");
+      var c = $(event.target).attr('class');
+      var dataTable = $(event.target).closest('table').DataTable();
+      var rowData = dataTable.row(event.currentTarget).data();
+      if (c == "removerOferta") {
+        $(event.target).closest('table').removeClass('selected');
+        Meteor.call('removerOfertaMateria', rowData._id)
+        Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
+      } else {
+        Session.set('rowData', rowData);
+        $('#cadastrar').val("Atualizar")
+
+        atualizar();
+      }
+    },
+  })
 
   Template.cadastroOfertaDisciplina.helpers({
     buscarArea() {

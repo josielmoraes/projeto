@@ -262,3 +262,26 @@ input.error {
 label.error {
   color: #c00000;
 }
+
+
+/* forms */
+
+#formCadastroProcesso {
+  border-bottom: 1px solid #d1cfcf;
+  padding:10px;
+  margin-bottom: 15px;
+}
+
+.submateria {
+  padding: 10px 5px 0;
+}
+.submateria_1, .submateria_3, .submateria_5 {
+  background: #ccc;
+}
+
+
+/* listas */
+
+.tr_active {
+  background-color: #d2e2ff !important;
+}

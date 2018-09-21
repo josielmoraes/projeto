@@ -2,71 +2,75 @@
 	{{>menu}}
 	<div class="container-fluid">
 		<div class="mar">
-			<div class="row ">
+	
 				{{#if permissao currentUser.profile.permission}}
 				{{> cadastroProcesso}}
 				{{/if}}
-			</div>
+			
 		</div>
 	</div>
 </template>
 
 <template name="cadastroProcesso">
-	<div class="col-sm-10 offset-sm-1">
-		<form name="formCadatroProcesso" id="formCadastroProcesso" class="form-horizontal offset-sm-2">
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="semestreSelecionado">Semestre Letivo </label>
-				<div class="col-sm-3">
-					{{> buscaSemestre}}
-				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="dataLimite">Data limite para pré-oferta matéria </label>
-				<div class="col-sm-3">
+		<form name="formCadatroProcesso" id="formCadastroProcesso" class="form-horizontal">
+			<div class="row">
+				<div class="form-group col-sm-3">
+					<label  class="control-label" for="semestreSelecionado">Semestre Letivo </label>
+					{{> buscaSemestre}}
+					
+				</div>
+
+				<div class="form-group  col-sm-3">
+					<label  class="control-label" for="dataLimite">Data limite para pré-oferta matéria </label>
 					<input type="date" name="dataLimite" id="dataLimite"  class="form-control">
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="alocarProfessor">Data limite para alocar professor </label>
-				<div class="col-sm-3">
+				<div class="form-group col-sm-3">
+					<label  class="control-label" for="alocarProfessor">Data limite para alocar professor </label>
 					<input type="date" name="alocarProfessor" id="alocarProfessor"  class="form-control" >
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="aprovarProcesso">Data limite para confirmar </label>
-				<div class="col-sm-3">
+
+				<div class="form-group col-sm-3">
+					<label  class="control-label" for="aprovarProcesso">Data limite para confirmar </label>
 					<input type="date" name="aprovarProcesso" id="aprovarProcesso" class="form-control">
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="restricao">Data limite para restrição </label>
-				<div class="col-sm-3">
+				<div class="form-group col-sm-3">
+					<label  class="control-label " for="restricao">Data limite para restrição </label>
 					<input type="date" name="restricao" id="restricao"  class="form-control">
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="criarHorario">Data limite para criar horário </label>
-				<div class="col-sm-3">
+				<div class="form-group col-sm-3">
+					<label  class="control-label " for="criarHorario">Data limite para criar horário </label>
 					<input type="date" name="criarHorario" id="criarHorario"  class="form-control">
 				</div>
-			</div>
 
-			<div class="form-group row">
-				<label  class="control-label col-sm-3" for="alocarSala">Data limite para alocar sala </label>
-				<div class="col-sm-3">
+				<div class="form-group col-sm-3">
+					<label  class="control-label " for="alocarSala">Data limite para alocar sala </label>
 					<input type="date" name="alocarSala" id="alocarSala"  class="form-control">
 				</div>
-			</div>
 
-			<div class="form-group row">
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			<div class="form-group ">
 				<label class="control-label offset-sm-3" name="erro" id="erro"></label>
 			</div>
-			<div class="form-group row">
+			<div class="form-group ">
 				<div class="offset-sm-3">
 					<input type="submit" class="input btn btn-primary" name="cadastrar" id="cadastrar" value="Cadastrar">
 					<input type="submit" class="input btn btn-success" name="deletar" id="deletar" value="Voltar">
@@ -74,7 +78,7 @@
 				</div>
 			</div>
 		</form>
-	</div>
+	
 	<div class="col-sm-10 offset-sm-1">
 		{{> tabular table=TabularTables.Processo class="table table-striped table-bordered table-condensed"}}
 	</div>
