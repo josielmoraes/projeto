@@ -251,3 +251,14 @@
   border: 1px solid transparent;
   width: 100%;
 }
+
+
+/* validacao forms */
+
+input.error {
+  background: #fbeeee;
+  border: 1px solid #c00000;
+}
+label.error {
+  color: #c00000;
+}
