@@ -24,7 +24,9 @@ Meteor.startup(() => {
   if (Meteor.isServer) {
     //Meteor.users.remove({})
     //Processo.remove({})
-    //Processo.update({_id:"cxNpkmdtj5JHrTK5z"},{etapas:4})
+    //Processo.update({_id: "u3j8vcLgZksTz9XXM"},{$set: {etapas:5}})
+    //Processo.update({_id: "EdCitiKjLri2HvB6p"},{$set: {etapas:1}})
+   // Processo.update({_id: "GboWc5KER39mywWDx"},{$set: {etapas:1}})
     //OfertaMateria.remove({});
     //Meteor.users.remove({})
     //ROOT_URL="http://192.168.0.108:3000" meteor run

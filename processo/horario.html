@@ -2,19 +2,27 @@
 	{{>menu}}
 	<div class="container-fluid">
 		<div class="mar">
+			<div class="card">
+				<div class="card-header">
+					<div class="row">
+				        <div class="col-md-4">
+				          <h5>Criar horário</h5>
+				        </div>
 
+				        {{#if permissao currentUser.profile.permission}}
+				          <div class="col-md-8">{{>buscaProcesso pro="4"}}</div>
+				        {{/if}}
+			      	</div>
 
-			 <div class="row">
-		        <div class="col-md-4">
-		          <h5>Criar horário</h5>
-		        </div>
+				</div>
+				<div class="card-body">
+					{{#if permissao currentUser.profile.permission}}
+			          {{> criarHorario}}
+			        {{/if}}
+				</div>
+			</div>
 
-		        {{#if permissao currentUser.profile.permission}}
-		          <div class="col-md-8">{{>buscaProcesso pro="4"}}</div>
-		          {{> criarHorario}}
-		        {{/if}}
-		      </div>
-
+			
 		</div>
 	</div>
 </template>
@@ -23,7 +31,7 @@
 
 
 	{{#if mostrar}}
-	<div class="col-sm-10 offset-sm-1 ">
+	<div class="col-md-12">
 		<div class="form-group row">
 			<label for="cursoSelecionado"  class="control-label col-sm-1" >Curso:</label>
 			<div class="col-sm-4">
@@ -47,7 +55,7 @@
 			</div>
 		</div>
 		{{#if mostrarTabela}}
-		<div class="col-sm-12">
+		<div class="col-md-12">
 			{{> tabelaHorario}}
 		</div>
 		{{/if}}
@@ -70,7 +78,7 @@
 	{{#each tmp in turmasTabela}}
 	<p>Turma {{tmp}}</p>
 	<table id='tableHorario{{tmp}}' cellspacing="10" class="tableMargin">
-		<tr>
+		<tr class="cabecalho">
 			{{#each val in diasSemana}}
 			<th class="tamanho">{{val}}</th>
 			{{/each}}
@@ -109,7 +117,7 @@
 	{{#each tmp in turmasTabela}}
 	<p>Turma {{tmp}}</p>
 	<table id='tableHorario{{tmp}}' cellspacing="10" class="tableMargin">
-		<tr>
+		<tr class="cabecalho ">
 			{{#each val in diasSemana}}
 			<th class="tamanho">{{val}}</th>
 			{{/each}}
@@ -120,7 +128,7 @@
 			{{#each val in diasSemana}}
 			{{#let d=@index }}
 			{{#if criarTabela d }}
-			<td class="tamanho">{{imprimir aux}}</td>
+			<td class="tamanho td_label">{{imprimir aux}}</td>
 			{{else}}
 			<td class="tamanho">
 				{{#if validarTemplate}}

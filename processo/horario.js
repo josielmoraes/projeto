@@ -93,7 +93,7 @@ if (Meteor.isClient) {
     mostrarTabela() {
       var curso = Session.get("cursoSelecionado");
       var sem = Session.get('periodoSelecionado');
-      //console.log(curso)
+      console.log(curso,sem)
       if (curso == "") {
         Session.set('sairOption', false)
         return false;
@@ -154,7 +154,7 @@ if (Meteor.isClient) {
     },
     'mostrarHorario': function() {
       var tmp = Session.get('validarTemplate')
-      //console.log(tmp)
+      console.log(tmp)
       if (tmp == "tableHorario") {
         return true
       } else {
