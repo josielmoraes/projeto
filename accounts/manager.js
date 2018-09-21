@@ -24,7 +24,7 @@ Router.route('/reset/:token', {
 });
 if (Meteor.isClient) {
   Template.ForgotPassword.onCreated(function() {
-    $('body').addClass('bg-dark')
+    $('body').addClass('bg-blue')
   })
   Template.login.onCreated(function() {
     Session.set('showModal', false);

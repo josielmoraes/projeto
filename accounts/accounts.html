@@ -67,6 +67,11 @@
 
 
 <template name="ForgotPassword">
+	<div class="bar_login">
+		<div class="container">
+			<img src="/images/logo_v.png">
+		</div>
+	</div>
 	<div class="container col-sm-3" style="margin-top:200px;" >
 		<div class="card card-login mx-auto mt-5">
 			<div class="card-header">Esqueceu a senha</div>
@@ -76,7 +81,7 @@
 						<label for="emailLogin">Email:</label>
 						<input id="forgotPasswordEmail" type="text" name="email" class="form-control">
 					</div>
-					<input type="submit" class="btn btn-block" value="Enviar">
+					<input type="submit" class="btn btn-block btn-primary" value="Enviar">
 				</form>
 				<div class="text-center">
 					<a class="d-block small" href="{{pathFor route= 'Inicio'}}" >Voltar para inicio</a>
@@ -103,7 +108,7 @@
 					<div class="form-group">
 						<label name="erroLogin" id="erroLogin"></label>
 					</div>
-					<input type="submit" class="btn btn-block" value="Entrar">
+					<input type="submit" class="btn btn-block btn-primary" value="Entrar">
 				</form>
 				<div class="text-center">
 					<a class="d-block small" href="{{pathFor route= 'esqueciSenha'}}" id="esqueciSenha">Esqueceu a senha?</a>
@@ -116,6 +121,11 @@
 
 
 <template name="ResetPassword">
+	<div class="bar_login">
+		<div class="container">
+			<img src="/images/logo_v.png">
+		</div>
+	</div>
 	<div class="container col-sm-4" style="margin-top:200px;" >
 		<div class="card card-login mx-auto mt-5">
 			<div class="card-header">Recuperação de senha</div>
@@ -135,7 +145,7 @@
 					</div>
 					<div class="form-group row">
 						<div class="col-sm-offset-4 col-sm-10">
-							<input type="submit" class="btn" name="confirmar" id="confirmar" value="Confirmar">
+							<input type="submit" class="btn btn-primary" name="confirmar" id="confirmar" value="Confirmar">
 							<input type="submit" class="btn" name="cancelar" id="cancelar" value="Cancelar">
 						</div>
 					</div>

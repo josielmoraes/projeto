@@ -226,3 +226,28 @@
   text-align: right;
   background: #e3e3e3;
 }
+
+/* Login */
+.bar_login {
+  background: #fff;
+  min-height: 50px;
+  width: 100%;
+  display: block;
+}
+
+.bar_login img {
+  position: absolute;
+  top: 2px;
+  height: 150px;
+  left: 50%;
+  margin-left: -80px;
+}
+#erroLogin-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  width: 100%;
+}
