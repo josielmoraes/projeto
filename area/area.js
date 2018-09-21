@@ -59,6 +59,8 @@ if (Meteor.isClient) {
       $('#areaSigla').val("");
       $('#cadastrar').val("Cadastrar");
       $('#deletar').val("Voltar");
+      $('#deletar').addClass("btn-success");
+      $('#deletar').removeClass("btn-danger");
       $('#formCadastroArea').validate().resetForm();
     },
     homeGo() {
@@ -111,6 +113,8 @@ if (Meteor.isClient) {
       $('#areaSigla').val(rowData.sigla);
       $('#cadastrar').val("Atualizar");
       $('#deletar').val("Deletar");
+      $('#deletar').addClass("btn-danger");
+      $('#deletar').removeClass("btn-success");
       $('#formCadastroArea').valid();
       Session.set("area", rowData);
     },

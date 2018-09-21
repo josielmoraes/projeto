@@ -42,10 +42,12 @@ if (Meteor.isClient) {
       $(".nav-link").removeClass("active")
       $("#menu_horario").addClass("active");
       });
+      var pro = Session.get('processoSelecionado');
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");
       self.subscribe("buscaProcesso");
+      self.subscribe("buscaTodasOferta");
       self.subscribe("curso");
     })
   })
@@ -220,6 +222,7 @@ if (Meteor.isClient) {
     'validarTemplate': function() {
       var tmp = Session.get('validarTemplate')
       //console.log(tmp)
+
       if (tmp == "criarHorario") {
         return true
       } else {
@@ -628,9 +631,10 @@ if (Meteor.isClient) {
       }
     },
 
-    'mouseenter .sel': function(event) {
+    'focus .sel': function(event) {
       event.preventDefault();
       var val = $(event.target).val()
+      console.log(val);
       Session.set('anterior', val)
     }
   })

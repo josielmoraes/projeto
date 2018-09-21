@@ -170,7 +170,7 @@ if (Meteor.isClient) {
       $('#turmaMateria').focus()
       $('#subMateria').attr('disabled', false)
       $('#subMateria').attr('min', 0)
-      $("#cadastrar").val('Ofertar')
+      $("#cadastrar").val('Ofertar');
       Session.set('materiaSelecionada', "")
       Session.set('areaSelecionada', "");
       Session.set('setSubMateria', 0);
@@ -850,6 +850,9 @@ if (Meteor.isServer) {
     return OfertaMateria.find({
       Processo: processo
     })
+  })
+  Meteor.publish("buscaTodasOferta", function(processo) {
+    return OfertaMateria.find()
   })
 
 }

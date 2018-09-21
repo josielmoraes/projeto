@@ -14,7 +14,7 @@ import OfertaMateria from "/imports/collections/ofertaMateria";
 
 Router.route('/Disciplina', {
   template: 'cadastroMateria',
- 
+
 })
 
 
@@ -81,6 +81,8 @@ if (Meteor.isClient) {
       $('#aulaSemanal').val("");
       $('#Cadastrar').val("Cadastrar");
       $('#Deletar').val("Voltar");
+      $('#Deletar').addClass("btn-success");
+      $('#Deletar').removeClass("btn-danger");
       $('#formCadastroMateria').validate().resetForm();
       $('#erro').val("");
     },
@@ -225,6 +227,8 @@ if (Meteor.isClient) {
       $('#divisao').val(rowData.dividirMateria);
       $('#Cadastrar').val("Atualizar");
       $('#Deletar').val("Deletar")
+      $('#Deletar').addClass("btn-danger");
+      $('#Deletar').removeClass("btn-success");
       Session.set('materia', rowData)
       //Template.instance().variavelReac.set(true);
     },

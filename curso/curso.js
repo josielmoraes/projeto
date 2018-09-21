@@ -68,8 +68,8 @@ if (Meteor.isClient) {
 
   Template.cadastroCurso.helpers({
     colorirMenu(){
-     
-      
+
+
     },
     campos() {
       $('#nomeCurso').focus()
@@ -77,6 +77,8 @@ if (Meteor.isClient) {
       $('#siglaCurso').val("");
       $('#cadastrarCurso').val("Cadastrar");
       $('#deletarCurso').val("Voltar")
+      $('#deletarCurso').addClass("btn-success");
+      $('#deletarCurso').removeClass("btn-danger");
     },
     'permissao': function(valor) {
       if (valor == 0)
@@ -131,7 +133,9 @@ if (Meteor.isClient) {
       $('#nomeCurso').val(rowData.nome);
       $('#siglaCurso').val(rowData.sigla);
       $('#cadastrarCurso').val("Atualizar");
-      $('#deletarCurso').val("Deletar")
+      $('#deletarCurso').val("Deletar");
+      $('#deletarCurso').addClass("btn-danger");
+      $('#deletarCurso').removeClass("btn-success");
       Session.set("curso", rowData);
     }
   });
