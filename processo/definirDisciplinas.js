@@ -142,6 +142,20 @@ if (Meteor.isClient) {
         atualizar();
       }
     },
+
+    'click #confirmaOferta': function(event) {
+      event.preventDefault();
+      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 1, function(e, r) {
+        if (e) {
+
+        } else {
+          Session.set('aux', false);
+          Session.set('processoSelecionado', "");
+          Bert.alert("Pré-oferta realizada com sucesso", 'default', 'growl-top-right', 'fa-bell')
+        }
+      })
+    }
+    
   })
 
   Template.cadastroOfertaDisciplina.helpers({

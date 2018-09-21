@@ -398,7 +398,7 @@ if (Meteor.isClient) {
     }
 
   })
-  Template.cadastroAlocarProfessor.events({
+  Template.ListaDisciplinas.events({
     'click table >  tbody >tr': function(event, template) {
       event.preventDefault();
       var id = event.currentTarget.id;
@@ -417,7 +417,30 @@ if (Meteor.isClient) {
         }
         Template.cadastroAlocarProfessor.__helpers.get('setRowDataProfessor').call();
       }
-    },
+    }
+  })
+  Template.ListaOfertasProfessores.events({
+    'click table >  tbody >tr': function(event, template) {
+      event.preventDefault();
+      var id = event.currentTarget.id;
+      var dataTable = $(event.target).closest('table').DataTable();
+      var rowData = dataTable.row(event.currentTarget).data();
+      Session.set('setRowDataProfessor', rowData);
+      if (id == "escolha") {
+        Session.set('professorSelecionado', "");
+        Template.cadastroAlocarProfessor.__helpers.get('setRowDataProfessor').call();
+      } else if (id == "professor") {
+        var prof = rowData.Professor;
+        if (prof) {
+          Session.set('professorSelecionado', prof);
+        } else {
+          Session.set('professorSelecionado', "");
+        }
+        Template.cadastroAlocarProfessor.__helpers.get('setRowDataProfessor').call();
+      }
+    }
+  })
+  Template.cadastroAlocarProfessor.events({
 
     "autocompleteselect #professor": function(event, template, doc) {
       event.preventDefault();
@@ -500,7 +523,39 @@ if (Meteor.isClient) {
         Template.cadastroAlocarProfessor.__helpers.get('campos').call();
       }
     },
-    'click #finalizar': function(event) {
+    
+    'click #plus': function(event) {
+      //console.log("plusss")
+      event.preventDefault();
+      var tmp = Session.get('plus');
+      Session.set('plus', tmp + 1)
+      //console.log(Session.get('plus'))
+    },
+    'click #less': function(event) {
+      event.preventDefault();
+      var tmp = Session.get('plus');
+      if (tmp > 0) {
+        Session.set('plus', tmp - 1)
+      }
+    }
+  })
+
+  Template.ListaDisciplinas.helpers({
+     mostrar() {
+      var s = Session.get('aux');
+      return Session.get('aux');
+    },
+  })
+
+  Template.ListaOfertasProfessores.helpers({
+     mostrar() {
+      var s = Session.get('aux');
+      return Session.get('aux');
+    },
+  })
+
+  Template.ListaOfertasProfessores.events({
+     'click #finalizar': function(event) {
       event.preventDefault();
       var oferta = OfertaMateria.findOne({
         Processo: Session.get('processoSelecionado'),
@@ -521,21 +576,9 @@ if (Meteor.isClient) {
         })
       }
     },
-    'click #plus': function(event) {
-      //console.log("plusss")
-      event.preventDefault();
-      var tmp = Session.get('plus');
-      Session.set('plus', tmp + 1)
-      //console.log(Session.get('plus'))
-    },
-    'click #less': function(event) {
-      event.preventDefault();
-      var tmp = Session.get('plus');
-      if (tmp > 0) {
-        Session.set('plus', tmp - 1)
-      }
-    }
   })
+
+
 
 }
 if (Meteor.isServer) {
