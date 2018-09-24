@@ -67,7 +67,7 @@ if (Meteor.isClient) {
     },
     'perProfessor': function(p) {
       //console.log(p);
-      if (p.permission == 1 ||p.permission==0 )
+      if (p.permission == 1 )//||p.permission==0 )
         return true;
       else
         return false

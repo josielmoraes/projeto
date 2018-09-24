@@ -22,14 +22,59 @@ Meteor.startup(() => {
   }
 
   if (Meteor.isServer) {
-    //Meteor.users.remove({})
-    //Processo.remove({})
-    //Processo.update({_id: "u3j8vcLgZksTz9XXM"},{$set: {etapas:5}})
-    //Processo.update({_id: "EdCitiKjLri2HvB6p"},{$set: {etapas:1}})
-   // Processo.update({_id: "GboWc5KER39mywWDx"},{$set: {etapas:1}})
-    //OfertaMateria.remove({});
-    //Meteor.users.remove({})
-    //ROOT_URL="http://192.168.0.108:3000" meteor run
+    /*
+  var fs = Npm.require('fs');
+  // Assume that the csv file is in yourApp/public/data folder
+  var data = fs.readFileSync(process.env.PWD + '/public/usuarios.csv', 'utf8');
+  var array=new Array();
+  var tmp=new Array();
+  var string="";
+  var cont=0;
+  var total="";
+  for(i=0;i<data.length;i++){
+
+    if(data[i]=='\n'){
+      tmp[cont]=string;
+      string="";
+      array.push(tmp);
+      cont=0
+      tmp=new Array();
+    }else{
+      if(data[i]==';' ){
+          tmp[cont]=string;
+          cont++;
+          string="";
+      }else{
+          string+=data[i];
+          total+=data[i];
+      }
+    }
+  }
+  var json=new Array()
+  for(x=1;x<array.length;x++){
+    name=array[x][1]
+    r=name.replace(/\s+/g, ' ');
+    name=name.toLowerCase();
+    user={
+      username:name,
+      email:array[x][3],
+      password: 'tmp1234',
+      profile:{
+        name:array[x][1],
+        siape:array[x][2],
+        permission:1
+      }
+    }
+    if (Meteor.users.findOne({emails: { $elemMatch: { address: user.email }}}) == null) {
+      var res="";
+      res=Accounts.createUser({
+        email: user.email,
+        password: user.password,
+        profile: user.profile
+      })
+
+    }
+  }*/
     smtp = {
       username: 'sistemasieng@ufmt.br', // eg: server@gentlenode.com
       password: 'teste123', // eg: 3eeP1gtizk5eziohfervU
@@ -38,38 +83,6 @@ Meteor.startup(() => {
     }
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
     process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
-    let templateEmailrecovery = {
-      from: function() {
-        return smtp.username;
-      },
-      subject: function(user) {
-        return 'Recuperação de Senha';
-      },
-      text: function(user, url) {
-        var newUrl = url.replace('#/reset-password', 'reset');
-        return 'Olá,\nPara recuperar sua senha, clique no link...\n' + newUrl;;
-      }
-    }
-    let templateEmailEnroll = {
-      from: function() {
-        return smtp.username;
-      },
-      subject: function(user) {
-        return 'Cadastro ';
-      },
-      text: function(user, url) {
-        var newUrl = url.replace('#/reset-password', 'reset');
-        return 'Olá,\n Você foi cadastro no sistema. Para recuperar sua senha, clique no link...\n' + newUrl;;
-      }
-    }
-    //Accounts.emailTemplates.resetPassword = templateEmailrecovery;
-    //Accounts.emailTemplates.enrollAccount=templateEmailEnroll;
-
-    //console.log(us);
-    var us = Meteor.users.find({
-      username: 'root'
-    }).fetch();
-    //console.log(us);
     var r = {
       username: 'root',
       email: 'josielloureirodemoraes@gmail.com',
@@ -91,13 +104,22 @@ Meteor.startup(() => {
     if (Meteor.users.findOne({
         username: r.username
       }) == null) {
-      Accounts.createUser({
+        var out=""
+      out=Accounts.createUser({
         username: r.username,
         email: r.email,
         password: r.password,
         profile: r.profile
 
-      });
+      });/*
+      if(out !=''){
+        Email.send({
+        from:smtp.username,
+        to:r.email,
+        subject:'Cadastro no sistema de horario',
+        text:'Voce foi cadastrado no site de horário da Faculdade de Engenharias do Campus de Várzea Grande.\n\nLogin:'+r.email+'\nSenha:'+r.password+'\nNo endereço: '
+      })
+    }*/
     }
     if (Meteor.users.findOne({
         username: a.username
