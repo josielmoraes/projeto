@@ -8,7 +8,9 @@ import {
 
 
 Meteor.startup(() => {
+
   if (Meteor.isClient) {
+    //  document.title = "Sistema de horário";
     $('input').attr('autocomplete', 'off');
 
     Meteor.loginWithPassword('root', '12', function(e, r) {

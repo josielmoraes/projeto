@@ -1,7 +1,10 @@
 <head>
+	<link rel="icon"  href="../images/icon.png">
+	<title> Sistema de horário</title>
 </head>
-
 <template name="home">
+
+
 	{{#if currentUser}}
 	{{>menu}}
 	<div class="mar">
@@ -12,6 +15,7 @@
 	{{/if}}
 </template>
 <template name="menu">
+
 	{{#if currentUser}}
 	<div class="navbar navbar-expand-lg navbar-dark bg-blue fixed-top" id="mainNav">
 		<a class="navbar-brand" href="{{pathFor route= 'Inicio'}}">
