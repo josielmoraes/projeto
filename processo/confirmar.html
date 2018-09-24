@@ -10,7 +10,7 @@
 				        </div>
 
 				        {{#if permissao currentUser.profile.permission}}
-				        	<div class="col-md-8">{{>buscaProcesso pro="2"}}</div>				         
+				        	<div class="col-md-8">{{>buscaProcesso pro="2"}}</div>
 				        {{/if}}
 			      	</div>
 				</div>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 
-			
+
 		</div>
 	</div>
 </template>
@@ -29,9 +29,9 @@
 	{{#if mostrar}}
 		<div class="col-md-12">
 				<p></p>
-				<label>Visualização por: </label>
-				<label class="radio-inline"><input type="radio" name="optradio" class="radioB" id="radioArea">Area</label>
-				<label class="radio-inline"><input type="radio" name="optradio" class="radioB" id="radioProfessor">Professor</label>
+				<label class="mr-2">Visualização por: </label>
+				<label class="radio-inline mr-2"><input type="radio" name="optradio" class="radioB " id="radioArea">Área</label>
+				<label class="radio-inline mr-2"><input type="radio" name="optradio" class="radioB" id="radioProfessor">Professor</label>
 
 		</div>
 		<div class="row">
@@ -51,14 +51,14 @@
 				<div class="col-md-4">
 					<div class="card text-white bg-secondary mb-3">
 						<div class="card-header">
-							
+
 							<div class="row">
 								<label class="control-label col-md-2">Turma:</label>
 								<label class="control-label col-md-3" id="valorTurmaConfirmar"></label>
 								<label class="control-label col-md-3"> Disciplina:</label>
 								<label class="control-label col-md-3" id="valorMateriaConfirmar"></label>
 							</div>
-								
+
 						</div>
 
 						<div class="card-body">
@@ -67,12 +67,12 @@
 									<div class="form-group col-md-6">
 										<label  class="control-label" for="professor">Professor</label>
 										{{> inputAutocomplete settings=settingsProfessor id='professor' name="professor" autocomplete="off" class="form-control"}}
-												
+
 									</div>
 
 									<div class="form-group col-md-6">
 										<label  class="control-label" for="professor">Area: </label>
-					
+
 													<!--{{> inputAutocomplete settings=settingsArea id='area' name="area" autocomplete="off" class="form-control"}}-->
 										<select id="area" name="area" class="form-control dropdown">
 											<option val=""></option>
@@ -80,12 +80,12 @@
 												<option value="{{val._id}}">{{val.nome}}</option>
 											{{/each}}
 										</select>
-											
+
 									</div>
 
 									 <div class="form-group col-md-6">
 										<label  class="control-label" for="professor">Curso: </label>
-								
+
 												<!--{{> inputAutocomplete settings=settingsCurso id='curso' name="curso" autocomplete="off" class="form-control"}}-->
 										<select id="curso" name="curso" class="form-control dropdown">
 											<option val=""></option>

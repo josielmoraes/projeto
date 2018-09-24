@@ -20,7 +20,7 @@
 							{{> ListaDisciplinas }}
 						</div>
 
-						<div class="col-md-5">	
+						<div class="col-md-5">
 							{{#if permissao currentUser.profile.permission}}
 								{{> cadastroAlocarProfessor}}
 							{{/if}}
@@ -46,20 +46,20 @@
 	{{#if mostrar}}
 		<div class="card text-white bg-secondary mb-3">
 			<div class="card-header">
-				
+
 				<div class="row">
 					<label class="control-label col-md-2">Turma:</label>
 					<label class="control-label col-md-3" id="valorTurma"></label>
 					<label class="control-label col-md-3"> Disciplina:</label>
 					<label class="control-label col-md-3" id="valorMateria"></label>
 				</div>
-					
+
 			</div>
 
 			<div class="card-body">
 
 				<form id="formAlocarProfessor" name="formAlocarProfessor" class="form-horizontal">
-					<div class="row">					
+					<div class="row">
 
 						<div class="form-group col-md-6">
 							<label  class="control-label" for="professor">Professor:</label>
@@ -67,7 +67,7 @@
 						</div>
 
 						<div class="form-group col-md-6">
-							<label  class="control-label" for="professor">Area: </label>
+							<label  class="control-label" for="professor">Área: </label>
 
 							<select class="form-control dropdown" id="area">
 								<option value=""></option>
@@ -143,9 +143,9 @@
 				</form>
 			</div>
 		</div>
-	
 
-		
+
+
 	{{/if}}
 </template>
 

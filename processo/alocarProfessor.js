@@ -14,7 +14,7 @@ new Tabular.Table({
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia"
+      title: "Disciplina"
     },
     {
       data: "Professor.profile.name",
@@ -34,7 +34,7 @@ new Tabular.Table({
             horas += parseInt(f[x].cargaHoraria);
             aulas += parseInt(f[x].aulaSemanal);
           }
-          $(cell).attr('title', 'Aulas: ' + aulas + ' horas semestre: ' + horas)
+          $(cell).attr('title', 'Aulas semanais: ' + aulas + '. Horas semestre: ' + horas)
         }
       },
     },
@@ -91,7 +91,7 @@ new Tabular.Table({
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia"
+      title: "Disciplina"
     },
     {
       data: "Tipo",
@@ -210,7 +210,7 @@ if (Meteor.isClient) {
       self.subscribe("acharSemetre");
       self.subscribe("area");
       self.subscribe("curso");
-      self.subscribe("usuarioProfessor");
+      self.subscribe("buscaProfessores");
     })
   })
   Template.cadastroAlocarProfessor.onDestroyed(function() {
@@ -242,22 +242,8 @@ if (Meteor.isClient) {
     },
   })
   Template.cadastroAlocarProfessor.helpers({
-    selectEscolha: function() {
-      var processo = Session.get('processoSelecionado');
-      return {
-        Processo: processo,
-        /*Professor:"",*/ Curso: ""
-      }
-    },
-    selectProfessor: function() {
-      var processo = Session.get('processoSelecionado');
-      return {
-        Processo: processo,
-        Curso: {
-          $ne: ""
-        }
-      }
-    },
+
+
     mostrar() {
       var s = Session.get('aux');
       return Session.get('aux');
@@ -523,7 +509,7 @@ if (Meteor.isClient) {
         Template.cadastroAlocarProfessor.__helpers.get('campos').call();
       }
     },
-    
+
     'click #plus': function(event) {
       //console.log("plusss")
       event.preventDefault();
@@ -545,12 +531,28 @@ if (Meteor.isClient) {
       var s = Session.get('aux');
       return Session.get('aux');
     },
+    selectEscolha: function() {
+      var processo = Session.get('processoSelecionado');
+      return {
+        Processo: processo,
+        /*Professor:"",*/ Curso: ""
+      }
+    },
   })
 
   Template.ListaOfertasProfessores.helpers({
      mostrar() {
       var s = Session.get('aux');
       return Session.get('aux');
+    },
+    selectProfessor: function() {
+      var processo = Session.get('processoSelecionado');
+      return {
+        Processo: processo,
+        Curso: {
+          $ne: ""
+        }
+      }
     },
   })
 

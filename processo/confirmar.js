@@ -20,7 +20,7 @@ new Tabular.Table({
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia",
+      title: "Disciplina",
       orderable: false
     },
     {
@@ -104,13 +104,13 @@ new Tabular.Table({
   ],
   columns: [{
       data: "Area.nome",
-      title: "Area",
+      title: "Área",
       className: "mostrar",
       visible: false
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia",
+      title: "Disciplina",
       orderable: false
     },
     {
@@ -129,7 +129,7 @@ new Tabular.Table({
       orderable: false
     },
     {
-      data: "Professor.nome",
+      data: "Professor.profile.name",
       title: "Professor",
       orderable: false
     },

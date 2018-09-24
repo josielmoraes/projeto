@@ -14,7 +14,7 @@ new Tabular.Table({
     },
     {
       data: "periodoLetivo",
-      title: "Periodo"
+      title: "Período"
     },
     {
       data: "dataInicio",

@@ -14,7 +14,7 @@ new Tabular.Table({
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia"
+      title: "Disciplina"
     },
   ],
   responsive: true,
@@ -61,7 +61,7 @@ new Tabular.Table({
     },
     {
       data: "Materia.nomeMateria",
-      title: "Materia"
+      title: "Disciplina"
     },
   ],
   extraFields: [

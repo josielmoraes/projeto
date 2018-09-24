@@ -21,7 +21,7 @@
 						{{> cadastroOfertaDisciplina}}
 					{{/if}}
 				</div>
-			</div>	
+			</div>
 			{{> ListaOfertas }}
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 				<div class="form-group col-md-2">
 					<label  class="control-label " for="turmaMateria">Turma</label>
 					<input type="number" min="1" max="5" value="1" name="turmaMateria" id="turmaMateria" class="form-control">
-				</div>	
+				</div>
 
 				<div class="form-group col-md-2">
 					<label  class="control-label " for="materia">Disciplina</label>
@@ -53,7 +53,7 @@
 				</div>
 
 				<div class="form-group col-md-2">
-					<label  class="control-label" for="area">Sugestão Area</label>
+					<label  class="control-label" for="area">Sugestão Área</label>
 
 					<!--{{> inputAutocomplete settings=settings2 id='area' name="area" autocomplete="off" class="form-control"}}-->
 					<select id="area" name="area" class="form-control dropdown">
@@ -62,7 +62,7 @@
 							<option value="{{val._id}}">{{val.nome}}</option>
 						{{/each}}
 					</select>
-			
+
 				</div>
 
 				<div class="form-group col-md-2">
@@ -70,7 +70,7 @@
 					<select id="tipoAula" class="form-control dropdown">
 						<option value="teorica">Teórica</option>
 						<option value="pratica">Prática</option>
-					</select>			
+					</select>
 				</div>
 
 				<div class="form-group col-md-2">
@@ -85,11 +85,11 @@
 			</div>
 
 
-			
-			
-			
-			
-			
+
+
+
+
+
 			<div class="form-group row">
 				<div class="offset-sm-2">
 					<input class="input btn btn-primary" type="submit" name="cadastrar" id="cadastrar" value="Ofertar">
@@ -98,11 +98,11 @@
 				</div>
 			</div>
 		</form>
-	
+
 	{{#if validar}}{{/if}}
 	{{/if}}
 
-	
+
 
 </template>
 
@@ -134,7 +134,7 @@
 </template>
 
 <template name="subMateria">
-	
+
 	{{#each sub in habilitarSubMateria}}
 		<div class="submateria submateria_{{sub}}">
 
@@ -151,7 +151,7 @@
 								<input type="number" min="1" max="5"  id="subTurma{{sub}}" name="subTurma{{sub}}" class="form-control">
 							</div>
 						</div>
-						
+
 					</div>
 
 					<div class="form-group col-md-2">
@@ -162,7 +162,7 @@
 							</div>
 						</div>
 
-						
+
 					</div>
 
 					<div class="form-group col-md-3">
@@ -207,5 +207,5 @@
 			<br>
 			<br>
 		</div>
-	{{/if}}	
+	{{/if}}
 </template>

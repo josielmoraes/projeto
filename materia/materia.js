@@ -35,7 +35,7 @@ new Tabular.Table({
     },
     {
       data: "aulaSemanal",
-      title: "Aulas Semanal"
+      title: "Aulas Semanais"
     },
   ],
   responsive: true,

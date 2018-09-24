@@ -25,7 +25,7 @@ new Tabular.Table({
     },
     {
       data: "Area.nome",
-      title: "Area"
+      title: "Área"
     },
     {
       data: "Tipo",
@@ -155,7 +155,7 @@ if (Meteor.isClient) {
         }
       })
     }
-    
+
   })
 
   Template.cadastroOfertaDisciplina.helpers({
@@ -894,6 +894,9 @@ if (Meteor.isServer) {
   })
   Meteor.publish("buscaTodasOferta", function(processo) {
     return OfertaMateria.find()
+  })
+  Meteor.publish("buscaProfessores", function(processo) {
+    return Meteor.users.find({"profile.permission" : 1})
   })
 
 }
