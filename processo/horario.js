@@ -111,6 +111,18 @@ if (Meteor.isClient) {
 
   })
   Template.criarHorario.events({
+    'click #finalizarHorario':function(event){
+      event.preventDefault();
+      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 5, function(e, r) {
+        if (e) {
+
+        } else {
+          Session.set('aux', false);
+          Session.set('processoSelecionado', "");
+          Bert.alert("Criação de horário realizada com sucesso", 'default', 'growl-top-right', 'fa-bell')
+        }
+      })
+    },
     'change #semestre': function(event) {
       var tmp = $('#semestre').val();
       Session.set('periodoSelecionado', tmp)
@@ -399,7 +411,9 @@ if (Meteor.isClient) {
       _id: id
     });
     console.log(tmpOferta);
-    var horario = tmpOferta.Professor.profile.horario;
+    var professor=tmpOferta.Professor;
+    if(professor!=""){
+    var horario = professor.profile.horario;
     if (horario != null) {
       for (x = 0; x < horario.length; x++) {
         if (horario[x].dia == dia && horario[x].aula == aula) {
@@ -409,6 +423,7 @@ if (Meteor.isClient) {
           return tmp
         }
       }
+    }
     }
     return true;
   }

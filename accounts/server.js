@@ -97,9 +97,9 @@ Meteor.startup(() => {
     var a = {
       username: 'josiel',
       email: 'josiel@gmail.com',
-      //password:'root1234',
+      password:'root1234',
       profile: {
-        permission: 1,
+        permission: 0,
         name: 'Josiel'
       }
     };

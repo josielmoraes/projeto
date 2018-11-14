@@ -2,7 +2,7 @@
     {{>menu}}
     <div class="container-fluid">
   		<div class="mar">
-  		
+
         <div class="card">
           <div class="card-header">
             <div class="row">
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-      
+
 
 
     </div>
@@ -58,6 +58,9 @@
   		</div>
       {{#if mostrarTabela}}
             {{> tabelaHorario}}
+            <div class="col-md-12">
+        			<input class="btn float-right btn-lg btn-success mt-3" type="submit" id="finalizarSala" value="Finalizar">
+        		</div>
   		{{/if}}
     </div>
 	{{/if}}

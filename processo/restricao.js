@@ -188,6 +188,18 @@ if (Meteor.isClient) {
     }
   })
   Template.restricaoTurma.events({
+    'click #finalizarRestricao':function(event){
+      event.preventDefault();
+      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 4, function(e, r) {
+        if (e) {
+
+        } else {
+          Session.set('aux', false);
+          Session.set('processoSelecionado', "");
+          Bert.alert("Restrição realizada com sucesso", 'default', 'growl-top-right', 'fa-bell')
+        }
+      })
+    },
     'click .restricaoTurma': function(event, template) {
       event.preventDefault();
       var r = Session.get('rgba');

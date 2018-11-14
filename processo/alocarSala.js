@@ -71,6 +71,18 @@ if (Meteor.isClient) {
       var tmp = $('#semestre').val();
       Session.set('periodoSelecionado', tmp)
 
-    }
+    },
+    'click #finalizarSala':function(event){
+      event.preventDefault();
+      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 6, function(e, r) {
+        if (e) {
+
+        } else {
+          Session.set('aux', false);
+          Session.set('processoSelecionado', "");
+          Bert.alert("Alocação de sala  realizada com sucesso", 'default', 'growl-top-right', 'fa-bell')
+        }
+      })
+    },
   })
 }
