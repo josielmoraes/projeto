@@ -28,6 +28,14 @@ if (Meteor.isClient) {
   })
   Template.login.onCreated(function() {
     Session.set('showModal', false);
+    var self = this;
+    self.autorun(function() {
+      self.subscribe("buscaProcesso");
+      self.subscribe("acharSemetre");
+      self.subscribe("area");
+      self.subscribe("curso");
+      self.subscribe("buscaProfessores");
+    })
   })
   Template.login.helpers({
     'showModal': function() {
@@ -59,7 +67,8 @@ if (Meteor.isClient) {
             erroLogin: "Email ou senha não confere",
           })
         } else {
-          if (Meteor.userId != null) {
+          console.log(Meteor.userId);
+          //if (Meteor.userId != null) {
             //data current
             var td = new Date();
             var dia = td.getDate();
@@ -152,7 +161,7 @@ if (Meteor.isClient) {
               }
               //fim alocar
             }
-          }
+          //}
           Router.go('/')
         }
       })

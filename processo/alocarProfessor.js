@@ -1,7 +1,8 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
 import Area from '../imports/collections/area'
-
+import Processo from "../imports/collections/processo";
+import Semestre from "../imports/collections/semestre";
 Router.route('/alocarProfessor', {
   template: 'alocarProfessor'
 })
@@ -223,7 +224,8 @@ if (Meteor.isClient) {
   })
   Template.professorAuto.helpers({
     validarProf(prof) {
-      //console.log(prof);
+      return true;
+      console.log(prof);
       if (prof.profile.permission == 1) {
         return true;
       } else {
@@ -293,17 +295,16 @@ if (Meteor.isClient) {
     },
     buscaArea() {
       var tmp = Area.find().fetch();
-      console.log(tmp)
       return tmp
     },
     buscaCurso() {
       var tmp = Curso.find().fetch();
-      console.log(tmp)
       return tmp
     },
     campos() {
       $('#valorTurma').text("");
       $('#valorMateria').text("");
+      $("#semestreAlocar").val(1);
       $("#professor").val("");
       Session.set('areaSelecionada', "")
       $('#area').val("");
@@ -321,6 +322,8 @@ if (Meteor.isClient) {
       var prof = Session.get('professorSelecionado');
       if (prof != "") {
         $("#professor").val(prof.profile.name)
+      }else{
+        $("#professor").val("")
       }
       var area = rowData.Area;
       Session.set('areaSelecionada', area)
@@ -348,8 +351,9 @@ if (Meteor.isClient) {
       for (x = 0; x < tmp; x++) {
         s = ('#cursoOferta' + x).toString();
         c = $(s).children().val();
+        console.log(c);
         id = Curso.findOne({
-          nome: c
+          _id: c
         });
         s = ('#semestreOfertante' + x).toString();
         sem = $(s).val()
@@ -373,7 +377,7 @@ if (Meteor.isClient) {
             for (i = 0; i < ofertantes.length; i++) {
               if (ofertantes[i].curso != null) {
                 s = ('#cursoOferta' + i).toString();
-                c = $(s).children().val(ofertantes[i].curso.nome);
+                c = $(s).children().val(ofertantes[i].curso._id);
                 s = ('#semestreOfertante' + i).toString();
                 sem = $(s).val(ofertantes[i].semestre)
               }
@@ -430,7 +434,6 @@ if (Meteor.isClient) {
 
     "autocompleteselect #professor": function(event, template, doc) {
       event.preventDefault();
-      console.log(doc)
       Session.set('professorSelecionado', doc);
     },
     /*
@@ -496,15 +499,16 @@ if (Meteor.isClient) {
         alert("Selecione um Curso");
       } else {
         $('#erro').text("");
+        var novaTurma
         var cursoOfertantes = Template.cadastroAlocarProfessor.__helpers.get('getCursoOfertante').call()
         var semestre = $('#semestreAlocar').val();
-        //console.log('cursos oferta ',cursoOfertantes)
         if (rowData.Turma.length == 1) {
-          var novaTurma = curso.sigla + rowData.Turma;
+          novaTurma = curso.sigla + rowData.Turma;
           //console.log(novaTurma)
         } else if (rowData.Turma.length == 3) {
-          novaTurma = rowData.Turma
+          novaTurma = curso.sigla +rowData.Turma[2]
         }
+        console.log(novaTurma)
         Meteor.call('atualizarProfessorOferta', rowData, professor, area, curso, semestre, cursoOfertantes, novaTurma);
         Template.cadastroAlocarProfessor.__helpers.get('campos').call();
       }

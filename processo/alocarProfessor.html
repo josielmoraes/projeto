@@ -109,7 +109,13 @@
 							<div class="form-group col-md-8">
 								<label  class="control-label" for="curso">Curso ofertante: </label>
 								<div id='cursoOferta{{val}}'>
-									{{> inputAutocomplete settings=settingsCurso autocomplete="off" class="form-control"}}
+									<!---{> inputAutocomplete settings=settingsCurso autocomplete="off" class="form-control"}}-->
+									<select class="form-control dropdown" id="cursoOfertantes">
+										<option value=""></option>
+										{{#each val in buscaCurso}}
+											<option value="{{val._id}}">{{val.nome}}</option>
+										{{/each}}
+									</select>
 								</div>
 							</div>
 							<div class="form-group col-md-4">
@@ -150,9 +156,7 @@
 </template>
 
 <template name="professorAuto">
-	{{#if validarProf this}}
-		<span>{{this.profile.name}}</span>
-	{{/if}}
+		<span>{{profile.name}}</span>
 </template>
 
 

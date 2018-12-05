@@ -18,6 +18,10 @@ new Tabular.Table({
       data: "apelido",
       title: "Apelido"
     },
+    {
+      data: "ocupacao",
+      title: "Ocupação"
+    },
   ],
   responsive: true,
   autoWidth: false,
@@ -65,6 +69,7 @@ if (Meteor.isClient) {
       $('#localSala').val("");
       $('#numeroSala').val("");
       $('#apelidoSala').val("")
+      $('#ocupacao').val(0)
       $('#Cadastrar').val("Cadastrar");
       $('#Deletar').val("Voltar");
       $('#Deletar').addClass("btn-success");
@@ -88,6 +93,9 @@ if (Meteor.isClient) {
         numeroSala: {
           required: true,
         },
+        ocupacao: {
+          required: true,
+        },
 
       },
       messages: {
@@ -98,6 +106,10 @@ if (Meteor.isClient) {
         numeroSala: {
           required: " Campo obrigatório",
         },
+        ocupacao: {
+          required: " Campo obrigatório",
+        },
+
 
       }
     })
@@ -113,13 +125,14 @@ if (Meteor.isClient) {
         var local = $('#localSala').val();
         var num = $('#numeroSala').val();
         var apelido = $('#apelidoSala').val()
+        var ocupacao = $('#ocupacao').val()
         var evento = $('#Cadastrar').val();
         var sair = $('#formCadastrosala').valid();
         if (evento == "Cadastrar" && sair) {
-          Meteor.call('cadastrarSala', local, num, apelido);
+          Meteor.call('cadastrarSala', local, num, apelido,parseInt(ocupacao));
         } else if (evento == "Atualizar" && sair) {
           var sala = Session.get('salaSelcionada');
-          Meteor.call('atualizarSala', sala._id.toString(), local, num, apelido);
+          Meteor.call('atualizarSala', sala._id.toString(), local, num, apelido,parseInt(ocupacao));
         }
         Template.cadastrarSala.__helpers.get('campos').call()
         Session.set('salaSelcionada', '')
@@ -144,6 +157,7 @@ if (Meteor.isClient) {
       $('#localSala').val(rowData.local);
       $('#numeroSala').val(rowData.numero);
       $('#apelidoSala').val(rowData.apelido)
+      $('#ocupacao').val(rowData.ocupacao)
       $('#Cadastrar').val("Atualizar");
       $('#Deletar').val("Deletar");
       $('#deletar').addClass("btn-danger");
@@ -154,11 +168,12 @@ if (Meteor.isClient) {
 }
 if (Meteor.isServer) {
   Meteor.methods({
-    'cadastrarSala': function(local, num, ape) {
+    'cadastrarSala': function(local, num, ape,ocupacao) {
       Sala.insert({
         local: local,
         numero: num,
-        apelido: ape
+        apelido: ape,
+        ocupacao:ocupacao
       })
     },
     'deletarSala': function(id) {
@@ -166,14 +181,15 @@ if (Meteor.isServer) {
         _id: id
       })
     },
-    'atualizarSala': function(id, local, num, ape) {
+    'atualizarSala': function(id, local, num, ape,ocupacao) {
       Sala.update({
         _id: id
       }, {
         $set: {
           local: local,
           numero: num,
-          apelido: ape
+          apelido: ape,
+          ocupacao:ocupacao
         }
       })
     }

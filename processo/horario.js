@@ -20,6 +20,7 @@ function criarArrayOferta(turma) {
   }).fetch();
   for (x = 0; x < tmp.length; x++) {
     array.push(tmp[x])
+
   }
   var temp = OfertaMateria.find({
     Processo: pro,
@@ -38,11 +39,11 @@ if (Meteor.isClient) {
   })
   Template.horario.onCreated(function() {
     Session.set('aux', false);
-     $( document ).ready(function() {
+    $( document ).ready(function() {
       $(".nav-link").removeClass("active")
       $("#menu_horario").addClass("active");
-      });
-      var pro = Session.get('processoSelecionado');
+    });
+    var pro = Session.get('processoSelecionado');
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");
@@ -336,6 +337,7 @@ if (Meteor.isClient) {
       var pro = Session.get('processoSelecionado');
       var curso = Session.get("cursoSelecionado");
       var sem = Session.get('periodoSelecionado');
+
       Session.set('validarLabel', "")
       dia = parseInt(dia)
       aula = parseInt(aula)
@@ -374,6 +376,7 @@ if (Meteor.isClient) {
 
       return array
     },
+
   })
 
   function validarProfessor(id, dia, aula) {
@@ -383,109 +386,159 @@ if (Meteor.isClient) {
     });
     dia = parseInt(dia);
     aula = parseInt(aula);
-    var mat = OfertaMateria.find({
-      'Processo': pro,
-      'Professor._id': tmpOferta.Professor._id,
-      horario: {
-        $elemMatch: {
-          dia: dia,
-          aula: aula
-        }
-      }
-    }).fetch();
-    if (mat.length == 0) {
-
-      return false;
-    } else {
-      var string = 'Conflito:\n'
-      for (x = 0; x < mat.length; x++) {
-        string += "Professor: " + mat[x].Professor.profile.name + " Curso: " + mat[x].Curso.nome + " Disc: " + mat[x].Materia.nomeMateria + '\n'
-      }
-      alert(string)
-      return true;
-    }
-  };
-
-  function validarRestricaoProfessor(id, dia, aula) {
-    var tmpOferta = OfertaMateria.findOne({
-      _id: id
-    });
-    console.log(tmpOferta);
-    var professor=tmpOferta.Professor;
-    if(professor!=""){
-    var horario = professor.profile.horario;
-    if (horario != null) {
-      for (x = 0; x < horario.length; x++) {
-        if (horario[x].dia == dia && horario[x].aula == aula) {
-          console.log("entrou");
-          var tmp = confirm("Horário que o professor nao gostaria de ministrar aula. Deseja manter a disciplina nesse horário?");
-          console.log(tmp);
-          return tmp
-        }
-      }
-    }
-    }
-    return true;
-  }
-
-  function validarRestricao(id, dia, aula) {
-    var pro = Session.get('processoSelecionado');
-    dia = parseInt(dia);
-    aula = parseInt(aula)
-    var tmpOferta = OfertaMateria.findOne({
-      _id: id
-    });
-    var array = tmpOferta.restricao;
-    var aux = [];
-    if (array != null) {
-      for (x = 0; x < array.length; x++) {
-        t = OfertaMateria.findOne({
-          _id: array[x],
+    if(tmpOferta!=null){
+      if(tmpOferta.Professor!=""){
+        var mat = OfertaMateria.find({
+          'Processo': pro,
+          'Professor._id': tmpOferta.Professor._id,
           horario: {
             $elemMatch: {
               dia: dia,
               aula: aula
             }
           }
-        })
-        if (t != null) {
-          aux.push(t)
+        }).fetch();
+        if (mat.length == 0) {
+
+          return false;
+        } else {
+          var string = 'Conflito:\n'
+          for (x = 0; x < mat.length; x++) {
+            string += "Professor: " + mat[x].Professor.profile.name + " Curso: " + mat[x].Curso.nome + " Disc: " + mat[x].Materia.nomeMateria + '\n'
+          }
+          //alert(string)
+          Bert.alert({
+          message: string,
+          type: 'danger',
+          style: 'growl-top-right',
+           hideDelay: 10000,
+        });
+          return true;
+        }
+      }}
+    };
+
+    function validarRestricaoProfessor(id, dia, aula) {
+      var tmpOferta = OfertaMateria.findOne({
+        _id: id
+      });
+      if(tmpOferta!=null){
+        var professor=tmpOferta.Professor;
+        if(professor!=""){
+          var horario = professor.profile.horario;
+          if (horario != null) {
+            for (x = 0; x < horario.length; x++) {
+              if (horario[x].dia == dia && horario[x].aula == aula) {
+                console.log("entrou");
+                var tmp = confirm("Horário que o professor nao gostaria de ministrar aula. Deseja manter a disciplina nesse horário?");
+                console.log(tmp);
+                return tmp
+              }
+            }
+          }
         }
       }
-      if (aux.length != 0) {
-        var string = 'Conflito de restrição:\n'
-        for (x = 0; x < aux.length; x++) {
-          string += "Professor: " + aux[x].Professor.profile.name + " Curso: " + aux[x].Curso.nome + " Disc: " + aux[x].Materia.nomeMateria + '\n'
+      return true;
+    }
+
+    function validarRestricao(id, dia, aula) {
+      var pro = Session.get('processoSelecionado');
+      dia = parseInt(dia);
+      aula = parseInt(aula)
+      var tmpOferta = OfertaMateria.findOne({
+        _id: id
+      });
+      var array = tmpOferta.restricao;
+      var aux = [];
+      if (array != null) {
+        for (x = 0; x < array.length; x++) {
+          t = OfertaMateria.findOne({
+            _id: array[x],
+            horario: {
+              $elemMatch: {
+                dia: dia,
+                aula: aula
+              }
+            }
+          })
+          if (t != null) {
+            aux.push(t)
+          }
         }
-        alert(string)
-        return true;
+        if (aux.length != 0) {
+          var string = 'Conflito de restrição:\n'
+          for (x = 0; x < aux.length; x++) {
+            string += "Professor: " + aux[x].Professor.profile.name + " Curso: " + aux[x].Curso.nome + " Disc: " + aux[x].Materia.nomeMateria + '\n'
+          }
+          //alert(string)
+          Bert.alert({
+          message: string,
+          type: 'danger',
+          style: 'growl-top-right',
+           hideDelay: 10000,
+        });
+          return true;
+        } else {
+          return false
+        }
       } else {
         return false
       }
-    } else {
-      return false
+
     }
 
-  }
-
-  function validarMaterias(id, dia, aula) {
-    var pro = Session.get('processoSelecionado');
-    dia = parseInt(dia);
-    aula = parseInt(aula)
-    var tmpOferta = OfertaMateria.findOne({
-      _id: id
-    });
-    //console.log(tmpOferta)
-    //console.log(tmpOferta.Ofertantes);
-    var array = tmpOferta.Ofertantes;
-    var string = ""
-    for (x = 0; x < array.length; x++) {
-      //procurar no curso do mesmo semestre das ofertantes senao nao existe conflito
-      //console.log(array)
-      var aux = OfertaMateria.findOne({
+    function validarMaterias(id, dia, aula) {
+      var pro = Session.get('processoSelecionado');
+      dia = parseInt(dia);
+      aula = parseInt(aula)
+      var tmpOferta = OfertaMateria.findOne({
+        _id: id
+      });
+      //console.log(tmpOferta)
+      //console.log(tmpOferta.Ofertantes);
+      var array = tmpOferta.Ofertantes;
+      var string = ""
+      for (x = 0; x < array.length; x++) {
+        //procurar no curso do mesmo semestre das ofertantes senao nao existe conflito
+        //console.log(array)
+        var aux = OfertaMateria.findOne({
+          Processo: pro,
+          'Curso._id': array[x].curso._id,
+          Semestre: array[x].semestre,
+          horario: {
+            $elemMatch: {
+              dia: dia,
+              aula: aula
+            }
+          }
+        });
+        //console.log(aux)
+        if (aux != null) {
+          string += 'Conflito de materia:\n';
+          //console.log(aux.Materia.nomeMateria,aux.Curso.nome)
+          string += aux.Materia.nomeMateria + " Curso: " + aux.Curso.nome;
+        }
+      }
+      if (string != "") {
+        //alert(string)
+        Bert.alert({
+        message: string,
+        type: 'danger',
+        style: 'growl-top-right',
+         hideDelay: 10000,
+      });
+        return true
+      }
+      string = ""
+      //procurar em todas Ofertas quais ofertantes do mesmo curso e semestre esta no mesmo horario
+      var a = OfertaMateria.findOne({
         Processo: pro,
-        'Curso._id': array[x].curso._id,
-        Semestre: array[x].semestre,
+        Ofertantes: {
+          $elemMatch: {
+            'curso._id': tmpOferta.Curso._id,
+            semestre: tmpOferta.Semestre
+          }
+        },
         horario: {
           $elemMatch: {
             dia: dia,
@@ -493,245 +546,267 @@ if (Meteor.isClient) {
           }
         }
       });
-      //console.log(aux)
-      if (aux != null) {
-        string += 'Conflito de materia:\n';
-        //console.log(aux.Materia.nomeMateria,aux.Curso.nome)
-        string += aux.Materia.nomeMateria + " Curso: " + aux.Curso.nome;
+      //console.log(a)
+      if (a != null) {
+        string += 'Conflito de materia:\n'
+        string += a.Materia.nomeMateria + " Curso: " + a.Curso.nome
+        //alert(string)
+        Bert.alert({
+        message: string,
+        type: 'danger',
+        style: 'growl-top-right',
+         hideDelay: 10000,
+      });
+        return true;
       }
-    }
-    if (string != "") {
-      alert(string)
-      return true
-    }
-    string = ""
-    //procurar em todas Ofertas quais ofertantes do mesmo curso e semestre esta no mesmo horario
-    var a = OfertaMateria.findOne({
-      Processo: pro,
-      Ofertantes: {
-        $elemMatch: {
-          'curso._id': tmpOferta.Curso._id,
-          semestre: tmpOferta.Semestre
-        }
-      },
-      horario: {
-        $elemMatch: {
-          dia: dia,
-          aula: aula
-        }
-      }
-    });
-    //console.log(a)
-    if (a != null) {
-      string += 'Conflito de materia:\n'
-      string += a.Materia.nomeMateria + " Curso: " + a.Curso.nome
-      alert(string)
-      return true;
-    }
-    return false
-  }
-
-  function validarSala(id, dia, aula, sala) {
-    var pro = Session.get('processoSelecionado');
-    dia = parseInt(dia);
-    aula = parseInt(aula)
-    var tmp = OfertaMateria.findOne({
-      Processo: pro,
-      horario: {
-        $elemMatch: {
-          dia: dia,
-          aula: aula,
-          'sala._id': sala
-        }
-      }
-    })
-    //console.log('validar sala',sala)
-    if (tmp != null) {
-      alert('Sala utilizada pela disciplina ' + tmp.Materia.nomeMateria + " do " + tmp.Semestre + "º semestre do curso " + tmp.Curso.nome)
       return false
-    } else {
-      return true
     }
-  }
-  Template.tabelaHorario.events({
-    'change .sel': function(event) {
-      event.preventDefault();
-      var tmp = Session.get('validarTemplate')
-      if (tmp == "criarHorario") {
-        var ant = Session.get('anterior');
-        var val = $(event.target).val();
-        var text = $(event.target).find("option:selected").text(); //only time the find is required
-        var id = $(event.target).find("option:selected").attr('id');
-        //console.log(val,text,id);
-        id = id.split(';');
-        var dia = id[0];
-        var aula = id[1];
 
-        if (ant == "") {
-          if (!validarRestricaoProfessor(val, dia, aula)) {
-            event.target.options[0].selected = true;
-          } else if (validarProfessor(val, dia, aula)) {
-            event.target.options[0].selected = true;
-          } else if (validarRestricao(val, dia, aula)) {
-
-            event.target.options[0].selected = true;
-          } else if (validarMaterias(val, dia, aula)) {
-            event.target.options[0].selected = true;;
-          } else {
-
-            Meteor.call('atualizarAula', val, dia, aula)
-          }
-        } else if (ant != val) {
-          if (val == '') {
-            Meteor.call('removerAula', ant, dia, aula);
-          } else {
-            aux = event.target;
-            var posicao = "";
-            for (x = 0; x < event.target.length; x++) {
-              if (event.target.options[x].value == ant) {
-                posicao = x;
-              }
-            }
-            if (!validarRestricaoProfessor(val, dia, aula)) {
-              event.target.options[posicao].selected = true;
-            }
-            if (validarProfessor(val, dia, aula)) {
-              event.target.options[posicao].selected = true;
-            } else if (validarRestricao(val, dia, aula)) {
-              event.target.options[posicao].selected = true;
-            } else if (validarMaterias(val, dia, aula)) {
-              event.target.options[posicao].selected = true;;
-
-            } else {
-              Meteor.call('removerAula', ant, dia, aula);
-              Meteor.call('atualizarAula', val, dia, aula)
-            }
+    function validarSala(id, dia, aula, sala) {
+      var pro = Session.get('processoSelecionado');
+      dia = parseInt(dia);
+      aula = parseInt(aula)
+      var tmp = OfertaMateria.findOne({
+        Processo: pro,
+        horario: {
+          $elemMatch: {
+            dia: dia,
+            aula: aula,
+            'sala._id': sala
           }
         }
+      })
+      //console.log('validar sala',sala)
+      if (tmp != null) {
+        //alert('Sala utilizada pela disciplina ' + tmp.Materia.nomeMateria + " do " + tmp.Semestre + "º semestre do curso " + tmp.Curso.nome)
+        let string='Sala utilizada pela disciplina ' + tmp.Materia.nomeMateria + " do " + tmp.Semestre + "º semestre do curso " + tmp.Curso.nome;
+        Bert.alert({
+        message: string,
+        type: 'danger',
+        style: 'growl-top-right',
+         hideDelay: 10000,
+      });
+        return false
       } else {
-        var ant = Session.get('anterior');
-        var val = $(event.target).val();
-        var text = $(event.target).find("option:selected").text();
-        var id = $(event.target).find("option:selected").attr('id');
-        id = id.split(';');
-        var dia = id[0];
-        var aula = id[1];
-        id = event.target.parentNode.children[0].id
-        if (ant == "") {
-          //console.log('anterior vazio')
-          if (validarSala(id, dia, aula, val)) {
-            Meteor.call('alocarSala', id, dia, aula, val);
-          } else {
-            event.target.options[0].selected = true;
+        return true
+      }
+    }
+    Template.tabelaHorario.events({
+      'change .sel': function(event) {
+        event.preventDefault();
+        var tmp = Session.get('validarTemplate')
+        if (tmp == "criarHorario") {
+          var ant = Session.get('anterior');
+          var val = $(event.target).val();
+          var text = $(event.target).find("option:selected").text(); //only time the find is required
+          var id = $(event.target).find("option:selected").attr('id');
+          //console.log(val,text,id);
+          id = id.split(';');
+          var dia = id[0];
+          var aula = id[1];
+
+          if (ant == "") {
+            if (!validarRestricaoProfessor(val, dia, aula)) {
+              event.target.options[0].selected = true;
+            } else if (validarProfessor(val, dia, aula)) {
+              event.target.options[0].selected = true;
+            } else if (validarRestricao(val, dia, aula)) {
+
+              event.target.options[0].selected = true;
+            } else if (validarMaterias(val, dia, aula)) {
+              event.target.options[0].selected = true;;
+            } else {
+
+              Meteor.call('atualizarAula', val, dia, aula,function(e,r){
+                if(e){
+                  //alert("Número excedente de aula")
+                  Bert.alert({
+                  message: string,
+                  type: 'danger',
+                  style: 'growl-top-right',
+                   hideDelay: 10000,
+                });
+                  event.target.options[0].selected = true;
+                }
+              })
+
+            }
+          } else if (ant != val) {
+            if (val == '') {
+              Meteor.call('removerAula', ant, dia, aula);
+            } else {
+              console.log("aqui")
+              Meteor.call('removerAula', ant, dia, aula,function(e,r){
+                if(e){
+                  console.log(e)
+                }else{
+                  console.log(r);
+
+                  aux = event.target;
+                  var posicao = "";
+                  for (x = 0; x < event.target.length; x++) {
+                    if (event.target.options[x].value == ant) {
+                      posicao = x;
+                    }
+                  }
+                  if (!validarRestricaoProfessor(val, dia, aula)) {
+                    event.target.options[posicao].selected = true;
+                  }
+                  if (validarProfessor(val, dia, aula)) {
+                    event.target.options[posicao].selected = true;
+                  } else if (validarRestricao(val, dia, aula)) {
+                    event.target.options[posicao].selected = true;
+                  } else if (validarMaterias(val, dia, aula)) {
+                    event.target.options[posicao].selected = true;;
+
+                  } else {
+
+                    Meteor.call('atualizarAula', val, dia, aula,function(e,r){
+                      if(e){
+                        //alert("Número excedente de aula")
+                        Bert.alert({
+                        message: string,
+                        type: 'danger',
+                        style: 'growl-top-right',
+                         hideDelay: 10000,
+                      });
+                        event.target.options[0].selected = true;
+                      }
+                    })
+                  }
+                }
+              });
+            }
           }
         } else {
-
-          if (val == "") {
-            Meteor.call('removerSala', id, dia, aula);
-          } else {
-            aux = event.target;
-            var posicao = "";
-            for (x = 0; x < event.target.length; x++) {
-              if (event.target.options[x].value == ant) {
-                posicao = x;
-              }
-            }
+          var ant = Session.get('anterior');
+          var val = $(event.target).val();
+          var text = $(event.target).find("option:selected").text();
+          var id = $(event.target).find("option:selected").attr('id');
+          id = id.split(';');
+          var dia = id[0];
+          var aula = id[1];
+          id = event.target.parentNode.children[0].id
+          if (ant == "") {
+            //console.log('anterior vazio')
             if (validarSala(id, dia, aula, val)) {
               Meteor.call('alocarSala', id, dia, aula, val);
             } else {
-              event.target.options[posicao].selected = true;
+              event.target.options[0].selected = true;
+            }
+          } else {
+
+            if (val == "") {
+              Meteor.call('removerSala', id, dia, aula);
+            } else {
+              aux = event.target;
+              var posicao = "";
+              for (x = 0; x < event.target.length; x++) {
+                if (event.target.options[x].value == ant) {
+                  posicao = x;
+                }
+              }
+              if (validarSala(id, dia, aula, val)) {
+                Meteor.call('alocarSala', id, dia, aula, val);
+              } else {
+                event.target.options[posicao].selected = true;
+              }
             }
           }
         }
+      },
+
+      'focus .sel': function(event) {
+        event.preventDefault();
+        var val = $(event.target).val()
+        Session.set('anterior', val)
       }
-    },
-
-    'focus .sel': function(event) {
-      event.preventDefault();
-      var val = $(event.target).val()
-      console.log(val);
-      Session.set('anterior', val)
-    }
-  })
-}
+    })
+  }
 
 
-if (Meteor.isServer) {
-  Meteor.methods({
-    'atualizarAula': function(id, dia, aula) {
-      dia = parseInt(dia)
-      aula = parseInt(aula)
-      //console.log('dia',dia,'aula',aula,'t')
-      var vetor = new Array()
-      vetor[0] = {
-        dia: dia,
-        aula: aula
+  if (Meteor.isServer) {
+    Meteor.methods({
+      'atualizarAula': function(id, dia, aula) {
+        dia = parseInt(dia)
+        aula = parseInt(aula)
+        //console.log('dia',dia,'aula',aula,'t')
+        var vetor = new Array()
+        vetor[0] = {
+          dia: dia,
+          aula: aula
+        }
+        let mat=  OfertaMateria.findOne({ _id: id })
+        if(mat.horario.length<mat.aulaSemanal){
+          OfertaMateria.update({
+            _id: id
+          }, {
+            $addToSet: {
+              horario: {
+                dia: dia,
+                aula: aula,
+                sala: ""
+              }
+            }
+          })
+
+        }else{
+          throw new Meteor.Error('qtde_aula', "Quantidade de aulas");
+        }
+      },
+      'removerAula': function(id, dia, aula) {
+        dia = parseInt(dia)
+        aula = parseInt(aula)
+        return OfertaMateria.update({
+          _id: id
+        }, {
+          $pull: {
+            horario: {
+              dia: dia,
+              aula: aula
+            }
+          }
+        })
+      },
+      'alocarSala': function(id, dia, aula, sala) {
+        dia = parseInt(dia);
+        aula = parseInt(aula)
+        var sala = Sala.findOne({
+          _id: sala
+        })
+        //console.log(sala,dia,aula)
+        var resul = OfertaMateria.update({
+          _id: id,
+          horario: {
+            $elemMatch: {
+              dia: dia,
+              aula: aula
+            }
+          }
+        }, {
+          $set: {
+            "horario.$.sala": sala
+          }
+        })
+        //console.log(resul)
+      },
+      'removerSala': function(id, dia, aula) {
+        dia = parseInt(dia);
+        aula = parseInt(aula);
+        var resul = OfertaMateria.update({
+          _id: id,
+          horario: {
+            $elemMatch: {
+              dia: dia,
+              aula: aula
+            }
+          }
+        }, {
+          $set: {
+            "horario.$.sala": ""
+          }
+        })
+        //console.log(resul)
       }
-      OfertaMateria.update({
-        _id: id
-      }, {
-        $addToSet: {
-          horario: {
-            dia: dia,
-            aula: aula,
-            sala: ""
-          }
-        }
-      })
-    },
-    'removerAula': function(id, dia, aula) {
-      dia = parseInt(dia)
-      aula = parseInt(aula)
-      OfertaMateria.update({
-        _id: id
-      }, {
-        $pull: {
-          horario: {
-            dia: dia,
-            aula: aula
-          }
-        }
-      })
-    },
-    'alocarSala': function(id, dia, aula, sala) {
-      dia = parseInt(dia);
-      aula = parseInt(aula)
-      var sala = Sala.findOne({
-        _id: sala
-      })
-      //console.log(sala,dia,aula)
-      var resul = OfertaMateria.update({
-        _id: id,
-        horario: {
-          $elemMatch: {
-            dia: dia,
-            aula: aula
-          }
-        }
-      }, {
-        $set: {
-          "horario.$.sala": sala
-        }
-      })
-      //console.log(resul)
-    },
-    'removerSala': function(id, dia, aula) {
-      dia = parseInt(dia);
-      aula = parseInt(aula);
-      var resul = OfertaMateria.update({
-        _id: id,
-        horario: {
-          $elemMatch: {
-            dia: dia,
-            aula: aula
-          }
-        }
-      }, {
-        $set: {
-          "horario.$.sala": ""
-        }
-      })
-      //console.log(resul)
-    }
-  })
-}
+    })
+  }

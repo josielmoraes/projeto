@@ -1,7 +1,8 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
 import Professor from '/imports/collections/professor'
-
+import Semestre from "../imports/collections/semestre";
+import Processo from "../imports/collections/processo";
 Router.route('/confirmarProcesso', {
   template: 'confirmarProcesso'
 })

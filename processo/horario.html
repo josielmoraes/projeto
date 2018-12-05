@@ -59,7 +59,7 @@
 			{{> tabelaHorario}}
 		</div>
 		<div class="col-md-12">
-			<input class="btn float-right btn-lg btn-success mt-3" type="submit" id="finalizarHorario" value="Finalizar">
+			<input class="btn float-right btn-lg btn-success mt-3" type="hidden" id="finalizarHorario" value="Finalizar">
 		</div>
 		{{/if}}
 	</div>
@@ -99,6 +99,7 @@
 				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
 				</select>
 				{{else}}
+
 				{{#each saida in buscarValido d a tmp}}
 				<label id="{{saida._id}}">{{imprimirSala saida d a}} </label>
 				{{/each}}
@@ -138,6 +139,7 @@
 				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">
 				</select>
 				{{else}}
+
 				{{#each saida in buscarValido d a tmp}}
 				<label id="{{saida._id}}">{{saida.Materia.nomeMateria}} / {{saida.Turma}} </label>
 				<select class="form-control dropdown sel" id="{{d}}s{{a}}{{tmp}}">

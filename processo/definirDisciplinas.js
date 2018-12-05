@@ -121,6 +121,10 @@ if (Meteor.isClient) {
       var s = Session.get('aux');
       return Session.get('aux');
     },
+    selector() {
+      let pro=Session.get("processoSelecionado");
+      return { Processo: pro };
+    },
   })
 
   Template.ListaOfertas.events({
@@ -321,12 +325,12 @@ if (Meteor.isClient) {
           codSub = ('#subTurma' + x).toString();
           tipo = ('#subTipoAula' + x).toString();
           car = ('#cargaHoraria' + x).toString();
-          aula = ("#aulasSemanal" + x).toString();
+          aula=parseInt($(car).val()/16);
           aux = {
             codigo: $(codSub).val(),
             tipo: $(tipo).val(),
             cargaHoraria: $(car).val(),
-            aula: $(aula).val(),
+            aula: aula,
           }
           sub[x - 1] = aux;
         }
@@ -544,7 +548,7 @@ if (Meteor.isClient) {
               Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
             }
           });
-        } else if (evento == "Atualizar") {
+        } else if (evento == "Atualizar" && sair) {
           var aux = Session.get('rowData');
           //console.log(aux._id,turma,mat._id,mat.cargaHoraria,mat.aulaSemanal,processo,area._id,tipo,aux.qtdeAuto,"");
           Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, mat.cargaHoraria, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "")
@@ -805,6 +809,7 @@ if (Meteor.isServer) {
         aulaSemanal: aulaSemanal,
         horario: [],
         restricao: [],
+        alunos:0
       })
     },
 
@@ -896,7 +901,8 @@ if (Meteor.isServer) {
     return OfertaMateria.find()
   })
   Meteor.publish("buscaProfessores", function(processo) {
-    return Meteor.users.find({"profile.permission" : 1})
+    return Meteor.users.find()
+    //{"profile.permission" : 1}
   })
 
 }

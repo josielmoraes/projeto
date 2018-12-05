@@ -101,7 +101,6 @@ if (Meteor.isClient) {
         return false
     },
     'perHorario': function(p) {
-      console.log(p);
       if (p.permission == 1 && p.subFuncao != 4) {
         return true;
       } else if (p.permission == 0 || p.permission == 2)
