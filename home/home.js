@@ -1,7 +1,8 @@
 
-
-Router.route('/Inicio', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/Inicio', {
   template: 'home',
+  name:'Inicio',
   onBeforeAction: function() {
     var login = Meteor.userId();
     if (login == null) {
@@ -15,9 +16,10 @@ Router.route('/Inicio', {
     }
     this.next();
   }
-}, )
-Router.route('/', {
+})
+Router.route(Prefix+'/', {
   template: 'home',
+  name:'home',
   onBeforeAction: function() {
     var login = Meteor.userId();
     if (login == null) {
@@ -31,7 +33,7 @@ Router.route('/', {
     }
 
     this.next();
-  },
+  }
 })
 
 if (Meteor.isClient) {
@@ -183,7 +185,7 @@ if (Meteor.isClient) {
   Template.menu.events({
     'click #sair': function() {
       //console.log('sair')
-      Router.go('/')
+      Router.go('home')
       Meteor.logout();
     },
 

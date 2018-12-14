@@ -1,10 +1,11 @@
 import HorarioSemanal from "../imports/collections/horarioSemanal";
 import Curso from "../imports/collections/curso";
 import Tabular from 'meteor/aldeed:tabular';
+import Prefix from '../imports/prefix.js';
 
-
-Router.route('/Curso', {
+Router.route(Prefix+'/Curso', {
   template: 'cadastroCurso',
+  name:'Curso'
 });
 new Tabular.Table({
   name: "Curso",
@@ -85,7 +86,7 @@ if (Meteor.isClient) {
         return true;
     },
     homeGo() {
-      Router.go('/')
+      Router.go('home')
     }
   })
   Template.cadastroCurso.events({
@@ -112,7 +113,7 @@ if (Meteor.isClient) {
       } else if (id == "deletarCurso") {
         var deletar = $('#deletarCurso').val();
         if (deletar == "Voltar") {
-          Router.go("/")
+          Router.go("home")
         } else if (deletar == "Deletar") {
           var idCurso = Session.get("curso");
           if (validarDeletar(idCurso._id)) {

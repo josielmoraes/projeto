@@ -1,5 +1,6 @@
 import Materia from "/imports/collections/materia";
 import Tabular from 'meteor/aldeed:tabular';
+import Prefix from '../imports/prefix.js';
 import {
   Template
 } from 'meteor/templating';
@@ -12,8 +13,9 @@ import {
 import dataTablesBootstrap from 'datatables.net-bs4';
 import OfertaMateria from "/imports/collections/ofertaMateria";
 
-Router.route('/Disciplina', {
+Router.route(Prefix+'/Disciplina', {
   template: 'cadastroMateria',
+  name: 'Disciplina',
 })
 
 
@@ -86,7 +88,7 @@ if (Meteor.isClient) {
       $('#erro').val("");
     },
     homeGo() {
-      Router.go('/')
+      Router.go('home')
     },
     'permissao': function(valor) {
       if (valor == 0)
@@ -202,7 +204,7 @@ if (Meteor.isClient) {
         if (evento == "Voltar") {
           $('#formCadastroMateria').validate().resetForm();
           Template.cadastroMateria.__helpers.get('campos').call();
-          Router.go('/');
+          Router.go('home');
         } else if (evento == "Deletar") {
           var id = Session.get('materia');
           if (Template.cadastroMateria.__helpers.get('validarDeletar').call()) {

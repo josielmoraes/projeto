@@ -7,9 +7,12 @@ import {
 
 
 
+
 Meteor.startup(() => {
 
   if (Meteor.isClient) {
+    import Prefix from '../imports/prefix.js';
+    console.log(Prefix);
     //  document.title = "Sistema de horário";
     $('input').attr('autocomplete', 'off');
 
@@ -24,6 +27,7 @@ Meteor.startup(() => {
   }
 
   if (Meteor.isServer) {
+    console.log(process.env);
     /*
   var fs = Npm.require('fs');
   // Assume that the csv file is in yourApp/public/data folder
@@ -97,7 +101,7 @@ Meteor.startup(() => {
     var a = {
       username: 'josiel',
       email: 'josiel@gmail.com',
-      password:'root1234',
+      password: 'root1234',
       profile: {
         permission: 0,
         name: 'Josiel'
@@ -106,22 +110,22 @@ Meteor.startup(() => {
     if (Meteor.users.findOne({
         username: r.username
       }) == null) {
-        var out=""
-      out=Accounts.createUser({
+      var out = ""
+      out = Accounts.createUser({
         username: r.username,
         email: r.email,
         password: r.password,
         profile: r.profile
 
-      });/*
-      if(out !=''){
+      });
+      /*if (out != '') {
         Email.send({
-        from:smtp.username,
-        to:r.email,
-        subject:'Cadastro no sistema de horario',
-        text:'Voce foi cadastrado no site de horário da Faculdade de Engenharias do Campus de Várzea Grande.\n\nLogin:'+r.email+'\nSenha:'+r.password+'\nNo endereço: '
-      })
-    }*/
+          from: smtp.username,
+          to: r.email,
+          subject: 'Cadastro no sistema de horario',
+          text: 'Voce foi cadastrado no site de horário da Faculdade de Engenharias do Campus de Várzea Grande.\n\nLogin:' + r.email + '\nSenha:' + r.password + '\nNo endereço: '
+        })
+      }*/
     }
     if (Meteor.users.findOne({
         username: a.username

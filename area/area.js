@@ -1,7 +1,9 @@
 import Area from '../imports/collections/area'
 import Tabular from 'meteor/aldeed:tabular';
-Router.route('/Area', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/Area', {
   template: 'cadastroArea',
+  name:'Area'
 })
 
 
@@ -64,7 +66,7 @@ if (Meteor.isClient) {
       $('#formCadastroArea').validate().resetForm();
     },
     homeGo() {
-      Router.go('/')
+      Router.go('home')
     }
 
 
@@ -96,7 +98,7 @@ if (Meteor.isClient) {
       } else if (id == "deletar") {
         var deletar = $('#deletar').val();
         if (deletar == "Voltar") {
-          Router.go('/');
+          Router.go('home');
         } else if (deletar == "Deletar") {
           var aux = Session.get("area");
           Meteor.call('deletarArea', aux._id);

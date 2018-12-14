@@ -3,8 +3,10 @@ import Tabular from 'meteor/aldeed:tabular';
 import Professor from '/imports/collections/professor'
 import Semestre from "../imports/collections/semestre";
 import Processo from "../imports/collections/processo";
-Router.route('/confirmarProcesso', {
-  template: 'confirmarProcesso'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/confirmarProcesso', {
+  template: 'confirmarProcesso',
+  name: 'confirmarProcesso'
 })
 new Tabular.Table({
 
@@ -220,7 +222,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },

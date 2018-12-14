@@ -5,12 +5,13 @@ import Tabular from 'meteor/aldeed:tabular';
 import Area from '../imports/collections/area';
 //import Processo from "../imports/collections/processo";
 import SubTurma from '../imports/collections/subTurma'
+import Prefix from '../imports/prefix.js';
 
 
 
-
-Router.route('/definirDisciplina', {
+Router.route(Prefix+'/definirDisciplina', {
   template: 'definirDisciplina',
+  name: 'definirDisciplina',
 })
 new Tabular.Table({
   name: "Oferta",
@@ -103,7 +104,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },
@@ -528,7 +529,7 @@ if (Meteor.isClient) {
         var sub = Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
         $('#cadastroOfertaMateria').validate().resetForm()
       } else if (id == "voltar") {
-        Router.go('/')
+        Router.go('home')
       } else if (id == "cadastrar") {
         var evento = $('#cadastrar').val()
         var sair = false;

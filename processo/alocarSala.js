@@ -1,8 +1,9 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
-
-Router.route('/alocarSala', {
-  template: 'alocarSala'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/alocarSala', {
+  template: 'alocarSala',
+  name: 'alocarSala'
 })
 
 
@@ -32,7 +33,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },

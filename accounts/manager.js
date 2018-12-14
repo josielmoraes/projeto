@@ -1,7 +1,9 @@
-Router.route('/esqueciSenha', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/esqueciSenha', {
   template: 'ForgotPassword',
+  name:"esqueciSenha"
 })
-Router.route('/reset/:token', {
+Router.route(Prefix+'/reset/:token', {
   template: 'ResetPassword',
   name: 'resetPassword',
   onBeforeAction() {
@@ -11,14 +13,14 @@ Router.route('/reset/:token', {
         if (err) {
           console.log(err.message);
           Bert.alert('Link de recuperação expirado.', 'danger', 'growl-top-right');
-          Router.go("/");
+          Router.go("home");
         }
       });
       Accounts._resetPasswordToken = this.params.token;
       this.next();
     } else {
       Accounts._resetPasswordToken = null;
-      Router.go("/");
+      Router.go("home");
     }
   }
 });
@@ -162,7 +164,7 @@ if (Meteor.isClient) {
               //fim alocar
             }
           //}
-          Router.go('/')
+          Router.go('home')
         }
       })
     },
@@ -194,7 +196,7 @@ if (Meteor.isClient) {
         }
       });
       //Modal.hide('ForgotPassword');
-      Router.go('/')
+      Router.go('home')
     },
   });
 
@@ -229,11 +231,11 @@ if (Meteor.isClient) {
         alert("Senhas diferentes")
       }
       Meteor.logout();
-      Router.go('/')
+      Router.go('home')
     },
     'click #cancelar': function(event) {
       event.preventDefault;
-      Router.go('/')
+      Router.go('home')
     }
   });
 
@@ -270,7 +272,7 @@ if (Meteor.isServer) {
           return 'Recuperação de Senha';
         },
         text: function(user, url) {
-          var newUrl = url.replace('#/reset-password', 'reset');
+          var newUrl = url.replace('#/reset-password', 'horario/reset');
           return 'Olá,\nPara recuperar sua senha, clique no link...\n' + newUrl;;
         }
       }

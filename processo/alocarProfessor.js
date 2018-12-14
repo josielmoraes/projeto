@@ -3,8 +3,10 @@ import Tabular from 'meteor/aldeed:tabular';
 import Area from '../imports/collections/area'
 import Processo from "../imports/collections/processo";
 import Semestre from "../imports/collections/semestre";
-Router.route('/alocarProfessor', {
-  template: 'alocarProfessor'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/alocarProfessor', {
+  template: 'alocarProfessor',
+  name: 'alocarProfessor'
 })
 new Tabular.Table({
   name: "OfertaProfessor",
@@ -238,7 +240,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },

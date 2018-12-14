@@ -1,9 +1,11 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Processo from "../imports/collections/processo";
 import Semestre from "../imports/collections/semestre";
+import Prefix from '../imports/prefix.js';
 import Tabular from 'meteor/aldeed:tabular';
-Router.route('/alocarAluno', {
-  template: 'alocarAluno'
+Router.route(Prefix+'/alocarAluno', {
+  template: 'alocarAluno',
+  name: 'alocarAluno'
 })
 new Tabular.Table({
   name: "AlocarAluno",

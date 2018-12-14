@@ -1,9 +1,11 @@
 import Tabular from 'meteor/aldeed:tabular';
 import Processo from '/imports/collections/processo'
+import Prefix from '../imports/prefix.js';
 //import Semestre from "/imports/collections/semestre";
 import OfertaMateria from "/imports/collections/ofertaMateria";
-Router.route('/Processo', {
-  template: 'processo'
+Router.route(Prefix+'/Processo', {
+  template: 'processo',
+  name:'Processo'
 })
 new Tabular.Table({
   name: "Processo",
@@ -95,7 +97,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },
@@ -209,7 +211,7 @@ if (Meteor.isClient) {
       } else if (id == "deletar") {
         var evento = $('#deletar').val();
         if (evento == "Voltar") {
-          Router.go('/');
+          Router.go('home');
         } else if (evento == "Deletar") {
           var id = Session.get('processoTable');
           var v = Template.cadastroProcesso.__helpers.get('validarDeletar').call();

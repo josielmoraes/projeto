@@ -1,8 +1,9 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Tabular from 'meteor/aldeed:tabular';
-
-Router.route('/restricaoDisciplina', {
-  template: 'restricao'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/restricaoDisciplina', {
+  template: 'restricao',
+  name:"restricaoDisciplina"
 })
 
 new Tabular.Table({
@@ -131,7 +132,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },

@@ -1,9 +1,10 @@
 import OfertaMateria from "../imports/collections/ofertaMateria";
 import Sala from "../imports/collections/sala";
 import Tabular from 'meteor/aldeed:tabular';
-
-Router.route('/criarHorario', {
-  template: 'horario'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/criarHorario', {
+  template: 'horario',
+  name: 'criarHorario'
 })
 
 function criarArrayOferta(turma) {
@@ -57,7 +58,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },

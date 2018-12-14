@@ -1,7 +1,9 @@
 import Sala from "../imports/collections/sala";
 import Tabular from 'meteor/aldeed:tabular';
-Router.route('/Sala', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/Sala', {
   template: 'sala',
+  name:"Sala"
 })
 new Tabular.Table({
   name: "Sala",
@@ -59,7 +61,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },
@@ -139,7 +141,7 @@ if (Meteor.isClient) {
       } else if (id == "Deletar") {
         var evento = $('#Deletar').val();
         if (evento == "Voltar") {
-          Router.go('/')
+          Router.go('home')
         } else if (evento == "Deletar") {
           var sala = Session.get('salaSelcionada');
           Meteor.call('deletarSala', sala._id.toString())

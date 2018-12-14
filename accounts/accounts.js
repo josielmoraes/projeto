@@ -1,7 +1,8 @@
 import Tabular from 'meteor/aldeed:tabular';
-
-Router.route('/Usuario', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/Usuario', {
   template: 'cadastroUsuario',
+  name:'cadastroUsuario'
 })
 
 
@@ -77,7 +78,6 @@ Meteor.users.helpers({
       _id: this._id
     })
     a = a.profile.subFuncao;
-    console.log(a);
     if (a == 0) {
       return "Diretor(a)";
     } else if (a == 1) {
@@ -152,7 +152,7 @@ if (Meteor.isClient) {
       if (valor == 0) {
         return true;
       } else {
-        Router.go('/')
+        Router.go('home')
         return false
       }
     },
@@ -160,7 +160,7 @@ if (Meteor.isClient) {
       return Session.get('mostrarSubFuncao');
     },
     homeGo() {
-      Router.go('/')
+      Router.go('home')
     }
   })
   Template.cadastroUsuario.onRendered(function() {
@@ -228,7 +228,7 @@ if (Meteor.isClient) {
       } else if (id == "deletar") {
         var evento = $('#deletar').val();
         if (evento == "Voltar") {
-          Router.go('/');
+          Router.go('home');
         } else if (evento == "Deletar") {
           var user = Session.get('user');
           Meteor.call('removerUsuario', user);
@@ -313,7 +313,7 @@ if (Meteor.isServer) {
           return 'Cadastro ';
         },
         text: function(user, url) {
-          var newUrl = url.replace('#/reset-password', 'reset');
+          var newUrl = url.replace('#/reset-password', '/horario/reset');
           return 'Olá,\nVocê foi cadastro no sistema para criar horario do campus. Para gerar sua senha, clique no link...\n' + newUrl;;
         }
       }

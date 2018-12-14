@@ -1,5 +1,7 @@
-Router.route('/visualizarHorario', {
-  template: 'visualizarHorario'
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/visualizarHorario', {
+  template: 'visualizarHorario',
+  name: 'visualizarHorario'
 })
 
 if (Meteor.isClient) {

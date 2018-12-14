@@ -1,8 +1,10 @@
 import Semestre from "../imports/collections/semestre";
 import Tabular from 'meteor/aldeed:tabular';
 import dataTablesBootstrap from 'datatables.net-bs4';
-Router.route('/Semestre', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/Semestre', {
   template: 'cadastroSemestre',
+  name:'Semestre'
 })
 
 new Tabular.Table({
@@ -106,7 +108,7 @@ if (Meteor.isClient) {
   })
   Template.cadastroSemestre.helpers({
     homeGo() {
-      Router.go('/')
+      Router.go('home')
     },
     'permissao': function(valor) {
       if (valor == 0)
@@ -170,7 +172,7 @@ if (Meteor.isClient) {
       } else if (id == "deletar") {
         var deletar = $('#deletar').val();
         if (deletar == "Voltar") {
-          Router.go('/');
+          Router.go('home');
         } else if (deletar == "Deletar") {
           var aux = Session.get("semestre");
           if (validarDeletar(aux._id)) {

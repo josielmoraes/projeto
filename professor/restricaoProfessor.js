@@ -1,5 +1,7 @@
-Router.route('/restricaoProfessor', {
+import Prefix from '../imports/prefix.js';
+Router.route(Prefix+'/restricaoProfessor', {
   template: 'restricaoProfessor',
+  name:'restricaoProfessor'
 })
 
 if (Meteor.isClient) {
@@ -66,7 +68,7 @@ if (Meteor.isClient) {
       }
     },
     "home": function() {
-      Router.go('/')
+      Router.go('home')
     },
     "preencherTabela": function() {
       setTimeout(function() {
