@@ -209,10 +209,10 @@ if (Meteor.isClient) {
           if (sair) {
             Meteor.call('cadastrarUsuario', dados, function(e, r) {
               if (e) {} else {
-                Meteor.call("emailCadastro");
-                Accounts.forgotPassword({
-                  email: dados.email
-                })
+                //Meteor.call("emailCadastro");
+              //  Accounts.forgotPassword({
+                //  email: dados.email
+              //  })
               }
             })
           }
