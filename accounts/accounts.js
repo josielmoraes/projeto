@@ -1,8 +1,8 @@
 import Tabular from 'meteor/aldeed:tabular';
 import Prefix from '../imports/prefix.js';
-Router.route(Prefix+'/Usuario', {
+Router.route(Prefix + '/Usuario', {
   template: 'cadastroUsuario',
-  name:'cadastroUsuario'
+  name: 'cadastroUsuario'
 })
 
 
@@ -98,7 +98,6 @@ function validarUsuario() {
   var sair = Meteor.users.findOne({
     "emails.address": c.toString()
   });
-  ////console.log(sair)
   if (sair != null) {
     $('#formCadastroUsuario').validate().showErrors({
       emailUsuario: 'Email cadastrado'
@@ -111,10 +110,10 @@ function validarUsuario() {
 if (Meteor.isClient) {
   Template.cadastroUsuario.onCreated(function() {
     Session.set('mostrarSubFuncao', false);
-     $( document ).ready(function() {
-        $(".nav-link").removeClass("active")
-        $("#menu_usuario").addClass("active");
-      });
+    $(document).ready(function() {
+      $(".nav-link").removeClass("active")
+      $("#menu_usuario").addClass("active");
+    });
   })
   Template.cadastroUsuario.helpers({
     'logado': function(l) {
@@ -313,7 +312,7 @@ if (Meteor.isServer) {
           return 'Cadastro ';
         },
         text: function(user, url) {
-          var newUrl = url.replace('#/reset-password', '/horario/reset');
+          var newUrl = url.replace('#/reset-password', 'reset');
           return 'Olá,\nVocê foi cadastro no sistema para criar horario do campus. Para gerar sua senha, clique no link...\n' + newUrl;;
         }
       }

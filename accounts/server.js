@@ -13,6 +13,7 @@ Meteor.startup(() => {
   if (Meteor.isClient) {
     import Prefix from '../imports/prefix.js';
     console.log(Prefix);
+
     //  document.title = "Sistema de horário";
     $('input').attr('autocomplete', 'off');
 

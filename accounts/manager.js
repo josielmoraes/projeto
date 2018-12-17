@@ -272,7 +272,7 @@ if (Meteor.isServer) {
           return 'Recuperação de Senha';
         },
         text: function(user, url) {
-          var newUrl = url.replace('#/reset-password', 'horario/reset');
+          var newUrl = url.replace('#/reset-password', 'reset');
           return 'Olá,\nPara recuperar sua senha, clique no link...\n' + newUrl;;
         }
       }
