@@ -4,9 +4,9 @@ import {
 import {
   Accounts
 } from 'meteor/accounts-base'
-
-
-
+import Processo from '/imports/collections/processo'
+import Curso from "../imports/collections/curso";
+import OfertaMateria from "/imports/collections/ofertaMateria";
 
 Meteor.startup(() => {
 
@@ -139,6 +139,62 @@ Meteor.startup(() => {
 
       });
     }
+    var Api = new Restivus({
+      version: 'v2',
+      useDefaultAuth: false,
+      prettyJson: true
+    });
+    Api.addRoute('processo', {
+      get: function() {
+        let tmp = Processo.find().fetch();
+        for( x in tmp){
+          let id=tmp[x].semestreSelecionado;
+          let semestre=Semestre.find({_id:id}).fetch();
+          tmp[x].semestre=semestre;
+        }
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
+    Api.addRoute('semestre/:id', {
+      get: function() {
+        let id =this.urlParams.id;
+        let tmp = Semestre.find({_id:id}).fetch();
+
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
+    Api.addRoute('curso', {
+      get: function() {
+        let tmp = Curso.find().fetch();
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
+    Api.addRoute('ofertas/:processo/:curso/:semestre', {
+      get: function() {
+        console.log(this.urlParams)
+        let pro=this.urlParams.processo;
+        let sem=this.urlParams.semestre;
+        let curso=this.urlParams.curso;
+        let tmp = OfertaMateria.find({
+          Processo: pro,
+          Semestre: sem,
+          'Curso._id': curso,
+        }).fetch();
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
 
 
 

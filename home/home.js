@@ -53,6 +53,9 @@ if (Meteor.isClient) {
     $('body').removeClass('bg-blue');
   })
   Template.menu.helpers({
+    'prefix':function(){
+      return Prefix;
+    },
     'perUsuario': function(p) {
       //console.log(p);
       if (p.permission == 0)
