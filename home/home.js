@@ -173,6 +173,16 @@ if (Meteor.isClient) {
         return false;
       }
     },
+    'perAlocarAluno': function(p) {
+      //console.log(p);
+      if (p.permission == 0) {
+        return true;
+      } else if (p.permission == 1 && p.subFuncao == 2) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     'perAlocarSala': function(p) {
       //console.log(p);
       if (p.permission == 0) {

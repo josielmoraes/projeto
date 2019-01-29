@@ -110,6 +110,9 @@
 						{{#if perCriarHorario currentUser.profile}}
 							<a  href="{{pathFor route= 'criarHorario'}}" class="dropdown-item">Criar Horário</a>
 						{{/if}}
+						{{#if perAlocarAluno currentUser.profile}}
+							<a  href="{{pathFor route= 'alocarAluno'}}" class="dropdown-item">Alocar Aluno</a>
+						{{/if}}
 						{{#if perAlocarSala currentUser.profile}}
 							<a  href="{{pathFor route= 'alocarSala'}}" class="dropdown-item">Alocar Sala</a>
 						{{/if}}

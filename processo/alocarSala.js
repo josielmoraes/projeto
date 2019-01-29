@@ -41,6 +41,7 @@ if (Meteor.isClient) {
   Template.criarAlocarSala.onCreated(function() {
     Session.set('cursoSelecionado', "");
     Session.set('periodoSelecionado', "")
+    Session.set('aux',false);
     Session.set('validarTemplate', 'criarAlocarSala')
   })
   Template.criarAlocarSala.helpers({
@@ -75,7 +76,7 @@ if (Meteor.isClient) {
     },
     'click #finalizarSala':function(event){
       event.preventDefault();
-      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 6, function(e, r) {
+      Meteor.call('mudarEtapa', Session.get('processoSelecionado'), 7, function(e, r) {
         if (e) {
 
         } else {

@@ -9,17 +9,21 @@
 							<h5>Alocar alunos</h5>
 						</div>
 						{{#if permissao currentUser.profile.permission}}
-							<div class="col-md-8">{{>buscaProcessoMaior pro="1"}}</div>
+							<div class="col-md-8">{{>buscaProcessoMaior pro="5"}}</div>
 						{{/if}}
 					</div>
 				</div>
-        <div class="card-body">
+				<div class="card-body">
 
 					{{#if permissao currentUser.profile.permission}}
-            {{#if mostrarTabela}}
-						  {{> tabular table=TabularTables.AlocarAluno selector=selector class="table table-striped table-bordered table-condensed"}}
-              {{/if}}
+						{{#if mostrarTabela}}
+							{{> tabular table=TabularTables.AlocarAluno selector=selector class="table table-striped table-bordered table-condensed"}}
+							<div class="col-md-12">
+								<input class="btn float-right btn-lg btn-success mt-3" type="button" id="finalizarAluno" value="Finalizar">
+							</div>
+						{{/if}}
 					{{/if}}
+
 				</div>
 			</div>
 		</div>
@@ -27,13 +31,13 @@
 </template>
 <template name="buscaProcessoMaior">
 	<div class="form-group row ">
-		<label for="processoSelecionado"  class="control-label col-sm-3" >Selecione o semestre:</label>
+		<label for="processoSelecionado" class="control-label col-sm-3">Selecione o semestre:</label>
 
 		<div class="col-sm-9">
 			<select id="processoSelecionadoMaior" class="form-control dropdown">
 				<option value=""></option>
 				{{#each val in buscaProcessos pro}}
-				<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
+					<option value="{{val._id}}">{{buscaAnoSemestres val}}</option>
 				{{/each}}
 			</select>
 

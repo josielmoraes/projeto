@@ -28,7 +28,8 @@ Meteor.startup(() => {
   }
 
   if (Meteor.isServer) {
-    console.log(process.env);
+    Processo.update({_id: "mBWsGccY3ErAJASeE"},{$set:{etapas:5}})
+    //console.log(process.env);
     /*
   var fs = Npm.require('fs');
   // Assume that the csv file is in yourApp/public/data folder
@@ -158,17 +159,6 @@ Meteor.startup(() => {
         };
       }
     })
-    Api.addRoute('semestre/:id', {
-      get: function() {
-        let id =this.urlParams.id;
-        let tmp = Semestre.find({_id:id}).fetch();
-
-        return {
-          status: 'success',
-          data: tmp
-        };
-      }
-    })
     Api.addRoute('curso', {
       get: function() {
         let tmp = Curso.find().fetch();
@@ -188,6 +178,42 @@ Meteor.startup(() => {
           Processo: pro,
           Semestre: sem,
           'Curso._id': curso,
+        }).fetch();
+        let tmp2 = OfertaMateria.find({
+          Processo: pro,
+          'Ofertantes.semestre': sem,
+          'Ofertantes.curso._id': curso
+        }).fetch();
+        Array.prototype.push.apply(tmp,tmp2);
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
+    Api.addRoute('ofertas/:processo', {
+      get: function() {
+        console.log(this.urlParams)
+        let pro=this.urlParams.processo;
+        let tmp = OfertaMateria.find({
+          Processo: pro
+        }).fetch();
+        return {
+          status: 'success',
+          data: tmp
+        };
+      }
+    })
+    Api.addRoute('ofertas/ofertantes/:processo/:curso/:semestre', {
+      get: function() {
+        console.log(this.urlParams)
+        let pro=this.urlParams.processo;
+        let sem=this.urlParams.semestre;
+        let curso=this.urlParams.curso;
+        let tmp = OfertaMateria.find({
+          Processo: pro,
+          'Ofertantes.semestre': sem,
+          'Ofertantes.curso._id': curso
         }).fetch();
         return {
           status: 'success',

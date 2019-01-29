@@ -113,12 +113,24 @@ Template.alocarAluno.events({
 
       Meteor.call("atualizarAlunos",rowData._id,parseInt(num))
     }
-  }
+  },
+  'click #finalizarAluno':function(event){
+    event.preventDefault();
+    Meteor.call('mudarEtapa', Session.get('processoSelecionadoMaior'), 6, function(e, r) {
+      if (e) {
+
+      } else {
+        Session.set('aux', false);
+        Session.set('processoSelecionadoMaior', "");
+        Bert.alert("Alocação de aluno realizada com sucesso", 'default', 'growl-top-right', 'fa-bell')
+      }
+    })
+  },
 })
 Template.buscaProcessoMaior.helpers({
   'buscaProcessos': function(e) {
     return Processo.find({
-      etapas: {$gt:Number(e)}
+      etapas: Number(e)
     });
   },
   'buscaAnoSemestres': function(proc) {

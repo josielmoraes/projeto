@@ -58,6 +58,7 @@ if (Meteor.isClient) {
   })
   Template.barra.onCreated(function() {
     var self = this;
+    Session.set('aux', false);
     self.autorun(function() {
       self.subscribe("acharSemetre");
       self.subscribe("buscaProcesso");
@@ -89,6 +90,7 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_vermelho");
           $('#restricaoDisciplina').addClass("center_vermelho");
           $('#criarHorario').addClass("center_vermelho");
+          $('#alocarAluno').addClass("center_vermelho");
           $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 1) {
           $('#definirDatas').addClass("center_verde");
@@ -97,6 +99,7 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_vermelho");
           $('#restricaoDisciplina').addClass("center_vermelho");
           $('#criarHorario').addClass("center_vermelho");
+          $('#alocarAluno').addClass("center_vermelho");
           $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 2) {
           $('#definirDatas').addClass("center_verde");
@@ -105,6 +108,7 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_amarelo");
           $('#restricaoDisciplina').addClass("center_vermelho");
           $('#criarHorario').addClass("center_vermelho");
+          $('#alocarAluno').addClass("center_vermelho");
           $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 3) {
           $('#definirDatas').addClass("center_verde");
@@ -113,6 +117,7 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_verde");
           $('#restricaoDisciplina').addClass("center_amarelo");
           $('#criarHorario').addClass("center_vermelho");
+          $('#alocarAluno').addClass("center_vermelho");
           $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 4) {
           $('#definirDatas').addClass("center_verde");
@@ -121,6 +126,7 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_verde");
           $('#restricaoDisciplina').addClass("center_verde");
           $('#criarHorario').addClass("center_amarelo");
+          $('#alocarAluno').addClass("center_vermelho");
           $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 5) {
           $('#definirDatas').addClass("center_verde");
@@ -129,7 +135,8 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_verde");
           $('#restricaoDisciplina').addClass("center_verde");
           $('#criarHorario').addClass("center_verde");
-          $('#alocarSala').addClass("center_amarelo");
+          $('#alocarAluno').addClass("center_amarelo");
+          $('#alocarSala').addClass("center_vermelho");
         } else if (etapa == 6) {
           $('#definirDatas').addClass("center_verde");
           $('#solicitarDisciplina').addClass("center_verde");
@@ -137,8 +144,19 @@ if (Meteor.isClient) {
           $('#confirmarProcesso').addClass("center_verde");
           $('#restricaoDisciplina').addClass("center_verde");
           $('#criarHorario').addClass("center_verde");
+          $('#alocarAluno').addClass("center_verde");
+          $('#alocarSala').addClass("center_amarelo");
+        }else if (etapa == 7) {
+          $('#definirDatas').addClass("center_verde");
+          $('#solicitarDisciplina').addClass("center_verde");
+          $('#alocarProfessor').addClass("center_verde");
+          $('#confirmarProcesso').addClass("center_verde");
+          $('#restricaoDisciplina').addClass("center_verde");
+          $('#criarHorario').addClass("center_verde");
+            $('#alocarAluno').addClass("center_verde");
           $('#alocarSala').addClass("center_verde");
         }
+
       }, 10)
     }
   })
