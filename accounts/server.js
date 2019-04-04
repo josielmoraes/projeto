@@ -131,7 +131,7 @@ Meteor.startup(() => {
     }
     if (Meteor.users.findOne({
         username: a.username
-      }) == null) {
+      })!==undefined) {
       Accounts.createUser({
         username: a.username,
         email: a.email,

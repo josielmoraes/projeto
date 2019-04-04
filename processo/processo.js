@@ -67,15 +67,10 @@ new Tabular.Table({
 })
 Processo.helpers({
   'semestreLetivo': function() {
-    console.log(this.semestreSelecionado)
-    var semestre = Semestre.findOne({
-      _id: this.semestreSelecionado
-    });
-    console.log(this.semestreSelecionado,semestre)
-    if(semestre !== undefined){
-      return semestre.anoLetivo + "/" + semestre.periodoLetivo
-    }else{
+    if(this.semestreSelecionado==""){
       return "";
+    }else{
+      return this.semestreSelecionado.anoLetivo + "/" + this.semestreSelecionado.periodoLetivo
     }
   }
 })
@@ -198,12 +193,13 @@ if (Meteor.isClient) {
       if (id == "cadastrar") {
         Session.set('num', '');
         var evento = $("#cadastrar").val();
+        var semestre=Semestre.findOne({_id:$('#semestreSelecionado').val()});
         var dados = {
           dataLimite: $('#dataLimite').val(),
           alocarProfessor: $('#alocarProfessor').val(),
           aprovarProcesso: $('#aprovarProcesso').val(),
           criarHorario: $('#criarHorario').val(),
-          semestreSelecionado: $('#semestreSelecionado').val(),
+          semestreSelecionado: semestre,
           etapas: 0,
           restricao: $('#restricao').val(),
           alocarSala: $('#alocarSala').val()
@@ -216,6 +212,7 @@ if (Meteor.isClient) {
           Template.cadastroProcesso.__helpers.get('campos').call();
         } else if (evento == "Atualizar" && validar) {
           var id = Session.get('processoTable');
+
           Meteor.call('atualizarProcesso', id._id, dados)
           Template.cadastroProcesso.__helpers.get('campos').call();
         }
@@ -337,7 +334,5 @@ if (Meteor.isServer) {
   Meteor.publish("acharOfertas", function() {
     return OfertaMateria.find();
   })
-  Meteor.publish("processo", function() {
-    return Processo.find();
-  })
+
 }

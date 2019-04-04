@@ -1,5 +1,7 @@
 import Tabular from 'meteor/aldeed:tabular';
+import { _ } from 'meteor/underscore';
 import Prefix from '../imports/prefix.js';
+
 Router.route(Prefix + '/Usuario', {
   template: 'cadastroUsuario',
   name: 'cadastroUsuario'
@@ -109,6 +111,10 @@ function validarUsuario() {
 };
 if (Meteor.isClient) {
   Template.cadastroUsuario.onCreated(function() {
+    var self=this;
+    self.autorun(function(){
+      self.subscribe("users")
+    })
     Session.set('mostrarSubFuncao', false);
     $(document).ready(function() {
       $(".nav-link").removeClass("active")
@@ -331,6 +337,9 @@ if (Meteor.isServer) {
       console.log('novo ', tmp[x].profile)
     }
     return tmp //Meteor.users.find({'profile.permission':0});
+  })
+  Meteor.publish("usuarios", function() {
+    return Meteor.users.find();
   })
 
 }
