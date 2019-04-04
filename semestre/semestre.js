@@ -1,5 +1,6 @@
 import Semestre from "../imports/collections/semestre";
 import Tabular from 'meteor/aldeed:tabular';
+import Processo from '/imports/collections/processo'
 import dataTablesBootstrap from 'datatables.net-bs4';
 import Prefix from '../imports/prefix.js';
 Router.route(Prefix+'/Semestre', {
@@ -87,20 +88,21 @@ if (Meteor.isClient) {
   }
 
   function validarDeletar(id) {
-    var horarioSemanal = HorarioSemanal.find({
-      idSemestre: id
+    console.log(id)
+    var processo=Processo.find({
+      semestreSelecionado:id
     }).fetch();
-    if (horarioSemanal.length > 0) {
+    if (processo.length > 0) {
       $('#formCadastroSemestre').validate().showErrors({
-        erro: "Semestre relacionado com Horário Semanal"
+        erro: "Semestre relacionado com Horario"
       })
       return false
     } else {
       return true;
     }
-
   }
   Template.cadastroSemestre.onCreated(function(){
+      Meteor.subscribe("processo")
      $( document ).ready(function() {
         $(".nav-link").removeClass("active")
       $("#menu_semestre").addClass("active");
@@ -267,5 +269,8 @@ if (Meteor.isServer) {
   })
   Meteor.publish('semestre', function() {
     return Semestre.find();
+  })
+  Meteor.publish("processo",function(){
+    return Processo.find();
   })
 }

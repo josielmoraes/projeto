@@ -1,7 +1,7 @@
 import Tabular from 'meteor/aldeed:tabular';
 import Processo from '/imports/collections/processo'
 import Prefix from '../imports/prefix.js';
-//import Semestre from "/imports/collections/semestre";
+import Semestre from "/imports/collections/semestre";
 import OfertaMateria from "/imports/collections/ofertaMateria";
 Router.route(Prefix+'/Processo', {
   template: 'processo',
@@ -67,10 +67,16 @@ new Tabular.Table({
 })
 Processo.helpers({
   'semestreLetivo': function() {
+    console.log(this.semestreSelecionado)
     var semestre = Semestre.findOne({
       _id: this.semestreSelecionado
     });
-    return semestre.anoLetivo + "/" + semestre.periodoLetivo
+    console.log(this.semestreSelecionado,semestre)
+    if(semestre !== undefined){
+      return semestre.anoLetivo + "/" + semestre.periodoLetivo
+    }else{
+      return "";
+    }
   }
 })
 
@@ -87,9 +93,12 @@ if (Meteor.isClient) {
     //Meteor.unsubscribe("acharSemetre");
   })
   Template.processo.onCreated(function() {
+  var self = this;
     var tmp = Meteor.subscribe("acharSemetre")
-    this.autorun(function() {
-      Session.set("subSemestre", tmp);
+    self.autorun(function() {
+      self.subscribe("acharOfertas")
+      self.subscribe("processo")
+      self.subscribe("acharSemetre")
     })
   })
   Template.processo.helpers({
@@ -163,9 +172,11 @@ if (Meteor.isClient) {
     validarDeletar: function() {
       var id = Session.get('processoTable')
       var sair;
-      if (OfertaMateria.findOne({
+      var ofertas=OfertaMateria.findOne({
           Processo: id._id
-        })) {
+        })
+      console.log(ofertas)
+      if (ofertas!==undefined) {
         //console.log("entrou");
         var StringErro = "Processo iniciado"
         sair = false
@@ -322,5 +333,11 @@ if (Meteor.isServer) {
   })
   Meteor.publish("acharSemetre", function() {
     return Semestre.find();
+  })
+  Meteor.publish("acharOfertas", function() {
+    return OfertaMateria.find();
+  })
+  Meteor.publish("processo", function() {
+    return Processo.find();
   })
 }

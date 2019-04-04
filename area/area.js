@@ -44,6 +44,21 @@ new Tabular.Table({
 })
 
 if (Meteor.isClient) {
+  function validarDeletar(id) {
+    var ofertas = OfertaMateria.find({
+      'Area._id': id
+    }).fetch();
+    return false;
+    if (ofertas.length > 0) {
+      $('#formCadastroArea').validate().showErrors({
+        erro: "Área relacionado com Processo"
+      })
+      return false
+    } else {
+      return true;
+    }
+
+  }
   Template.cadastroArea.onCreated(function(){
      $( document ).ready(function() {
         $(".nav-link").removeClass("active")
@@ -101,8 +116,8 @@ if (Meteor.isClient) {
           Router.go('home');
         } else if (deletar == "Deletar") {
           var aux = Session.get("area");
-          Meteor.call('deletarArea', aux._id);
-          Template.cadastroArea.__helpers.get('campos').call();
+            Meteor.call('deletarArea', aux._id);
+            Template.cadastroArea.__helpers.get('campos').call();
         }
       } else if (id == "limpar") {
         Template.cadastroArea.__helpers.get('campos').call();

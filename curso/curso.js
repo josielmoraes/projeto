@@ -1,4 +1,4 @@
-import HorarioSemanal from "../imports/collections/horarioSemanal";
+import OfertaMateria from "/imports/collections/ofertaMateria";
 import Curso from "../imports/collections/curso";
 import Tabular from 'meteor/aldeed:tabular';
 import Prefix from '../imports/prefix.js';
@@ -47,12 +47,12 @@ new Tabular.Table({
 if (Meteor.isClient) {
 
   function validarDeletar(id) {
-    var horarioSemanal = HorarioSemanal.find({
-      idCurso: id
+    var ofertas = OfertaMateria.find({
+      'Curso._id': id
     }).fetch();
-    if (horarioSemanal.length > 0) {
+    if (ofertas.length > 0) {
       $('#formCadrastroCurso').validate().showErrors({
-        erro: "Curso relacionado com Horário Semanal"
+        erro: "Curso relacionado com Processo"
       })
       return false
     } else {
@@ -61,6 +61,11 @@ if (Meteor.isClient) {
 
   }
   Template.cadastroCurso.onCreated(function(){
+    var self = this;
+    self.autorun(function() {
+      self.subscribe("curso")
+      self.subscribe("acharOfertas")
+    })
      $( document ).ready(function() {
         $(".nav-link").removeClass("active")
       $("#menu_curso").addClass("active");
@@ -116,10 +121,10 @@ if (Meteor.isClient) {
           Router.go("home")
         } else if (deletar == "Deletar") {
           var idCurso = Session.get("curso");
-          if (validarDeletar(idCurso._id)) {
+          //if (validarDeletar(idCurso._id)) {
             Meteor.call('deletarCurso', idCurso._id);
             Template.cadastroCurso.__helpers.get('campos').call();
-          }
+          //}
         }
 
       } else if (id == "limpar") {

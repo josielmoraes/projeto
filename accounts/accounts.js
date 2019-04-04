@@ -209,18 +209,19 @@ if (Meteor.isClient) {
           if (sair) {
             Meteor.call('cadastrarUsuario', dados, function(e, r) {
               if (e) {} else {
-                //Meteor.call("emailCadastro");
-              //  Accounts.forgotPassword({
-                //  email: dados.email
-              //  })
+                Meteor.call("emailCadastro");
+               Accounts.forgotPassword({
+                  email: dados.email
+                })
               }
             })
           }
           Template.cadastroUsuario.__helpers.get("campos").call()
         } else if (evento == "Atualizar" && validar) {
-          ////console.log('atualizar')
+          console.log('atualizar',dados)
           var user = Session.get('user');
-          Meteor.call('atualizarUsuario', user._id, dados);
+
+          Meteor.call('atualizarUsuario', user._id,user.emails[0].address, dados);
           Template.cadastroUsuario.__helpers.get("campos").call()
         }
 
@@ -288,15 +289,18 @@ if (Meteor.isServer) {
       })
       //console.log(id)
     },
-    atualizarUsuario: function(id, user) {
-      Meteor.users.update({
+    atualizarUsuario: function(id,old, user) {
+      console.log(id,old,user)
+      Accounts.removeEmail(id, old)
+      Accounts.addEmail(id, user.email);
+      var tmp=Meteor.users.update({
         _id: id
       }, {
         $set: {
-          email: user.email,
           profile: user.profile
         }
       })
+      console.log(tmp)
     },
     removerUsuario: function(user) {
       Meteor.users.remove({

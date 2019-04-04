@@ -7,11 +7,11 @@ import {
 import Processo from '/imports/collections/processo'
 import Curso from "../imports/collections/curso";
 import OfertaMateria from "/imports/collections/ofertaMateria";
-
+import Prefix from '../imports/prefix.js';
 Meteor.startup(() => {
 
   if (Meteor.isClient) {
-    import Prefix from '../imports/prefix.js';
+
     console.log(Prefix);
 
     //  document.title = "Sistema de horário";
