@@ -690,11 +690,7 @@ if (Meteor.isClient) {
       });
     },
     'buscaAnoSemestres': function(proc) {
-      var a = Semestre.findOne({
-        _id: proc.semestreSelecionado
-      });
-      console.log(a.anoLetivo);
-      return a.anoLetivo + "/" + a.periodoLetivo
+      return proc.semestreSelecionado.anoLetivo + "/" + proc.semestreSelecionado.periodoLetivo
     },
   })
   Template.buscaProcesso.events({

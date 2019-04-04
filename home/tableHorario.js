@@ -11,7 +11,7 @@ if (Meteor.isClient) {
     var self = this;
     self.autorun(function() {
       self.subscribe("acharSemetre");
-      self.subscribe("buscaProcesso");
+      self.subscribe("processo");
       self.subscribe('curso');
       self.subscribe("buscaTodasOferta");
     })
@@ -61,7 +61,7 @@ if (Meteor.isClient) {
     Session.set('aux', false);
     self.autorun(function() {
       self.subscribe("acharSemetre");
-      self.subscribe("buscaProcesso");
+      self.subscribe("processo");
     })
     //Meteor.subscribe()
   })
@@ -165,10 +165,7 @@ if (Meteor.isClient) {
       return Processo.find();
     },
     'buscaAnoSemestres': function(proc) {
-      var a = Semestre.findOne({
-        _id: proc.semestreSelecionado
-      });
-      return a.anoLetivo + "/" + a.periodoLetivo
+      return proc.semestreSelecionado.anoLetivo + "/" + proc.semestreSelecionado.periodoLetivo
     },
   })
   Template.buscaTodosProcesso.events({
