@@ -214,6 +214,7 @@ if (Meteor.isClient) {
       $('#subMateria').val(0);
       $('#turmaMateria').val(1);
       $('#turmaMateria').focus()
+      $('#ch').val(0)
       $('#subMateria').attr('disabled', false)
       $('#subMateria').attr('min', 0)
       $("#cadastrar").val('Ofertar');
@@ -328,7 +329,7 @@ if (Meteor.isClient) {
           car = ('#cargaHoraria' + x).toString();
           aula=parseInt($(car).val()/16);
           aux = {
-            codigo: $(codSub).val(),
+            codigo:x,// $(codSub).val(),
             tipo: $(tipo).val(),
             cargaHoraria: $(car).val(),
             aula: aula,
@@ -552,16 +553,17 @@ if (Meteor.isClient) {
         } else if (evento == "Atualizar" && sair) {
           var aux = Session.get('rowData');
           //console.log(aux._id,turma,mat._id,mat.cargaHoraria,mat.aulaSemanal,processo,area._id,tipo,aux.qtdeAuto,"");
-          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, mat.cargaHoraria, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "")
+          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, mat.cargaHoraria, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
           if (sub != null) {
             for (x = 0; x < sub.length; x++) {
               s = Session.get(('rowDataSub' + (x + 1)).toString())
               if (s != null) {
+                console.log(sub[x].codigo)
                 //console.log(s._id,sub[x].codigo,mat._id,sub[x].cargaHoraria,sub[x].aula,processo,area._id,sub[x].tipo,0,s.auto);
-                Meteor.call('atualizarOfertaMateria', s._id, sub[x].codigo, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, s.auto)
+                Meteor.call('atualizarOfertaMateria', s._id, turma, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, s.auto,sub[x].codigo)
               } else {
                 //console.log(sub[x].codigo,mat._id,sub[x].cargaHoraria,sub[x].aula,processo,area._id,sub[x].tipo,0,aux._id);
-                Meteor.call('cadastrarOfertaMateriaSub', sub[x].codigo, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, aux._id);
+                Meteor.call('cadastrarOfertaMateriaSub',turma, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, aux._id,sub[x].codigo);
                 Meteor.call('atualizarQtde', aux._id);
               }
             }
@@ -609,6 +611,7 @@ if (Meteor.isClient) {
       var c = $(event.target).attr('class');
       var dataTable = $(event.target).closest('table').DataTable();
       var rowData = dataTable.row(event.currentTarget).data();
+      console.log(rowData)
       if (c == "removerOferta") {
         $(event.target).closest('table').removeClass('selected');
         Meteor.call('removerOfertaMateria', rowData._id)
@@ -630,12 +633,14 @@ if (Meteor.isClient) {
     var rowData = Session.get('rowData');
     //console.log(rowData)
     if (rowData.qtdeAuto == 0 && rowData.auto == "") {
+      console.log("aqui")
       var m = rowData.Materia
       var a = rowData.Area
       $('#materia').val(m.nomeMateria);
       $('#area').val(a._id);
       $('#subMateria').val(rowData.qtdeAuto);
       $('#turmaMateria').val(rowData.Turma);
+      $('#ch').val(rowData.cargaHoraria);
       Session.set('materiaSelecionada', m)
       Session.set('areaSelecionada', a);
       Session.set('setSubMateria', 0);
@@ -655,7 +660,7 @@ if (Meteor.isClient) {
       Session.set('areaSelecionada', a)
       $('#materia').val(m.nomeMateria);
       $('#area').val(a._id);
-
+      $('#ch').val(rowData.cargaHoraria);
       $('#subMateria').val(rowData.qtdeAuto);
       $('#turmaMateria').val(rowData.Turma);
       Session.set('setSubMateria', rowData.qtdeAuto);
@@ -690,7 +695,7 @@ if (Meteor.isClient) {
       });
     },
     'buscaAnoSemestres': function(proc) {
-      
+
       return proc.semestreSelecionado.anoLetivo + "/" + proc.semestreSelecionado.periodoLetivo
     },
   })
@@ -724,6 +729,18 @@ if (Meteor.isClient) {
     }
 
   })
+  Template.subMateria.events({
+    'change .chSubMateria':function(event){
+      event.preventDefault();
+      var sum=0;
+      $(".chSubMateria").each(function(index){
+        sum+=$(this).val()
+      })
+      console.log(sum)
+      var total=$("#ch").val();
+
+    }
+  })
 
 }
 if (Meteor.isServer) {
@@ -749,12 +766,13 @@ if (Meteor.isServer) {
 
           } else {
             for (i = 0; i < dados.length; i++) {
+              console.log(dados)
               var c = OfertaMateria.insert({
                 auto: a,
                 qtdeAuto: 0,
                 cargaHoraria: dados[i].cargaHoraria,
                 aulaSemanal: dados[i].aula,
-                Turma: dados[i].codigo,
+                Turma: turma,
                 Processo: Processo,
                 Tipo: dados[i].tipo,
                 Materia: Materia,
@@ -762,7 +780,8 @@ if (Meteor.isServer) {
                 Professor: "",
                 Curso: "",
                 horario: [],
-                restricao: []
+                restricao: [],
+                sub:i
               }, function(e, r) {
                 if (e) {
                   console(e)
@@ -787,12 +806,13 @@ if (Meteor.isServer) {
           cargaHoraria: cargaMateria,
           aulaSemanal: aulaSemanal,
           horario: [],
-          restricao: []
+          restricao: [],
+          sub:""
         })
       }
 
     },
-    'cadastrarOfertaMateriaSub': function(turma, Materia, cargaMateria, aulaSemanal, Processo, Area, tipo, qtde, auto) {
+    'cadastrarOfertaMateriaSub': function(turma, Materia, cargaMateria, aulaSemanal, Processo, Area, tipo, qtde, auto,sub) {
       var a = OfertaMateria.insert({
         Materia: Materia,
         Processo: Processo,
@@ -807,7 +827,8 @@ if (Meteor.isServer) {
         aulaSemanal: aulaSemanal,
         horario: [],
         restricao: [],
-        alunos:0
+        alunos:0,
+        sub:sub
       })
     },
 
@@ -855,7 +876,7 @@ if (Meteor.isServer) {
         }
       })
     },
-    'atualizarOfertaMateria': function(id, turma, Materia, cargaMateria, aulaSemanal, Processo, Area, tipo, qtdeAuto, auto) {
+    'atualizarOfertaMateria': function(id, turma, Materia, cargaMateria, aulaSemanal, Processo, Area, tipo, qtdeAuto, auto,sub) {
       var a = OfertaMateria.update({
         _id: id
       }, {
@@ -873,6 +894,7 @@ if (Meteor.isServer) {
           aulaSemanal: aulaSemanal,
           horario: [],
           restricao: [],
+          sub:sub,
 
         }
       })
