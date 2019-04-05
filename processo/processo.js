@@ -239,7 +239,7 @@ if (Meteor.isClient) {
       $('#alocarProfessor').val(rowData.alocarProfessor);
       $('#aprovarProcesso').val(rowData.aprovarProcesso);
       $('#criarHorario').val(rowData.alocarProfessor);
-      $('#semestreSelecionado').val(rowData.semestreSelecionado);
+      $('#semestreSelecionado').val(rowData.semestreSelecionado._id);
       $('#restricao').val(rowData.restricao);
       $('#alocarSala').val(rowData.alocarSala);
       $('#cadastrar').val("Atualizar");
@@ -300,7 +300,7 @@ if (Meteor.isServer) {
         aprovarProcesso: dadoProcesso.aprovarProcesso,
         criarHorario: dadoProcesso.criarHorario,
         semestreSelecionado: dadoProcesso.semestreSelecionado,
-        etapas: dadoProcesso.etapas,
+        etapas: 0,
         restricao: dadoProcesso.restricao,
         alocarSala: dadoProcesso.alocarSala,
       })

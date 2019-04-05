@@ -690,6 +690,7 @@ if (Meteor.isClient) {
       });
     },
     'buscaAnoSemestres': function(proc) {
+      
       return proc.semestreSelecionado.anoLetivo + "/" + proc.semestreSelecionado.periodoLetivo
     },
   })
