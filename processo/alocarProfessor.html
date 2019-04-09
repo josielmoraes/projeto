@@ -9,7 +9,7 @@
 							<h5>Alocar professor</h5>
 						</div>
 
-						{{#if permissao currentUser.profile.permission}}
+						{{#if permissao currentUser.profile}}
 							<div class="col-md-8">{{>buscaProcesso pro="1"}}</div>
 						{{/if}}
 					</div>
@@ -21,7 +21,7 @@
 						</div>
 
 						<div class="col-md-5">
-							{{#if permissao currentUser.profile.permission}}
+							{{#if permissao currentUser.profile}}
 								{{> cadastroAlocarProfessor}}
 							{{/if}}
 

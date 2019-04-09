@@ -124,11 +124,15 @@ if (Meteor.isClient) {
       }
     },
     'perSolicitar': function(p) {
-      //console.log(p);
+      console.log(p);
       if (p.permission == 0) {
         return true;
-      } else if (p.permission == 1 && p.subFuncao == 1) {
-        return true;
+      } else if (p.permission == 1 ) {
+        if( p.subFuncao == 1){
+          return true;
+        }else{
+          return false
+        }
       } else {
         return false;
       }

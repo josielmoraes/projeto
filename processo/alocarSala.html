@@ -10,13 +10,13 @@
                 <h5>Alocar sala</h5>
               </div>
 
-              {{#if permissao currentUser.profile.permission}}
+              {{#if permissao currentUser.profile}}
                 <div class="col-md-8">{{>buscaProcesso pro="6"}}</div>
               {{/if}}
             </div>
           </div>
           <div class="card-body">
-             {{#if permissao currentUser.profile.permission}}
+             {{#if permissao currentUser.profile}}
                 {{> criarAlocarSala}}
               {{/if}}
           </div>

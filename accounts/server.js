@@ -31,6 +31,21 @@ Meteor.startup(() => {
     Processo.update({_id: "mBWsGccY3ErAJASeE"},{$set:{etapas:5}})
     //console.log(process.env);
     /*
+    var fs = require('fs');
+var parse = require('csv-parse');
+
+var csvData=[];
+fs.createReadStream(req.file.path)
+    .pipe(parse({delimiter: ':'}))
+    .on('data', function(csvrow) {
+        console.log(csvrow);
+        //do something with csvrow
+        csvData.push(csvrow);
+    })
+    .on('end',function() {
+      //do something wiht csvData
+      console.log(csvData);
+    });
   var fs = Npm.require('fs');
   // Assume that the csv file is in yourApp/public/data folder
   var data = fs.readFileSync(process.env.PWD + '/public/usuarios.csv', 'utf8');
