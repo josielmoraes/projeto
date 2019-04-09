@@ -544,8 +544,9 @@ if (Meteor.isClient) {
         var area = Session.get('areaSelecionada');
         var tipo = $('#tipoAula').val();
         var turma = $('#turmaMateria').val()
+        var ch=$("#ch").val()
         if (evento == "Ofertar" && sair) {
-          Meteor.call('cadastrarOfertaMateria', turma, mat, mat.cargaHoraria, mat.aulaSemanal, processo, area, tipo, sub, function(e, r) {
+          Meteor.call('cadastrarOfertaMateria', turma, mat, ch, mat.aulaSemanal, processo, area, tipo, sub, function(e, r) {
             if (e) {
               //console.log(e)
             } else {
@@ -555,7 +556,7 @@ if (Meteor.isClient) {
         } else if (evento == "Atualizar" && sair) {
           var aux = Session.get('rowData');
           //console.log(aux._id,turma,mat._id,mat.cargaHoraria,mat.aulaSemanal,processo,area._id,tipo,aux.qtdeAuto,"");
-          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, mat.cargaHoraria, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
+          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, ch, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
           if (sub != null) {
             for (x = 0; x < sub.length; x++) {
               s = Session.get(('rowDataSub' + (x + 1)).toString())
