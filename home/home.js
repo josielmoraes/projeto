@@ -124,7 +124,6 @@ if (Meteor.isClient) {
       }
     },
     'perSolicitar': function(p) {
-      console.log(p);
       if (p.permission == 0) {
         return true;
       } else if (p.permission == 1 ) {

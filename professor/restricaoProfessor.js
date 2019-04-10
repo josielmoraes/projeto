@@ -6,17 +6,18 @@ Router.route(Prefix+'/restricaoProfessor', {
 
 if (Meteor.isClient) {
   Template.restricaoProfessor.onCreated(function(){
-     $( document ).ready(function() {
-        $(".nav-link").removeClass("active")
+    Session.set("array",[]);
+    $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
       $("#menu_professor").addClass("active");
-      });
+    });
   })
   Template.restricaoProfessor.helpers({
     'perRestricaoProfessor': function(p) {
       if (p.permission == 1 ||p.permission==0 )
-        return true;
+      return true;
       else
-        return false;
+      return false;
     },
     'diasSemana': function() {
       var dias = ['Aulas', 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
@@ -77,6 +78,7 @@ if (Meteor.isClient) {
           _id: aux.toString
         })
         var horario = u.profile.horario;
+        var array=[]
         for (d = 1; d < 7; d++) {
           for (a = 0; a < 14; a++) {
             for (x = 0; x < horario.length; x++) {
@@ -84,56 +86,105 @@ if (Meteor.isClient) {
                 var i = (d + ';' + a);
                 var j = document.getElementById(i)
                 j.classList.add("red");
+                j=document.getElementById('text'+d+""+a)
+                j.value=horario[x].text
+              //  $(j).attr("disabled",false)
+                array.push({id:d+""+a,d:d.toString(),a:a.toString()})
               }
             }
           }
         }
+        Session.set("array",array)
       }, 200)
     }
   })
   Template.restricaoProfessor.events({
     "click .restricao": function(event) {
       event.preventDefault();
-      event.target.classList.toggle("red")
-      var tmp = event.target.classList;
-      var array = event.target.id.split(';')
-      console.log(Meteor.userId())
-      var id = Meteor.userId();
-      if (tmp[2] != null) {
-        console.log("adicinou");
-        console.log(array);
-        Meteor.call("adicionarHorario", id, array[0], array[1])
-      } else {
-        console.log("retirou")
-        console.log(array)
-        Meteor.call("removerHorario", id, array[0], array[1])
+      event.stopPropagation();
+      var restricao=Session.get("array")
+      var pai={}
+      var filho={}
+      if($(event.target).hasClass('textarea')){
+        pai=event.target.parentElement
+        filho=event.target
+      }else{
+        pai=event.target;
+        filho=event.target.firstChild;
       }
+      var tmp = pai.classList;
+      var array = pai.id.split(';')
+      var id = Meteor.userId();
+      if (!$(pai).hasClass("red")) {
+        $(pai).addClass("red")
+        restricao.push({id:array[0]+""+array[1],d:array[0],a:array[1]})
+        Session.set("array",restricao)
+      } else {
+        $(pai).removeClass("red")
+        var result=restricao.filter((value,i)=>{
+          if(value.id != array[0]+""+array[1]){
+            return value
+          }
+        })
+        console.log(result)
+        $(filho).val("")
+        Session.set("array",result)
+
+      }
+    },
+    'click #finalizar':function(event){
+      event.preventDefault();
+      var restricao=Session.get("array")
+      var out=false
+      restricao.forEach((value)=>{
+
+        if(value.a!="" && value.d!=""){
+          var id=(value.d+""+value.a).toString();
+          if($('#text'+id).val()==""){
+            out=true
+          }else{
+            value.text=$('#text'+id).val()
+          }
+        }
+      })
+      if(out){
+          Bert.alert("Preencher todas justificativas", 'danger', 'growl-top-right', 'fas fa-times')
+        //alert()
+      }else{
+        var id = Meteor.userId();
+        Meteor.call("removerHorario",id)
+        restricao.forEach((value)=>{
+          Meteor.call("adicionarHorario", id, value.d, value.a,value.text)
+        })
+        Bert.alert('Restrição alocada com sucesso', 'success', 'growl-top-right', 'fas fa-check')
+      }
+
+
     }
+
   })
 }
 if (Meteor.isServer) {
   Meteor.methods({
-    'adicionarHorario': function(id, dia, aula) {
+    'adicionarHorario': function(id, dia, aula,text) {
       Meteor.users.update({
         _id: id
       }, {
         $addToSet: {
           "profile.horario": {
             dia: dia,
-            aula: aula
+            aula: aula,
+            text:text
           }
         }
       })
     },
-    'removerHorario': function(id, dia, aula) {
+    'removerHorario': function(id) {
       Meteor.users.update({
         _id: id
       }, {
-        $pull: {
-          "profile.horario": {
-            dia: dia,
-            aula: aula
-          }
+        $set: {
+          "profile.horario": []
         }
       })
     }

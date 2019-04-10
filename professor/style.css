@@ -285,3 +285,9 @@ label.error {
 .tr_active {
   background-color: #d2e2ff !important;
 }
+.textarea{
+      background:transparent;
+      border: none;
+      color:white;
+    
+}
