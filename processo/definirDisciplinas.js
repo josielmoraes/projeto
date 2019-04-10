@@ -545,10 +545,11 @@ if (Meteor.isClient) {
         var tipo = $('#tipoAula').val();
         var turma = $('#turmaMateria').val()
         var ch=$("#ch").val()
+        var aulaSemanal=parseInt(parseInt(ch)/16)
+
         if (evento == "Ofertar" && sair) {
-          Meteor.call('cadastrarOfertaMateria', turma, mat, ch, mat.aulaSemanal, processo, area, tipo, sub, function(e, r) {
+          Meteor.call('cadastrarOfertaMateria', turma, mat, ch, aulaSemanal, processo, area, tipo, sub, function(e, r) {
             if (e) {
-              //console.log(e)
             } else {
               Template.cadastroOfertaDisciplina.__helpers.get('campos').call();
             }
@@ -556,12 +557,11 @@ if (Meteor.isClient) {
         } else if (evento == "Atualizar" && sair) {
           var aux = Session.get('rowData');
           //console.log(aux._id,turma,mat._id,mat.cargaHoraria,mat.aulaSemanal,processo,area._id,tipo,aux.qtdeAuto,"");
-          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, ch, mat.aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
+          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, ch, aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
           if (sub != null) {
             for (x = 0; x < sub.length; x++) {
               s = Session.get(('rowDataSub' + (x + 1)).toString())
               if (s != null) {
-                console.log(sub[x].codigo)
                 //console.log(s._id,sub[x].codigo,mat._id,sub[x].cargaHoraria,sub[x].aula,processo,area._id,sub[x].tipo,0,s.auto);
                 Meteor.call('atualizarOfertaMateria', s._id, turma, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, s.auto,sub[x].codigo)
               } else {
@@ -614,7 +614,6 @@ if (Meteor.isClient) {
       var c = $(event.target).attr('class');
       var dataTable = $(event.target).closest('table').DataTable();
       var rowData = dataTable.row(event.currentTarget).data();
-      console.log(rowData)
       if (c == "removerOferta") {
         $(event.target).closest('table').removeClass('selected');
         Meteor.call('removerOfertaMateria', rowData._id)
@@ -648,14 +647,16 @@ if (Meteor.isClient) {
       Session.set('areaSelecionada', a);
       Session.set('setSubMateria', 0);
     } else {
+
       if (rowData.auto != "") {
         var temp = rowData
         rowData = OfertaMateria.findOne({
           _id: temp.auto
         });
         Session.set('rowData', rowData);
+
       }
-      //console.log(rowData);
+
       $('#subMateria').attr('min', rowData.qtdeAuto)
       var m = rowData.Materia
       Session.set('materiaSelecionada', m)
@@ -670,6 +671,7 @@ if (Meteor.isClient) {
       var subs = OfertaMateria.find({
         auto: rowData._id
       }).fetch();
+
       window.setTimeout(function() {
         for (x = 0; x < subs.length; x++) {
           Session.set(('rowDataSub' + (x + 1)).toString(), subs[x])
@@ -733,16 +735,7 @@ if (Meteor.isClient) {
 
   })
   Template.subMateria.events({
-    'change .chSubMateria':function(event){
-      event.preventDefault();
-      var sum=0;
-      $(".chSubMateria").each(function(index){
-        sum+=$(this).val()
-      })
-      console.log(sum)
-      var total=$("#ch").val();
 
-    }
   })
 
 }
