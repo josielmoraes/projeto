@@ -14,7 +14,7 @@ Meteor.startup(() => {
     $('input').attr('autocomplete', 'off')
     Meteor.call('csv',function(e,r){
       if(e){
-        console.log(e)
+        console.log(e,"");
       }else{
         for(user of r ){
           console.log(user)
@@ -33,11 +33,12 @@ Meteor.startup(() => {
 
   if (Meteor.isServer) {
 
+
     Meteor.methods({
       "csv":function(){
     var fs = require('fs');
     // Assume that the csv file is in yourApp/public/data folder
-    var data = fs.readFileSync(process.env.PWD + '/public/usuarios.csv', 'utf8');
+    var data = fs.readFileSync(process.env.PWD+'/public/usuarios.csv', 'utf8');
     var array=new Array();
     var tmp=new Array();
     var string="";
