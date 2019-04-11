@@ -37,35 +37,35 @@ if (Meteor.isClient) {
     imprimir(aux) {
       //console.log(aux);
       if (aux == 0) {
-        return "Matutino 1";
+        return "Matutino 1 - 7h30 às 8h30";
       } else if (aux == 1) {
-        return "Matutino 2";
+        return "Matutino 2 - 8h30 às 9h30";
       } else if (aux == 2) {
-        return "Matutino 3";
+        return "Matutino 3 - 9h30 às 10h30";
       } else if (aux == 3) {
-        return "Matutino 4";
+        return "Matutino 4 - 10h30 às 11h30";
       } else if (aux == 4) {
-        return "Matutino 5";
+        return "Matutino 5 - 11h30 às 12h30";
       } else if (aux == 5) {
-        return "Vespertino 1";
+        return "Vespertino 1 - 12h30 às 13h30";
       } else if (aux == 6) {
-        return "Vespertino 2";
+        return "Vespertino 2 - 13h30 às 14h30";
       } else if (aux == 7) {
-        return "Vespertino 3";
+        return "Vespertino 3 - 14h30 às 15h30";
       } else if (aux == 8) {
-        return "Vespertino 4";
+        return "Vespertino 4 - 15h30 às 16h30";
       } else if (aux == 9) {
-        return "Vespertino 5";
+        return "Vespertino 5 - 16h30 às 17h30";
       } else if (aux == 10) {
-        return "Vespertino 6";
+        return "Vespertino 6 - 17h30 às 18h30";
       } else if (aux == 11) {
-        return "Noturno 1";
+        return "Noturno 1 - 19h00 às 20h00";
       } else if (aux == 12) {
-        return "Noturno 2";
+        return "Noturno 2 - 20h00 às 21h00";
       } else if (aux == 13) {
-        return "Noturno 3";
+        return "Noturno 3 - 21h00 às 22h00";
       } else if (aux == 14) {
-        return "Noturno 4";
+        return "Noturno 4 - 22h00 às 23h00";
       }
     },
     "home": function() {

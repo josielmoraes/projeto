@@ -85,7 +85,7 @@ Meteor.users.helpers({
     } else if (a == 1) {
       return "Coordenador(a) de Curso";
     } else if (a == 2) {
-      return "PCDE"
+      return "Comum"
     } else if (a == 4) {
       return "";
     }
