@@ -324,7 +324,7 @@ if (Meteor.isServer) {
         text: function(user, url) {
           var tmp = url.replace('#/reset-password', 'reset');
           var newUrl = tmp.replace('localhost:3000', 'faeng.ufmt.br/horario');
-          return 'Olá,\nVocê foi cadastro no sistema para criar horario do campus. Para gerar sua senha, clique no link...\n' + newUrl;;
+          return 'Olá,\nVocê foi cadastrado no sistema para criar horário do campus de Várzea Grande. Para gerar sua senha, clique no link...\n' + newUrl;;
         }
       }
       Accounts.emailTemplates.resetPassword = templateEmailEnroll;

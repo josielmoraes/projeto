@@ -81,6 +81,7 @@ if (Meteor.isClient) {
       });
     var self = this;
     self.autorun(function() {
+      //self.subscribe("buscaOferta");
       self.subscribe("acharSemetre");
       self.subscribe("buscaProcesso");
       self.subscribe("materia");
@@ -112,12 +113,11 @@ if (Meteor.isClient) {
     },
   })
   Template.cadastroOfertaDisciplina.onRendered(function() {
-    var self = this;
+  /*  var self = this;
     var sem = Session.get('processoSelecionado')
-    console.log(sem)
     self.autorun(function() {
       self.subscribe("buscaOferta", sem)
-    })
+    })*/
   })
   Template.ListaOfertas.helpers({
      mostrar() {
@@ -125,7 +125,9 @@ if (Meteor.isClient) {
       return Session.get('aux');
     },
     selector() {
+
       let pro=Session.get("processoSelecionado");
+
       return { Processo: pro };
     },
   })
@@ -168,7 +170,7 @@ if (Meteor.isClient) {
   Template.cadastroOfertaDisciplina.helpers({
     buscarArea() {
       var tmp = Area.find().fetch();
-      console.log(tmp);
+
       return tmp;
     },
     settings: function() {
@@ -635,7 +637,7 @@ if (Meteor.isClient) {
     var rowData = Session.get('rowData');
     //console.log(rowData)
     if (rowData.qtdeAuto == 0 && rowData.auto == "") {
-      console.log("aqui")
+
       var m = rowData.Materia
       var a = rowData.Area
       $('#materia').val(m.nomeMateria);
@@ -712,7 +714,7 @@ if (Meteor.isClient) {
       } else {
         Session.set('aux', true);
         Session.set('processoSelecionado', sem);
-
+          Meteor.subscribe("buscaOferta", sem)
       }
       $('#materia').val("");
       $('#area').val("");
@@ -762,7 +764,7 @@ if (Meteor.isServer) {
 
           } else {
             for (i = 0; i < dados.length; i++) {
-              console.log(dados)
+
               var c = OfertaMateria.insert({
                 auto: a,
                 qtdeAuto: 0,

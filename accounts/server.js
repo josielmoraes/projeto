@@ -12,14 +12,16 @@ Meteor.startup(() => {
 
   if (Meteor.isClient) {
     $('input').attr('autocomplete', 'off')
-    Meteor.call('csv',function(e,r){
+    /*Meteor.call('csv',function(e,r){
       if(e){
-        console.log(e,"");
+
       }else{
         for(user of r ){
           console.log(user)
-          Meteor.call('cadastrarUsuario', user, function(e, r) {
-            if (e) {} else {
+        /*  Meteor.call('cadastrarUsuario', user, function(e, r) {
+            if (e) {
+              console.log(e+" ")
+            } else {
               Meteor.call("emailCadastro");
              Accounts.forgotPassword({
                 email: user.email
@@ -28,7 +30,7 @@ Meteor.startup(() => {
           })
         }
       }
-    })
+    })*/
   }
 
   if (Meteor.isServer) {
