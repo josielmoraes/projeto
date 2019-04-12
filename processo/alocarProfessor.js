@@ -97,6 +97,10 @@ new Tabular.Table({
       title: "Disciplina"
     },
     {
+      data: "Area.nome",
+      title: "Area"
+    },
+    {
       data: "Tipo",
       title: "Tipo"
     },
@@ -108,6 +112,7 @@ new Tabular.Table({
       data: "cargaHoraria",
       title: "Carga horária"
     },
+
   ],
   extraFields: [
     'Materia', 'Area', 'auto', 'Professor', 'Curso', 'Ofertantes'
