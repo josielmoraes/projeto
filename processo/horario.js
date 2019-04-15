@@ -55,9 +55,11 @@ if (Meteor.isClient) {
   })
   Template.horario.helpers({
     'permissao': function(valor) {
-      if (valor == 0) {
+      if (valor.permission == 0) {
         return true;
-      } else {
+      } else if(valor.permission==1 && valor.subFuncao==1) {
+        return true;
+      }else{
         Router.go('home')
         return false
       }

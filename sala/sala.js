@@ -9,52 +9,53 @@ new Tabular.Table({
   name: "Sala",
   collection: Sala,
   columns: [{
-      data: "local",
-      title: "Local"
-    },
-    {
-      data: "numero",
-      title: "Número"
-    },
-    {
-      data: "apelido",
-      title: "Apelido"
-    },
-    {
-      data: "ocupacao",
-      title: "Ocupação"
-    },
-  ],
-  responsive: true,
-  autoWidth: false,
-  language: {
-    "decimal": "",
-    "emptyTable": "Nao há dados disponível",
-    "info": "Mostrando de _START_ a _END_ de _TOTAL_ registros",
-    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-    "infoFiltered": "(filtrado um total de  _MAX_  registros)",
-    "infoPostFix": "",
-    "thousands": ",",
-    "lengthMenu": "Exibindo _MENU_ registros por página",
-    "loadingRecords": "Carregando...",
-    "processing": "Processando...",
-    "search": "Procurar:",
-    "zeroRecords": "Não encontrado nenhum registro",
-    "paginate": {
-      "first": "Primeira",
-      "last": "Última",
-      "next": "Próxima",
-      "previous": "Anterior"
-    },
-  }
+    data: "local",
+    title: "Local"
+  },
+  {
+    data: "numero",
+    title: "Número"
+  },
+  {
+    data: "apelido",
+    title: "Apelido"
+  },
+  {
+    data: "ocupacao",
+    title: "Ocupação"
+  },
+],
+responsive: true,
+autoWidth: false,
+language: {
+  "decimal": "",
+  "emptyTable": "Nao há dados disponível",
+  "info": "Mostrando de _START_ a _END_ de _TOTAL_ registros",
+  "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+  "infoFiltered": "(filtrado um total de  _MAX_  registros)",
+  "infoPostFix": "",
+  "thousands": ",",
+  "lengthMenu": "Exibindo _MENU_ registros por página",
+  "loadingRecords": "Carregando...",
+  "processing": "Processando...",
+  "search": "Procurar:",
+  "zeroRecords": "Não encontrado nenhum registro",
+  "paginate": {
+    "first": "Primeira",
+    "last": "Última",
+    "next": "Próxima",
+    "previous": "Anterior"
+  },
+}
 })
 
 if (Meteor.isClient) {
   Template.sala.onCreated(function(){
-     $( document ).ready(function() {
-        $(".nav-link").removeClass("active")
+    //Meteor.call("csvSala")
+    $( document ).ready(function() {
+      $(".nav-link").removeClass("active")
       $("#menu_sala").addClass("active");
-      });
+    });
   })
   Template.sala.helpers({
     'permissao': function(valor) {
@@ -194,6 +195,39 @@ if (Meteor.isServer) {
           ocupacao:ocupacao
         }
       })
+    },
+    "csvSala":function(){
+      var fs = require('fs');
+      // Assume that the csv file is in yourApp/public/data folder
+      var data = fs.readFileSync(process.env.PWD+'/public/salas.csv', 'utf8');
+      var array=new Array();
+      var tmp=new Array();
+      var string="";
+      var cont=0;
+      var total="";
+      for(i=0;i<data.length;i++){
+
+        if(data[i]=='\n'){
+          tmp[cont]=string;
+          string="";
+          array.push(tmp);
+          cont=0
+          tmp=new Array();
+        }else{
+          if(data[i]==';' ){
+            tmp[cont]=string;
+            cont++;
+            string="";
+          }else{
+            string+=data[i];
+            total+=data[i];
+          }
+        }
+      }
+      for(i=1;i<array.length;i++){
+        console.log(array[i][1])
+        Meteor.call("cadastrarSala",array[i][0], parseInt(array[i][1]), array[i][2],parseInt(array[i][3]))
+      }
     }
   })
   Meteor.publish("sala", function() {
