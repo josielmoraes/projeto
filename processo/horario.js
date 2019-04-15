@@ -136,7 +136,7 @@ if (Meteor.isClient) {
   Template.tabelaHorario.helpers({
     imprimir(aux) {
       //console.log(aux);
-      iif (aux == 0) {
+      if (aux == 0) {
         return "Matutino 1 - 7h30 às 8h30";
       } else if (aux == 1) {
         return "Matutino 2 - 8h30 às 9h30";
