@@ -268,7 +268,7 @@ if (Meteor.isClient) {
                     option.text = ""
                     option.value = ""
                   } else {
-                    option.text = tmp[x].Materia.nomeMateria + '/' + tmp[x].Turma
+                    option.text = tmp[x].Materia.nomeMateria + '/' + tmp[x].Tipo
                     option.value = tmp[x]._id;
                     horario = tmp[x].horario;
                     for (y = 0; y < horario.length; y++) {
