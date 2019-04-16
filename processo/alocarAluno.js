@@ -80,8 +80,15 @@ if (Meteor.isClient) {
     Session.set("processoSelecionadoMaior","")
   })
 Template.alocarAluno.helpers({
-  permissao(perm){
-    return true;
+  permissao(valor){
+    if (valor.permission == 0) {
+      return true;
+    } else if(valor.permission==1 && valor.subFuncao==1) {
+      return true;
+    }else{
+      Router.go('home')
+      return false
+    }
   },
   mostrarTabela(){
     let pro=Session.get("processoSelecionadoMaior");

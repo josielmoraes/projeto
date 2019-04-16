@@ -8,14 +8,14 @@
 						<div class="col-md-4">
 							<h5>Alocar alunos</h5>
 						</div>
-						{{#if permissao currentUser.profile.permission}}
+						{{#if permissao currentUser.profile}}
 							<div class="col-md-8">{{>buscaProcessoMaior pro="5"}}</div>
 						{{/if}}
 					</div>
 				</div>
 				<div class="card-body">
 
-					{{#if permissao currentUser.profile.permission}}
+					{{#if permissao currentUser.profile}}
 						{{#if mostrarTabela}}
 							{{> tabular table=TabularTables.AlocarAluno selector=selector class="table table-striped table-bordered table-condensed"}}
 							<div class="col-md-12">
