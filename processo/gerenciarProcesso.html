@@ -1,0 +1,120 @@
+<template name="gerenciarProcesso">
+  {{>menu}}
+  <div class="container-fluid">
+    <div class="mar">
+      <div class="card mb-3">
+
+        <div class="card-header">
+          <div class="row">
+						<div class="col-md-4">
+							<h5>Gerenciar Processos</h5>
+						</div>
+
+						{{#if permissao currentUser.profile}}
+							<div class="col-md-8">{{>buscaTodosProcesso}}</div>
+						{{/if}}
+					</div>
+        </div>
+      </div>
+      {{#if mostrar}}
+      <div class="card-body">
+        {{> barraGerenciar }}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+</template>
+
+<template name="barraGerenciar">
+  <div class="container-fluid" id="visualizar">
+    <div class="text-center col-sm-10">
+      <table align="center_verde" border="0px" width="70%">
+        <tr>
+          <td>
+            <div class="container_text">
+              <div class="tamanhoBarra">
+                <p >Definir datas</p>
+              </div>
+              <div class="tamanhoBarra">
+                <p >Solicitar disciplinas</p>
+              </div>
+              <div  class="tamanhoBarra">
+                <p >Alocar professor</p>
+              </div>
+              <div class="tamanhoBarra">
+                <p>Confirmar Processo</p>
+              </div>
+              <div  class="tamanhoBarra">
+                <p >Restrição entre disciplina</p>
+              </div>
+              <div  class="tamanhoBarra">
+                <p >Criar horário</p>
+              </div>
+              <div class="tamanhoBarra">
+                <p >Alocar Aluno</p>
+              </div>
+              <div class="tamanhoBarra">
+                <p >Alocar sala</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="container_text">
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="definirDatas" ></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="solicitarDisciplina"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="alocarProfessor"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="confirmarProcesso"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1 actionClick">
+                  <div class="circle" id="restricaoDisciplina"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="criarHorario"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="alocarAluno"></div>
+                  <div class="linha_cinza"></div>
+                </div>
+              </div>
+              <div class="tamanhoBarra container1">
+                <div class="board1">
+                  <div class="circle actionClick" id="alocarSala"></div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    {{colorir}}
+  </div>
+</template>

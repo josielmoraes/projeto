@@ -200,7 +200,14 @@ if (Meteor.isClient) {
         return false;
       }
     },
-
+    'perGerenciar': function(p) {
+      //console.log(p);
+      if (p.permission == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   })
   Template.menu.events({
     'click #sair': function() {

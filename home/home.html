@@ -119,8 +119,16 @@
 					</div>
 				</li>
 				{{/if}}
-			</ul>
 
+			{{#if perGerenciar currentUser.profile}}
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="" data-original-title="Link">
+				<a class="nav-link" id="menu_gerenciar" href="{{pathFor route= 'gerenciarProcesso'}}">
+					<i class=""></i>
+					<span class="nav-link-text text-white">Gerenciar Processo</span>
+				</a>
+			</li>
+			{{/if}}
+			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
 					<a class="nav-link text-white" data-toggle="modal" data-target="#exampleModal" id="sair">

@@ -339,6 +339,7 @@ if (Meteor.isClient) {
       $('#area').val(area._id);
       var curso = rowData.Curso
       $('#curso').val(curso._id)
+      $("#semestreAlocar").val(rowData.Semestre)
       Session.set('cursoSelecionado', curso);
       Template.cadastroAlocarProfessor.__helpers.get('setCursoOfertantes').call()
     },

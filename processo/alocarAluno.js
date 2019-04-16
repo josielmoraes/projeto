@@ -134,10 +134,7 @@ Template.buscaProcessoMaior.helpers({
     });
   },
   'buscaAnoSemestres': function(proc) {
-    var a = Semestre.findOne({
-      _id: proc.semestreSelecionado
-    });
-    return a.anoLetivo + "/" + a.periodoLetivo
+    return proc.semestreSelecionado.anoLetivo + "/" + proc.semestreSelecionado.periodoLetivo
   },
 
 

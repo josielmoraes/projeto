@@ -559,13 +559,25 @@ if (Meteor.isClient) {
         } else if (evento == "Atualizar" && sair) {
           var aux = Session.get('rowData');
           //console.log(aux._id,turma,mat._id,mat.cargaHoraria,mat.aulaSemanal,processo,area._id,tipo,aux.qtdeAuto,"");
-          Meteor.call('atualizarOfertaMateria', aux._id, turma, mat, ch, aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
+          let turmaTmp=""
+          if(aux.Turma.length>1){
+            turmaTmp=aux.Turma[0]+aux.Turma[1]+turma;
+          }else{
+            turmaTmp=turma;
+          }
+          Meteor.call('atualizarOfertaMateria', aux._id, turmaTmp, mat, ch, aulaSemanal, processo, area, tipo, aux.qtdeAuto, "","")
           if (sub != null) {
             for (x = 0; x < sub.length; x++) {
               s = Session.get(('rowDataSub' + (x + 1)).toString())
               if (s != null) {
                 //console.log(s._id,sub[x].codigo,mat._id,sub[x].cargaHoraria,sub[x].aula,processo,area._id,sub[x].tipo,0,s.auto);
-                Meteor.call('atualizarOfertaMateria', s._id, turma, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, s.auto,sub[x].codigo)
+                let turmaTmp=""
+                if(s.Turma.length>1){
+                  turmaTmp=s.Turma[0]+s.Turma[1]+turma
+                }else{
+                  turmaTmp=turma
+                }
+                Meteor.call('atualizarOfertaMateria', s._id, turmaTmp, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, s.auto,sub[x].codigo)
               } else {
                 //console.log(sub[x].codigo,mat._id,sub[x].cargaHoraria,sub[x].aula,processo,area._id,sub[x].tipo,0,aux._id);
                 Meteor.call('cadastrarOfertaMateriaSub',turma, mat, sub[x].cargaHoraria, sub[x].aula, processo, area, sub[x].tipo, 0, aux._id,sub[x].codigo);
@@ -635,7 +647,7 @@ if (Meteor.isClient) {
 
   function atualizar() {
     var rowData = Session.get('rowData');
-    //console.log(rowData)
+    console.log(rowData)
     if (rowData.qtdeAuto == 0 && rowData.auto == "") {
 
       var m = rowData.Materia
@@ -643,7 +655,12 @@ if (Meteor.isClient) {
       $('#materia').val(m.nomeMateria);
       $('#area').val(a._id);
       $('#subMateria').val(rowData.qtdeAuto);
-      $('#turmaMateria').val(rowData.Turma);
+      if(rowData.Turma.length>1){
+        console.log(rowData.Turma[2])
+      $('#turmaMateria').val(rowData.Turma[2]);
+      }else{
+        $('#turmaMateria').val(rowData.Turma);
+      }
       $('#ch').val(rowData.cargaHoraria);
       Session.set('materiaSelecionada', m)
       Session.set('areaSelecionada', a);
@@ -668,7 +685,12 @@ if (Meteor.isClient) {
       $('#area').val(a._id);
       $('#ch').val(rowData.cargaHoraria);
       $('#subMateria').val(rowData.qtdeAuto);
-      $('#turmaMateria').val(rowData.Turma);
+      if(rowData.Turma.length>1){
+        console.log(rowData.Turma[2])
+      $('#turmaMateria').val(rowData.Turma[2]);
+      }else{
+        $('#turmaMateria').val(rowData.Turma);
+      }
       Session.set('setSubMateria', rowData.qtdeAuto);
       var subs = OfertaMateria.find({
         auto: rowData._id
@@ -886,14 +908,9 @@ if (Meteor.isServer) {
           auto: auto,
           qtdeAuto: qtdeAuto,
           Turma: turma,
-          Professor: "",
-          Curso: "",
           cargaHoraria: cargaMateria,
           aulaSemanal: aulaSemanal,
-          horario: [],
-          restricao: [],
           sub:sub,
-
         }
       })
     },
