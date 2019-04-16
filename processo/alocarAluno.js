@@ -19,16 +19,16 @@ new Tabular.Table({
       title: "Disciplina"
     },
     {
-      data: "Area.nome",
-      title: "Area"
+      data: "Curso.nome",
+      title: "Curso"
     },
     {
-      data: "profile.name",
+      data: "Professor.profile.name",
       title: "Professor"
     },
     {
-      data: "Curso.nome",
-      title: "Curso"
+      data: "Tipo",
+      title: "Tipo"
     },
     {
       data: "",
