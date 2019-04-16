@@ -19,6 +19,7 @@ function criarArrayOferta(turma) {
     'Curso._id': curso,
     Turma: turma
   }).fetch();
+  //console.log(tmp)
   for (x = 0; x < tmp.length; x++) {
     //console.log(tmp[x])
     filter=array.filter((obj)=>{
@@ -43,14 +44,12 @@ function criarArrayOferta(turma) {
     'Ofertantes.semestre': sem,
     'Ofertantes.curso._id': curso
   }).fetch();
-  console.log(tmp)
   for (x = 0; x < tmp.length; x++) {
     filter=array.filter((obj)=>{
       if(obj.oferta.Materia.nomeMateria==tmp[x].Materia.nomeMateria && obj.oferta.Turma==tmp[x].Turma && obj.oferta.Tipo==tmp[x].Tipo)
       return obj
     })
     if(filter.length>1){
-      //console.log(tmp[x],filter.length)
       for(y=0;y<filter.length;y++){
         filter[x].contador++;
       }
@@ -201,7 +200,6 @@ if (Meteor.isClient) {
     },
     'mostrarHorario': function() {
       var tmp = Session.get('validarTemplate')
-      console.log(tmp)
       if (tmp == "tableHorario") {
         return true
       } else {
@@ -281,7 +279,7 @@ if (Meteor.isClient) {
       var tmp;
       if (a != null) {
         tmp = criarArrayOferta(a)
-        //console.log("aa",tmp)
+        console.log("aa",tmp)
         setTimeout(function() {
           for (dia = 1; dia < 7; dia++) {
             for (aula = 0; aula < 15; aula++) {
@@ -293,12 +291,13 @@ if (Meteor.isClient) {
                 for (i = aux.options.length - 1; i >= 0; i--) {
                   aux.remove(i);
                 }
+                let optionNull= document.createElement("option");
+                optionNull.text = ""
+                optionNull.value = ""
+                optionNull.id = dia + ';' + aula;
+                aux.add(optionNull)
                 for (x = 0; x < tmp.length; x++) {
-                  var option = document.createElement("option");
-                  if (x == 0) {
-                    option.text = ""
-                    option.value = ""
-                  } else {
+                  let option = document.createElement("option");
                     if(tmp[x].contador>0){
                       option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo+" "+tmp[x].contador
                     }else{
@@ -311,7 +310,6 @@ if (Meteor.isClient) {
                         option.selected = true
                       }
                     }
-                  }
                   option.id = dia + ';' + aula;
                   aux.add(option)
                 }
@@ -659,7 +657,7 @@ if (Meteor.isClient) {
                 if(e){
                   //alert("Número excedente de aula")
                   Bert.alert({
-                    message: string,
+                    message: "Número excedente de aula",
                     type: 'danger',
                     style: 'growl-top-right',
                     hideDelay: 10000,
