@@ -12,24 +12,55 @@ function criarArrayOferta(turma) {
   var curso = Session.get("cursoSelecionado");
   var sem = Session.get('periodoSelecionado');
   //console.log(pro,curso,sem,turma)
-  var array = [" "];
+  var array = [];
   var tmp = OfertaMateria.find({
     Processo: pro,
-    Semestre: sem,
+    Semestre: sem.toString(),
     'Curso._id': curso,
     Turma: turma
   }).fetch();
   for (x = 0; x < tmp.length; x++) {
-    array.push(tmp[x])
-
+    //console.log(tmp[x])
+    filter=array.filter((obj)=>{
+      if(obj.oferta.Materia.nomeMateria==tmp[x].Materia.nomeMateria && obj.oferta.Turma==tmp[x].Turma && obj.oferta.Tipo==tmp[x].Tipo)
+      return obj
+    })
+    if(filter.length>1){
+      //console.log(tmp[x],filter.length)
+      for(y=0;y<filter.length;y++){
+        filter[x].contador++;
+      }
+      array.push({"oferta":tmp[x], 'contador':filter[filter.length-1].contador+1})
+    }else if(filter.length==1){
+      filter[0].contador++;
+      array.push({"oferta":tmp[x], 'contador':filter[0].contador+1})
+    }else{
+      array.push({"oferta":tmp[x], 'contador':0})
+    }
   }
-  var temp = OfertaMateria.find({
+  tmp = OfertaMateria.find({
     Processo: pro,
     'Ofertantes.semestre': sem,
     'Ofertantes.curso._id': curso
   }).fetch();
-  for (x = 0; x < temp.length; x++) {
-    array.push(temp[x])
+  console.log(tmp)
+  for (x = 0; x < tmp.length; x++) {
+    filter=array.filter((obj)=>{
+      if(obj.oferta.Materia.nomeMateria==tmp[x].Materia.nomeMateria && obj.oferta.Turma==tmp[x].Turma && obj.oferta.Tipo==tmp[x].Tipo)
+      return obj
+    })
+    if(filter.length>1){
+      //console.log(tmp[x],filter.length)
+      for(y=0;y<filter.length;y++){
+        filter[x].contador++;
+      }
+      array.push({"oferta":tmp[x], 'contador':filter[filter.length-1].contador+1})
+    }else if(filter.length==1){
+      filter[0].contador++;
+      array.push({"oferta":tmp[x], 'contador':filter[0].contador+1})
+    }else{
+      array.push({"oferta":tmp[x], 'contador':0})
+    }
   }
   return array;
 }
@@ -250,7 +281,7 @@ if (Meteor.isClient) {
       var tmp;
       if (a != null) {
         tmp = criarArrayOferta(a)
-        //console.log(tmp)
+        //console.log("aa",tmp)
         setTimeout(function() {
           for (dia = 1; dia < 7; dia++) {
             for (aula = 0; aula < 15; aula++) {
@@ -268,9 +299,13 @@ if (Meteor.isClient) {
                     option.text = ""
                     option.value = ""
                   } else {
-                    option.text = tmp[x].Materia.nomeMateria + '/' + tmp[x].Tipo
-                    option.value = tmp[x]._id;
-                    horario = tmp[x].horario;
+                    if(tmp[x].contador>0){
+                      option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo+" "+tmp[x].contador
+                    }else{
+                    option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo
+                    }
+                    option.value = tmp[x].oferta._id;
+                    horario = tmp[x].oferta.horario;
                     for (y = 0; y < horario.length; y++) {
                       if (horario[y].dia == dia && horario[y].aula == aula) {
                         option.selected = true
@@ -411,11 +446,11 @@ if (Meteor.isClient) {
           }
           //alert(string)
           Bert.alert({
-          message: string,
-          type: 'danger',
-          style: 'growl-top-right',
-           hideDelay: 10000,
-        });
+            message: string,
+            type: 'danger',
+            style: 'growl-top-right',
+            hideDelay: 10000,
+          });
           return true;
         }
       }}
@@ -475,11 +510,11 @@ if (Meteor.isClient) {
           }
           //alert(string)
           Bert.alert({
-          message: string,
-          type: 'danger',
-          style: 'growl-top-right',
-           hideDelay: 10000,
-        });
+            message: string,
+            type: 'danger',
+            style: 'growl-top-right',
+            hideDelay: 10000,
+          });
           return true;
         } else {
           return false
@@ -525,11 +560,11 @@ if (Meteor.isClient) {
       if (string != "") {
         //alert(string)
         Bert.alert({
-        message: string,
-        type: 'danger',
-        style: 'growl-top-right',
-         hideDelay: 10000,
-      });
+          message: string,
+          type: 'danger',
+          style: 'growl-top-right',
+          hideDelay: 10000,
+        });
         return true
       }
       string = ""
@@ -555,11 +590,11 @@ if (Meteor.isClient) {
         string += a.Materia.nomeMateria + " Curso: " + a.Curso.nome
         //alert(string)
         Bert.alert({
-        message: string,
-        type: 'danger',
-        style: 'growl-top-right',
-         hideDelay: 10000,
-      });
+          message: string,
+          type: 'danger',
+          style: 'growl-top-right',
+          hideDelay: 10000,
+        });
         return true;
       }
       return false
@@ -584,11 +619,11 @@ if (Meteor.isClient) {
         //alert('Sala utilizada pela disciplina ' + tmp.Materia.nomeMateria + " do " + tmp.Semestre + "º semestre do curso " + tmp.Curso.nome)
         let string='Sala utilizada pela disciplina ' + tmp.Materia.nomeMateria + " do " + tmp.Semestre + "º semestre do curso " + tmp.Curso.nome;
         Bert.alert({
-        message: string,
-        type: 'danger',
-        style: 'growl-top-right',
-         hideDelay: 10000,
-      });
+          message: string,
+          type: 'danger',
+          style: 'growl-top-right',
+          hideDelay: 10000,
+        });
         return false
       } else {
         return true
@@ -624,11 +659,11 @@ if (Meteor.isClient) {
                 if(e){
                   //alert("Número excedente de aula")
                   Bert.alert({
-                  message: string,
-                  type: 'danger',
-                  style: 'growl-top-right',
-                   hideDelay: 10000,
-                });
+                    message: string,
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    hideDelay: 10000,
+                  });
                   event.target.options[0].selected = true;
                 }
               })
@@ -668,11 +703,11 @@ if (Meteor.isClient) {
                       if(e){
                         //alert("Número excedente de aula")
                         Bert.alert({
-                        message: string,
-                        type: 'danger',
-                        style: 'growl-top-right',
-                         hideDelay: 10000,
-                      });
+                          message: string,
+                          type: 'danger',
+                          style: 'growl-top-right',
+                          hideDelay: 10000,
+                        });
                         event.target.options[0].selected = true;
                       }
                     })
