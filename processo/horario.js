@@ -373,7 +373,7 @@ if (Meteor.isClient) {
       var pro = Session.get('processoSelecionado');
       var curso = Session.get("cursoSelecionado");
       var sem = Session.get('periodoSelecionado');
-
+      console.log(turma)
       Session.set('validarLabel', "")
       dia = parseInt(dia)
       aula = parseInt(aula)
@@ -393,24 +393,25 @@ if (Meteor.isClient) {
       //console.log('validar ',tmp)
       if (tmp != null) {
         array.push(tmp)
-      }
-      tmp2 = OfertaMateria.findOne({
-        Processo: pro,
-        'Ofertantes.curso._id': curso,
-        'Ofertantes.semestre': sem,
-        horario: {
-          $elemMatch: {
-            dia: dia,
-            aula: aula
+      }else{
+        tmp2 = OfertaMateria.findOne({
+          Processo: pro,
+          'Ofertantes.curso._id': curso,
+          'Ofertantes.semestre': sem,
+          horario: {
+            $elemMatch: {
+              dia: dia,
+              aula: aula
+            }
           }
+        });
+        console.log('validar2 ',tmp2)
+        if (tmp2 != null) {
+          if(tmp2.Turma[2]==turma[2])  array.push(tmp2)
         }
-      });
-      //console.log('validar2 ',tmp2)
-      if (tmp2 != null) {
-        array.push(tmp2)
       }
-
       return array
+
     },
 
   })

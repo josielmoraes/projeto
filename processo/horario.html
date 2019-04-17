@@ -79,6 +79,7 @@
 <template name='tabelaHorario'>
 	{{#if mostrarHorario}}
 	{{#each tmp in turmasTabela}}
+	{{#let turma=tmp}}
 	<p>Turma {{tmp}}</p>
 	<table id='tableHorario{{tmp}}' cellspacing="10" class="tableMargin">
 		<tr class="cabecalho">
@@ -100,7 +101,7 @@
 				</select>
 				{{else}}
 
-				{{#each saida in buscarValido d a tmp}}
+				{{#each saida in buscarValido d a turma}}
 				<label id="{{saida._id}}">{{imprimirSala saida d a}} </label>
 				{{/each}}
 				{{/if}}
@@ -114,6 +115,7 @@
 	</table>
 
 	<p></p>
+	{{/let}}
 	{{/each}}
 
 	{{else}}
