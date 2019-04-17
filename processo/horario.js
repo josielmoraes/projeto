@@ -11,7 +11,7 @@ function criarArrayOferta(turma) {
   var pro = Session.get('processoSelecionado');
   var curso = Session.get("cursoSelecionado");
   var sem = Session.get('periodoSelecionado');
-  //console.log(pro,curso,sem,turma)
+  console.log(pro,curso,sem,turma)
   var array = [];
   var tmp = OfertaMateria.find({
     Processo: pro,
@@ -41,8 +41,13 @@ function criarArrayOferta(turma) {
   }
   tmp = OfertaMateria.find({
     Processo: pro,
-    'Ofertantes.semestre': sem,
-    'Ofertantes.curso._id': curso
+    "Turma":{$regex: turma[2]},
+    "Ofertantes":{
+      $elemMatch:{
+        "curso._id":curso,
+        "semestre":sem}
+      }
+
   }).fetch();
   for (x = 0; x < tmp.length; x++) {
     filter=array.filter((obj)=>{
@@ -280,6 +285,7 @@ if (Meteor.isClient) {
 
     buscaOferta(a) {
       var tmp;
+      var curso = Session.get("cursoSelecionado");
       if (a != null) {
         tmp = criarArrayOferta(a)
         console.log("aa",tmp)
@@ -305,6 +311,9 @@ if (Meteor.isClient) {
                       option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo+" "+tmp[x].contador
                     }else{
                     option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo
+                    }
+                    if(tmp[x].oferta.Curso._id!=curso){
+                      option.text+="/ "+tmp[x].oferta.Turma
                     }
                     option.value = tmp[x].oferta._id;
                     horario = tmp[x].oferta.horario;
@@ -508,6 +517,7 @@ if (Meteor.isClient) {
     }
 
     function validarRestricao(id, dia, aula) {
+      //validar com as restrições
       var pro = Session.get('processoSelecionado');
       dia = parseInt(dia);
       aula = parseInt(aula)
@@ -571,6 +581,7 @@ if (Meteor.isClient) {
           Processo: pro,
           'Curso._id': array[x].curso._id,
           Semestre: array[x].semestre,
+          "Turma":{$regex: tmpOferta.Turma[2]},
           horario: {
             $elemMatch: {
               dia: dia,
@@ -599,6 +610,7 @@ if (Meteor.isClient) {
       //procurar em todas Ofertas quais ofertantes do mesmo curso e semestre esta no mesmo horario
       var a = OfertaMateria.findOne({
         Processo: pro,
+        "Turma":{$regex: tmpOferta.Turma[2]},
         Ofertantes: {
           $elemMatch: {
             'curso._id': tmpOferta.Curso._id,
