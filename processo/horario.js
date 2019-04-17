@@ -39,7 +39,7 @@ function criarArrayOferta(turma) {
       array.push({"oferta":tmp[x], 'contador':0})
     }
   }
-  tmp = OfertaMateria.find({
+  /*tmp = OfertaMateria.find({
     Processo: pro,
     "Turma":{$regex: turma[2]},
     "Ofertantes":{
@@ -65,7 +65,7 @@ function criarArrayOferta(turma) {
     }else{
       array.push({"oferta":tmp[x], 'contador':0})
     }
-  }
+  }*/
   return array;
 }
 
