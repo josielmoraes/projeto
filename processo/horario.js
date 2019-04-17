@@ -118,6 +118,8 @@ if (Meteor.isClient) {
   })
   Template.criarHorario.onCreated(function() {
     Session.set('validarTemplate', 'criarHorario')
+    var processo=Session.get('processoSelecionado');
+
   })
   Template.criarHorario.helpers({
     mostrar() {
@@ -163,6 +165,7 @@ if (Meteor.isClient) {
 
     }
   })
+
   Template.tabelaHorario.helpers({
     imprimir(aux) {
       //console.log(aux);
@@ -324,7 +327,6 @@ if (Meteor.isClient) {
       Session.get('periodoSelecionado')
       var tmp = [" "]
       var aux = Sala.find().fetch()
-      console.log(aux)
       for (x = 0; x < aux.length; x++) {
         tmp.push(aux[x])
       }
@@ -373,11 +375,32 @@ if (Meteor.isClient) {
       var pro = Session.get('processoSelecionado');
       var curso = Session.get("cursoSelecionado");
       var sem = Session.get('periodoSelecionado');
-      console.log(turma)
+      //var ofertas=  Session.get("ofertasMaterias")
       Session.set('validarLabel', "")
       dia = parseInt(dia)
       aula = parseInt(aula)
       var array = new Array()
+      /*array =ofertas.filter((obj)=>{
+        if(obj.Curso._id==curso &&  obj.Semestre==sem && obj.Turma==turma){
+          for(let horario of obj.horario){
+            if(horario.dia==dia && horario.aula==aula)
+              return obj
+          }
+        }
+      })
+      if(array.length==0){
+        array=ofertas.filter((obj)=>{
+          for(let ofertante of obj.Ofertantes){
+            if(ofertante.curso._id==curso && ofertante.semestre==sem && obj.Turma[2]==turma[2] ){
+              for(let horario of obj.horario){
+                if(horario.dia==dia && horario.aula==aula)
+                  return obj
+              }
+            }
+          }
+        })
+      }*/
+
       var tmp = OfertaMateria.findOne({
         Processo: pro,
         'Curso._id': curso,
@@ -396,8 +419,13 @@ if (Meteor.isClient) {
       }else{
         tmp2 = OfertaMateria.findOne({
           Processo: pro,
-          'Ofertantes.curso._id': curso,
-          'Ofertantes.semestre': sem,
+          "Turma":{$regex: turma[2]},
+          Ofertantes:{
+            $elemMatch:{
+              'curso._id':curso,
+              'semestre':sem
+            }
+          },
           horario: {
             $elemMatch: {
               dia: dia,
@@ -405,9 +433,10 @@ if (Meteor.isClient) {
             }
           }
         });
-        console.log('validar2 ',tmp2)
         if (tmp2 != null) {
-          if(tmp2.Turma[2]==turma[2])  array.push(tmp2)
+          //console.log(tmp2)
+          //if(tmp2.Turma[2]==turma[2])
+           array.push(tmp2)
         }
       }
       return array

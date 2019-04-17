@@ -20,7 +20,6 @@ if (Meteor.isClient) {
   Template.visualizarHorario.onDestroyed(function() {
     $('body').removeClass('bg-dark')
     Session.set("aux", false)
-    console.log(this);
   })
   Template.tableHorario.onCreated(function() {
     Session.set('validarTemplate', 'tableHorario')
@@ -29,6 +28,11 @@ if (Meteor.isClient) {
   Template.tableHorario.helpers({
     mostrar() {
       var s = Session.get('aux');
+
+      /*if(s){
+        var array=OfertaMateria.find({Processo:Session.get('processoSelecionado')}).fetch();
+        Session.set("ofertasMaterias",array)
+      }*/
       return Session.get('aux');
     },
     mostrarTabela() {
