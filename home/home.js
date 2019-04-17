@@ -191,12 +191,13 @@ if (Meteor.isClient) {
       }
     },
     'perAlocarSala': function(p) {
-      //console.log(p);
       if (p.permission == 0) {
         return true;
-      } else if (p.permission == 1 && p.subFuncao == 2) {
+      } else if (p.permission == 1 && p.subFuncao == 1) {
         return true;
-      } else {
+      } else if(p.permission==2) {
+        return true;
+      }else{
         return false;
       }
     },

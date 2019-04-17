@@ -29,12 +29,15 @@ if (Meteor.isClient) {
     Session.set('aux', false);
   })
   Template.alocarSala.helpers({
-    'permissao': function(valor) {
-      if (valor == 0) {
+    'permissao': function(p) {
+      if (p.permission == 0) {
         return true;
-      } else {
-        Router.go('home')
-        return false
+      } else if (p.permission == 1 && p.subFuncao == 1) {
+        return true;
+      } else if(p.permission==2) {
+        return true;
+      }else{
+        return false;
       }
     },
   })
