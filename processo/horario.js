@@ -27,21 +27,27 @@ function criarArrayOferta(turma) {
       return obj
     })
     if(filter.length>1){
-      //console.log(tmp[x],filter.length)
+
+      if(filter.oferta._id!=tmp[x].id){
       for(y=0;y<filter.length;y++){
         filter[x].contador++;
       }
-      array.push({"oferta":tmp[x], 'contador':filter[filter.length-1].contador+1})
+      array.push({"oferta":tmp[x], 'contador':filter[filter.length-1].contador+1,'opcao':0})
+      }
     }else if(filter.length==1){
-      filter[0].contador++;
-      array.push({"oferta":tmp[x], 'contador':filter[0].contador+1})
+      console.log(tmp[x],filter)
+      if(filter.oferta._id!=tmp[x].id){
+        filter[0].contador++;
+        array.push({"oferta":tmp[x], 'contador':filter[0].contador+1,'opcao':0})
+      }
     }else{
-      array.push({"oferta":tmp[x], 'contador':0})
+      array.push({"oferta":tmp[x], 'contador':0,'opcao':0})
     }
   }
-  /*tmp = OfertaMateria.find({
+  tmp = OfertaMateria.find({
     Processo: pro,
     "Turma":{$regex: turma[2]},
+    "Curso._id":{$ne:curso},
     "Ofertantes":{
       $elemMatch:{
         "curso._id":curso,
@@ -65,8 +71,32 @@ function criarArrayOferta(turma) {
     }else{
       array.push({"oferta":tmp[x], 'contador':0})
     }
-  }*/
+  }
   return array;
+}
+function hiddenElement(val){
+  $('.sel').each(function(index){
+     if($(this).val()!=val){
+       $(this).find("option").each(function(i){
+
+          if($(this).val()==val){
+            $(this).attr("disabled",true)
+          }
+
+       })
+     }
+  })
+}
+function removeHidden(val){
+  $('.sel').each(function(index){
+     if($(this).val()!=val){
+       $(this).find("option").each(function(i){
+          if($(this).val()==val){
+            $(this).attr("disabled",false)
+          }
+       })
+     }
+  })
 }
 
 if (Meteor.isClient) {
@@ -74,6 +104,7 @@ if (Meteor.isClient) {
     Session.set('aux', false);
   })
   Template.horario.onCreated(function() {
+
     Session.set('aux', false);
     $( document ).ready(function() {
       $(".nav-link").removeClass("active")
@@ -134,7 +165,6 @@ if (Meteor.isClient) {
     mostrarTabela() {
       var curso = Session.get("cursoSelecionado");
       var sem = Session.get('periodoSelecionado');
-      console.log(curso,sem)
       if (curso == "") {
         Session.set('sairOption', false)
         return false;
@@ -269,7 +299,39 @@ if (Meteor.isClient) {
           array.push(temp)
         }
       }
-      //console.log('array turmas ',array, 'tamanha: ',array.length);
+      if(array.length==0){
+        tmp = OfertaMateria.find({
+          Processo: pro,
+          "Ofertantes":{
+            $elemMatch:{
+              "curso._id":curso,
+              "semestre":sem}
+            }
+        }).fetch();
+
+        for (x = 0; x < tmp.length; x++) {
+          var sigla=""
+
+          for(let ofertante of tmp[x].Ofertantes){
+            if(ofertante.curso._id==curso){
+                sigla=ofertante.curso.sigla
+            }
+          }
+          temp = sigla+tmp[x].Turma[2];
+          if (array.length == 0) {
+            array.push(temp)
+          }
+          var sair = false;
+          for (y = 0; y < array.length; y++) {
+            if (array[y] == temp) {
+              sair = true
+            }
+          }
+          if (sair == false) {
+            array.push(temp)
+          }
+        }
+      }
       return array
     },
     'validarTemplate': function() {
@@ -288,7 +350,6 @@ if (Meteor.isClient) {
       var curso = Session.get("cursoSelecionado");
       if (a != null) {
         tmp = criarArrayOferta(a)
-        console.log("aa",tmp)
         setTimeout(function() {
           for (dia = 1; dia < 7; dia++) {
             for (aula = 0; aula < 15; aula++) {
@@ -312,16 +373,29 @@ if (Meteor.isClient) {
                     }else{
                     option.text = tmp[x].oferta.Materia.nomeMateria + '/' + tmp[x].oferta.Tipo
                     }
+                    if(tmp[x].oferta.aulaSemanal==tmp[x].oferta.horario.length ){
+                      option.disabled=true
+                      option.setAttribute('v', tmp[x].oferta._id)
+                    }
+
                     if(tmp[x].oferta.Curso._id!=curso){
                       option.text+="/ "+tmp[x].oferta.Turma
+                      option.disabled=true
+                      option.style.color="red"
                     }
                     option.value = tmp[x].oferta._id;
                     horario = tmp[x].oferta.horario;
                     for (y = 0; y < horario.length; y++) {
                       if (horario[y].dia == dia && horario[y].aula == aula) {
                         option.selected = true
+                        if(tmp[x].oferta.Curso._id!=curso){
+                              aux.disabled=true
+                              aux.style.color="red"
+                        }
                       }
                     }
+
+
                   option.id = dia + ';' + aula;
                   aux.add(option)
                 }
@@ -364,8 +438,6 @@ if (Meteor.isClient) {
                   for (y = 0; y < ofertaM.horario.length; y++) {
                     if (ofertaM.horario[y].sala != "") {
                       if (tmp[x]._id == ofertaM.horario[y].sala._id && ofertaM.horario[y].dia == dia && ofertaM.horario[y].aula == aula) {
-                        //console.log('achou')
-                        //console.log(tmp[x])
                         option.selected = true
                       }
                     }
@@ -504,9 +576,8 @@ if (Meteor.isClient) {
           if (horario != null) {
             for (x = 0; x < horario.length; x++) {
               if (horario[x].dia == dia && horario[x].aula == aula) {
-                console.log("entrou");
+
                 var tmp = confirm("Horário que o professor nao gostaria de ministrar aula. Deseja manter a disciplina nesse horário?");
-                console.log(tmp);
                 return tmp
               }
             }
@@ -705,20 +776,35 @@ if (Meteor.isClient) {
                     hideDelay: 10000,
                   });
                   event.target.options[0].selected = true;
+                }else{
+                  if(r){
+                    hiddenElement(val)
+                  }
+
                 }
               })
 
             }
           } else if (ant != val) {
             if (val == '') {
-              Meteor.call('removerAula', ant, dia, aula);
+              Meteor.call('removerAula', ant, dia, aula,function(e,r){
+                if(e){
+
+                }else{
+                  if(r){
+                    removeHidden(ant)
+                  }
+                }
+              });
             } else {
               console.log("aqui")
               Meteor.call('removerAula', ant, dia, aula,function(e,r){
                 if(e){
                   console.log(e)
                 }else{
-                  console.log(r);
+                  if(r){
+                    removeHidden(ant)
+                  }
 
                   aux = event.target;
                   var posicao = "";
@@ -743,12 +829,16 @@ if (Meteor.isClient) {
                       if(e){
                         //alert("Número excedente de aula")
                         Bert.alert({
-                          message: string,
+                          message: "Número excedente de aula",
                           type: 'danger',
                           style: 'growl-top-right',
                           hideDelay: 10000,
                         });
                         event.target.options[0].selected = true;
+                      }else{
+                        if(r){
+                          hiddenElement(val)
+                        }
                       }
                     })
                   }
@@ -766,7 +856,6 @@ if (Meteor.isClient) {
           var aula = id[1];
           id = event.target.parentNode.children[0].id
           if (ant == "") {
-            //console.log('anterior vazio')
             if (validarSala(id, dia, aula, val)) {
               Meteor.call('alocarSala', id, dia, aula, val);
             } else {
@@ -796,7 +885,12 @@ if (Meteor.isClient) {
 
       'focus .sel': function(event) {
         event.preventDefault();
+
         var val = $(event.target).val()
+        if(val==null){
+          let id=event.target.id
+          val=$("#"+id+" option[disabled]:selected").val()
+        }
         Session.set('anterior', val)
       }
     })
@@ -815,7 +909,9 @@ if (Meteor.isClient) {
           aula: aula
         }
         let mat=  OfertaMateria.findOne({ _id: id })
-        if(mat.horario.length<mat.aulaSemanal){
+        if(mat.horario.length==mat.aulaSemanal){
+          return true
+        }else if(mat.horario.length<mat.aulaSemanal){
           OfertaMateria.update({
             _id: id
           }, {
@@ -827,7 +923,7 @@ if (Meteor.isClient) {
               }
             }
           })
-
+          return false
         }else{
           throw new Meteor.Error('qtde_aula', "Quantidade de aulas");
         }
@@ -845,6 +941,7 @@ if (Meteor.isClient) {
             }
           }
         })
+
       },
       'alocarSala': function(id, dia, aula, sala) {
         dia = parseInt(dia);
