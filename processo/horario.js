@@ -355,8 +355,11 @@ if (Meteor.isClient) {
             for (aula = 0; aula < 15; aula++) {
               string = dia + 's' + aula + a;
               aux = document.getElementById(string);
+
               if (aux != null) {
                 //console.log(aux)
+                aux.disabled=false
+                aux.style.color="black"
                 var i;
                 for (i = aux.options.length - 1; i >= 0; i--) {
                   aux.remove(i);
