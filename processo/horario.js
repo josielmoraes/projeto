@@ -271,6 +271,14 @@ if (Meteor.isClient) {
         }
       }
     },
+    imprimirProfessor(professor){
+      var nomes=professor.profile.name.split(" ")
+      if(nomes.length>1){
+        return nomes[0]+" "+nomes[nomes.length-1]
+      }else if(nomes.length==1){
+        return nomes[0];
+      }
+    },
     turmasTabela() {
       var pro = Session.get('processoSelecionado');
       var curso = Session.get("cursoSelecionado");
@@ -299,7 +307,7 @@ if (Meteor.isClient) {
           array.push(temp)
         }
       }
-      if(array.length==0){
+      //if(array.length==0){
         tmp = OfertaMateria.find({
           Processo: pro,
           "Ofertantes":{
@@ -331,7 +339,7 @@ if (Meteor.isClient) {
             array.push(temp)
           }
         }
-      }
+      //}
       return array
     },
     'validarTemplate': function() {
@@ -526,6 +534,7 @@ if (Meteor.isClient) {
       return array
 
     },
+
 
   })
 
