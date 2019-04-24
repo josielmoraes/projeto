@@ -11,7 +11,7 @@ function criarArrayOferta(turma) {
   var pro = Session.get('processoSelecionado');
   var curso = Session.get("cursoSelecionado");
   var sem = Session.get('periodoSelecionado');
-  console.log(pro,curso,sem,turma)
+  //console.log(pro,curso,sem,turma)
   var array = [];
   var tmp = OfertaMateria.find({
     Processo: pro,
@@ -27,16 +27,16 @@ function criarArrayOferta(turma) {
       return obj
     })
     if(filter.length>1){
-
-      if(filter.oferta._id!=tmp[x].id){
+      //console.log(filter.oferta)
+      if(filter.oferta._id!=tmp[x]._id){
       for(y=0;y<filter.length;y++){
         filter[x].contador++;
       }
       array.push({"oferta":tmp[x], 'contador':filter[filter.length-1].contador+1,'opcao':0})
       }
     }else if(filter.length==1){
-      console.log(tmp[x],filter)
-      if(filter.oferta._id!=tmp[x].id){
+      //console.log(tmp[x],filter.oferta)
+      if(filter[0].oferta._id!=tmp[x]._id){
         filter[0].contador++;
         array.push({"oferta":tmp[x], 'contador':filter[0].contador+1,'opcao':0})
       }
