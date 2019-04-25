@@ -719,9 +719,21 @@ if (Meteor.isClient) {
   })
   Template.buscaProcesso.helpers({
     'buscaProcessos': function(e) {
-      return Processo.find({
-        etapas: Number(e)
-      });
+      template= Session.get('validarTemplate')
+      if(template=='tableHorario'){
+        if(e>=4){
+          console.log(e)
+          return Processo.find({
+            etapas:{ $gte:Number(e)}
+          });
+        }else{
+          return []
+        }
+      }else{
+        return Processo.find({
+          etapas: Number(e)
+        });
+      }
     },
     'buscaAnoSemestres': function(proc) {
 
@@ -730,6 +742,7 @@ if (Meteor.isClient) {
   })
   Template.buscaProcesso.events({
     'click #processoSelecionado': function(event) {
+
       var sem = $('#processoSelecionado').val();
       if (sem == "") {
         Session.set('aux', false);
