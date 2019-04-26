@@ -541,7 +541,16 @@ if (Meteor.isClient) {
       return array
 
     },
-
+    imprimirAlocarSala(saida){
+      var nomes=saida.Professor.profile.name.split(" ")
+      var out="";
+      if(nomes.length>1){
+        out=nomes[0]+" "+nomes[nomes.length-1]
+      }else if(nomes.length==1){
+        out=nomes[0];
+      }
+      return saida.Materia.nomeMateria+" "+saida.Turma+"\n "+saida.tipo+'\n '+out
+    }
 
   })
 
