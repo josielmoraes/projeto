@@ -261,12 +261,15 @@ if (Meteor.isClient) {
     },
     'imprimirSala': function(saida, d, a) {
       var horario = saida.horario;
-      var nomes=saida.Professor.profile.name.split(" ")
-      var nomeImprimir=""
-      if(nomes.length>1){
-        nomeImprimir=nomes[0]+" "+nomes[nomes.length-1];
-      }else{
-        nomeImprimir=nomes[0]
+        var nomeImprimir=""
+      if(saida.Professor!=''){
+        var nomes=saida.Professor.profile.name.split(" ")
+
+        if(nomes.length>1){
+          nomeImprimir=nomes[0]+" "+nomes[nomes.length-1];
+        }else{
+          nomeImprimir=nomes[0]
+        }
       }
       for (x = 0; x < horario.length; x++) {
         if (horario[x].dia == d && horario[x].aula == a) {
@@ -543,6 +546,7 @@ if (Meteor.isClient) {
     },
     imprimirAlocarSala(saida){
       var out="";
+
       if(saida.Professor!=''){
           var nomes=saida.Professor.profile.name.split(" ")
         if(nomes.length>1){
