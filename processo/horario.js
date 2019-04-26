@@ -549,7 +549,7 @@ if (Meteor.isClient) {
       }else if(nomes.length==1){
         out=nomes[0];
       }
-      return saida.Materia.nomeMateria+" "+saida.Turma+"\n "+saida.tipo+'\n '+out
+      return saida.Materia.nomeMateria+" "+saida.Turma+"\n "+saida.Tipo+'\n '+out
     }
 
   })
