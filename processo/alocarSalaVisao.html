@@ -1,0 +1,79 @@
+<template name="alocarSalaVisao">
+    {{>menu}}
+    <div class="container-fluid">
+  		<div class="mar">
+
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-4">
+                <h5>Alocar sala</h5>
+              </div>
+
+              {{#if permissao currentUser.profile}}
+                <div class="col-md-8">{{>buscaProcesso pro="6"}}</div>
+              {{/if}}
+            </div>
+          </div>
+          <div class="card-body">
+             {{#if permissao currentUser.profile}}
+                {{> visaoPorSala}}
+              {{/if}}
+          </div>
+        </div>
+    </div>
+  </div>
+</template>
+<template name="visaoPorSala">
+  {{#if mostrar}}
+  	<div class="col-md-12">
+      	<div class="form-group row">
+          <p></p>
+    			<label for="cursoSelecionado"  class="control-label col-sm-1" >Local:</label>
+    			<div class="col-sm-4">
+    				<select id="local" class="form-control">
+              <option value=""></option>
+            </select>
+    			</div>
+          <label for="cursoSelecionado"  class="control-label col-sm-1" >Sala:</label>
+    			<div class="col-sm-4">
+    				<select id="sala" class="form-control">
+              <option value=""></option>
+            </select>
+    			</div>
+        </div>
+    </div>
+    {{local}}
+    {{#if mostrarTabela}}
+    <p></p>
+    <table id="salaVisao" cellspacing="10" class="tableMargin">
+      	<tr class="cabecalho">
+          {{#each val in diasSemana}}
+    			<th class="tamanho">{{val}}</th>
+    			{{/each}}
+        </tr>
+        {{#each aux in aulas}}
+    		{{#let a=@index}}
+        <tr>
+    			{{#each val in diasSemana}}
+          {{#let d=@index }}
+          {{#if criarDiasAulas d}}
+          <td class="tamanho">{{imprimir aux}}</td>
+          {{else}}
+          <td class="tamanho">
+            {{encontrarAula a d}}
+            <select class="form-control dropdown sel" id="{{d}}s{{a}}">
+              <option value=""></option>
+    				</select>
+          </td>
+          {{/if}}
+          {{/let}}
+          {{/each}}
+        </tr>
+        {{/let}}
+  			{{/each}}
+      </table>
+      {{preencherSelect}}
+    {{/if}}
+  {{/if}}
+</template>

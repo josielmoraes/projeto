@@ -428,7 +428,7 @@ if (Meteor.isClient) {
     },
     buscarSala(a) {
 
-      Session.get('periodoSelecionado')
+      var processo=Session.get('processoSelecionado')
       var tmp = [" "]
       var aux = Sala.find().fetch()
       for (x = 0; x < aux.length; x++) {
@@ -454,13 +454,29 @@ if (Meteor.isClient) {
                   option.text = ""
                   option.value = ""
                 } else {
-                  option.text = tmp[x].local + " " + tmp[x].numero;
-
+                  option.text = tmp[x].local + " " +tmp[x].apelido+" "+ tmp[x].numero;
+                  option.selected=false
                   for (y = 0; y < ofertaM.horario.length; y++) {
                     if (ofertaM.horario[y].sala != "") {
                       if (tmp[x]._id == ofertaM.horario[y].sala._id && ofertaM.horario[y].dia == dia && ofertaM.horario[y].aula == aula) {
                         option.selected = true
                       }
+                    }
+                  }
+                  if(!option.selected){
+                    ofertaLocal=OfertaMateria.findOne({
+                      Processo:processo,
+                      horario: {
+                        $elemMatch: {
+                          dia: dia,
+                          aula: aula,
+                          'sala._id':tmp[x]._id,
+                        }
+                      }
+                    })
+                    if(ofertaLocal!==undefined){
+                      option.disabled=true
+                      option.style.color="red"
                     }
                   }
                   option.value = tmp[x]._id;
@@ -997,7 +1013,7 @@ if (Meteor.isClient) {
             "horario.$.sala": sala
           }
         })
-        //console.log(resul)
+        return resul
       },
       'removerSala': function(id, dia, aula) {
         dia = parseInt(dia);
