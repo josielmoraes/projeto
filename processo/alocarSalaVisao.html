@@ -45,35 +45,37 @@
     </div>
     {{local}}
     {{#if mostrarTabela}}
-    <p></p>
-    <table id="salaVisao" cellspacing="10" class="tableMargin">
-      	<tr class="cabecalho">
-          {{#each val in diasSemana}}
-    			<th class="tamanho">{{val}}</th>
-    			{{/each}}
-        </tr>
-        {{#each aux in aulas}}
-    		{{#let a=@index}}
-        <tr>
-    			{{#each val in diasSemana}}
-          {{#let d=@index }}
-          {{#if criarDiasAulas d}}
-          <td class="tamanho">{{imprimir aux}}</td>
-          {{else}}
-          <td class="tamanho">
-            {{encontrarAula a d}}
-            <select class="form-control dropdown sel" id="{{d}}s{{a}}">
-              <option value=""></option>
-    				</select>
-          </td>
-          {{/if}}
+    {{#each value in salaFind}}
+      <p></p>
+      <table id="salaVisao" cellspacing="10" class="tableMargin">
+        	<tr class="cabecalho">
+            {{#each val in diasSemana}}
+      			<th class="tamanho">{{val}}</th>
+      			{{/each}}
+          </tr>
+          {{#each aux in aulas}}
+      		{{#let a=@index}}
+          <tr>
+      			{{#each val in diasSemana}}
+            {{#let d=@index }}
+            {{#if criarDiasAulas d}}
+            <td class="tamanho">{{imprimir aux}}</td>
+            {{else}}
+            <td class="tamanho">
+              {{encontrarAula a d}}
+              <select class="form-control dropdown sel" id="{{d}}s{{a}}" disabled>
+                <option value=""></option>
+      				</select>
+            </td>
+            {{/if}}
+            {{/let}}
+            {{/each}}
+          </tr>
           {{/let}}
-          {{/each}}
-        </tr>
-        {{/let}}
-  			{{/each}}
-      </table>
-      {{preencherSelect}}
+    			{{/each}}
+        </table>
+        {{preencherSelect}}
+      {{/each}}
     {{/if}}
   {{/if}}
 </template>

@@ -29,6 +29,7 @@ if(Meteor.isClient){
     var self = this;
       Session.set('aux', false);
       Session.set('salaId',"")
+      Session.set('contadorClick',0);
     self.autorun(function() {
       self.subscribe("sala");
       self.subscribe("acharSemetre");
@@ -42,11 +43,11 @@ if(Meteor.isClient){
   Template.alocarSalaVisao.onDestroyed(function(){
       Session.set('aux', false);
       Session.set('salaId',"")
+      Session.set('contadorClick',0);
   })
 
   Template.alocarSalaVisao.helpers({
     'permissao': function(p) {
-      console.log(p)
       if (p.permission == 0) {
         return true;
       } else if (p.permission == 1 && p.subFuncao == 1) {
@@ -59,6 +60,7 @@ if(Meteor.isClient){
     },
   })
   Template.visaoPorSala.onCreated(function(){
+      Session.set('contadorClick',0);
     })
   Template.visaoPorSala.helpers({
     mostrar(){
@@ -80,6 +82,14 @@ if(Meteor.isClient){
       }else{
         return true
       }
+    },
+    salaFind(){
+      let salas=[]
+      sala=Sala.findOne({'_id':Session.get('salaId')})
+      if(sala!==undefined){
+        salas.push(sala)
+      }
+      return salas
     },
     local(){
       var salas=Sala.find().fetch()
@@ -108,7 +118,6 @@ if(Meteor.isClient){
       var aulas = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
       return aulas
     },  imprimir(aux) {
-        //console.log(aux);
         if (aux == 0) {
           return "Matutino 1 - 7h30 às 8h30";
         } else if (aux == 1) {
@@ -170,11 +179,11 @@ if(Meteor.isClient){
               nomeImprimir=nomes[0]
             }
           }
-          return oferta.Materia.nomeMateria+" "+oferta.Turma+"\n"+oferta.Tipo+"\n"+nomeImprimir
+          return oferta.Materia.nomeMateria+" "+oferta.Turma+"\n"+oferta.Semestre+" "+oferta.Tipo+"\n"+nomeImprimir
         }
       },
       preencherSelect(){
-        Meteor.defer(function(){
+        setTimeout(function(){
           var ofertas=Session.get('ofertas')
           var salaId=Session.get("salaId")
           for (dia = 1; dia < 7; dia++) {
@@ -191,44 +200,56 @@ if(Meteor.isClient){
               option.text="";
               element.add(option);
               for(oferta of ofertas){
-                if(oferta.Professor!=''){
-                  var nomes=oferta.Professor.profile.name.split(" ")
-
-                  if(nomes.length>1){
-                    nomeImprimir=nomes[0]+" "+nomes[nomes.length-1];
-                  }else{
-                    nomeImprimir=nomes[0]
-                  }
-                }
-                option=document.createElement('option');
-                option.value=oferta._id;
-                option.id=oferta._id;
-                option.text=oferta.Materia.nomeMateria+" "+oferta.Turma+" "+oferta.Tipo+" "+nomeImprimir
-                option.selected=false;
-                  option.style.color='black'
-                contador=0
+                let select=false
+                let option=false
+                let contador=0
                 for(x=0;x<oferta.horario.length;x++){
                   if(oferta.horario[x].dia==dia && oferta.horario[x].aula==aula && oferta.horario[x].sala._id==salaId){
-                    option.selected=true
-                  }else if(oferta.horario[x].dia==dia && oferta.horario[x].aula==aula && oferta.horario[x].sala!=""){
-                    option.style.color='red'
-                    option.disabled=true
+                    select=true
+                  }
+                  if(oferta.horario[x].dia==dia && oferta.horario[x].aula==aula ){
+                    //option.style.color='red'
+                    //option.disabled=true
+                    option=true
                   }
                   if(oferta.horario[x].sala!=""){
                     contador++;
                   }
                 }
-                if(contador==oferta.horario.length){
-                  option.style.color='red'
-                  option.disabled=true
+
+                if(option){
+                  if(oferta.Professor!=''){
+                    var nomes=oferta.Professor.profile.name.split(" ")
+
+                    if(nomes.length>1){
+                      nomeImprimir=nomes[0]+" "+nomes[nomes.length-1];
+                    }else{
+                      nomeImprimir=nomes[0]
+                    }
+                  }
+                  option=document.createElement('option');
+                  option.value=oferta._id;
+                  option.id=oferta._id;
+                  option.text=oferta.Materia.nomeMateria+" "+oferta.Turma+" "+oferta.Tipo+" "+nomeImprimir
+                  option.selected=false;
+                    option.style.color='black'
+
+
+                  if(contador==oferta.horario.length){
+                    option.style.color='red'
+                    option.disabled=true
+                  }
+                  if(select){
+                    option.selected=true
+                  }
+
+                  element.add(option)
                 }
-
-                element.add(option)
               }
-
+              element.disabled=false
             }
           }
-        })
+        },500)
       }
   })
   Template.visaoPorSala.events({
@@ -258,40 +279,54 @@ if(Meteor.isClient){
       var val = $(event.target).val();
       var text = $(event.target).find("option:selected").text(); //only time the find is required
       var id = $(event.target).attr('id');
-      //console.log(val,text,id);
       id = id.split('s');
       var dia = id[0];
       var aula = id[1];
-      console.log("anterior",anterior);
-      if(anterior!=""){
-        Meteor.call('removerSala',anterior,dia,aula,function(e,r){
-          if(e){
-
-          }else{
-            hiddenElement(anterior,false,'black')
+      var find=OfertaMateria.findOne({
+        Processo:Session.get("processoSelecionado"),
+        horario: {
+          $elemMatch: {
+            dia: dia,
+            aula: aula,
+            'sala._id':val
           }
-        })
-      }
-      if(val!=""){
-        Meteor.call('alocarSala',val,dia,aula,salaid,function(e,r){
-          if(e){}
-          else{
-            oferta=OfertaMateria.findOne({
-              _id:val
-            })
+        }
+      })
+      if(find===undefined){
+        if(anterior!=""){
+          Meteor.call('removerSala',anterior,dia,aula,function(e,r){
+            if(e){
 
-            contador=0;
-            for(x=0;x<oferta.horario.length;x++){
-              if(oferta.horario[x].sala!=""){
-                contador++
+            }else{
+              hiddenElement(anterior,false,'black')
+            }
+          })
+        }
+        if(val!=""){
+          //sala=Sala.findOne({'_id':salaid})
+          Meteor.call('alocarSala',val,dia,aula,salaid,function(e,r){
+            if(e){
+
+            }
+            else{
+              oferta=OfertaMateria.findOne({
+                _id:val
+              })
+
+              contador=0;
+              for(x=0;x<oferta.horario.length;x++){
+                if(oferta.horario[x].sala!=""){
+                  contador++
+                }
+              }
+              if(contador==oferta.horario.length){
+                hiddenElement(val,true,'red')
               }
             }
-            console.log(oferta,contador)
-            if(contador==oferta.horario.length){
-              hiddenElement(val,true,'red')
-            }
-          }
-        })
+          })
+        }
+      }else{
+      $(event.target).val(anterior)
       }
     },
     'focus .sel': function(event) {
