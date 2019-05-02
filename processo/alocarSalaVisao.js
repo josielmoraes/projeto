@@ -117,7 +117,8 @@ if(Meteor.isClient){
     'aulas': function() {
       var aulas = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
       return aulas
-    },  imprimir(aux) {
+    },
+    imprimir(aux) {
         if (aux == 0) {
           return "Matutino 1 - 7h30 às 8h30";
         } else if (aux == 1) {
