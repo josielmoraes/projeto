@@ -26,17 +26,20 @@
       </div>
 
       {{#if mostrar}}
-      <div class="col-sm-10 offset-sm-1 ">
+      <div class="col-sm-10">
         <div class="form-group row">
 
-          <label for="cursoSelecionado"  class="control-label col-sm-2" >Curso</label>
+
+
+
+
+
           <div class="col-sm-4">
+          <label for="cursoSelecionado"  class="control-label" >Curso</label>
             {{>buscaCurso}}
           </div>
-        </div>
-        <div class="form-group row">
-          <label  class="control-label col-sm-2" for="semestre">Semestre</label>
-          <div class="col-sm-4">
+          <div class="col-sm-2">
+            <label  class="control-label" for="semestre">Semestre</label>
             <select id="semestre" class="form-control dropdown">
               <option value=''> </option>
               <option value='1'>1</option>
@@ -51,27 +54,27 @@
               <option value='10'>10</option>
             </select>
           </div>
-        </div>
-          <div class="form-group row">
-            <label for="professorSelecionado"  class="control-label col-sm-2" >Professor</label>
-            <div class="col-sm-4">
+
+            <div class="col-sm-2">
+              <label for="professorSelecionado"  class="control-label " >Professor</label>
               <select id="professorSelecionado" class="form-control dropdown">
                 <option value=''> </option>
                 {{#each obj in buscarProfessor}}
                 <option value='{{obj.Professor._id}}'>{{imprimirProfessor obj.Professor}} </option>
                 {{/each}}
               </select>
+              {{preencherProfessor}}
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="disciplinaSelecionada"  class="control-label col-sm-2" >Disciplina</label>
+
             <div class="col-sm-4">
+              <label for="disciplinaSelecionada"  class="control-label" >Disciplina</label>
               <select id="disciplinaSelecionada" class="form-control dropdown">
                 <option value=''> </option>
                 {{#each disciplina in buscarDisciplina}}
                 <option value='{{disciplina.Materia._id}}'>{{disciplina.Materia.nomeMateria}}</option>
                 {{/each}}
               </select>
+                {{preencherDisciplina}}
             </div>
           </div>
         {{#if mostrarTabela}}

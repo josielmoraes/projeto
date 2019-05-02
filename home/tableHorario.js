@@ -61,7 +61,7 @@ if (Meteor.isClient) {
     turma=[]
     disciplina=Session.get('disciplinaSelecionada')
     professor=Session.get('professorSelcionado')
-    if( (curso!='' && sem!='') || professor!='' || disciplina){
+    if( (curso!='' && sem!='') || professor!='' || disciplina!=""){
       ofertasFiltras=ofertas.filter((obj)=>{
         saidaCurso=false
         saidaSemestre=false
@@ -88,13 +88,16 @@ if (Meteor.isClient) {
           saidaCurso=tmp
         }
         if(saidaCurso && saidaSemestre){
-          console.log("seet 5")
           turmaTmp=turma.find((element)=>{
             if(element[2]==obj.Turma[2])
               return obj.Turma
           })
           if(turmaTmp===undefined){
-            turma.push(cursoDoc.sigla+obj.Turma[2])
+            if(cursoDoc!==undefined){
+              turma.push(cursoDoc.sigla+obj.Turma[2])
+            }else{
+              turma.push(obj.Turma)
+            }
           }
         }
 
@@ -175,10 +178,11 @@ if (Meteor.isClient) {
     turmas=Session.get('turmas')
     disciplina=Session.get('disciplinaSelecionada')
     professor=Session.get('professorSelcionado')
-    console.log(turmas)
+
     array=[]
+    return turmas
     if(cursoid!=""){
-      return turmas
+
     }else if(disciplina!='' || professor!=''){
       array.push("")
     }
@@ -190,9 +194,6 @@ if (Meteor.isClient) {
     ofertaFind=ofertas.find((obj)=>{
       for(horario of obj.horario){
         if(horario.dia==dia && horario.aula==aula){
-          if(sem=='10'){
-            console.log(obj)
-          }
           if(turma=='' || obj.Turma[2]==turma[2]){
             return obj
           }
@@ -292,6 +293,19 @@ if (Meteor.isClient) {
 
     return professores
   },
+  preencherProfessor(){
+    sem=Session.get('processoSelecionado');
+    curso = Session.get("cursoSelecionado");
+    sem = Session.get('periodoSelecionado');
+    disciplina=Session.get('disciplinaSelecionada')
+    setTimeout(function(){
+      if(Session.get('professorSelcionado')!='' && $("#professorSelecionado option[value="+Session.get('professorSelcionado')+"]").length>0){
+      $("#professorSelecionado option[value="+Session.get('professorSelcionado')+"]").attr('selected', 'selected');
+    }else{
+      Session.set('professorSelcionado',"")
+    }
+    },100)
+  },
   imprimirProfessor(professor){
     if(professor!=""){
       nomes=professor.profile.name.split(" ");
@@ -303,6 +317,19 @@ if (Meteor.isClient) {
       }
       return nomeImprimir;
     }
+  },
+  preencherDisciplina(){
+    sem=Session.get('processoSelecionado');
+    curso = Session.get("cursoSelecionado");
+    sem = Session.get('periodoSelecionado');
+    disciplina=Session.get('professorSelcionado')
+    setTimeout(function(){
+      if(Session.get('disciplinaSelecionada')!='' && $("#professorSelecionado option[value="+Session.get('disciplinaSelecionada')+"]").length>0){
+      $("#disciplinaSelecionada option[value="+Session.get('disciplinaSelecionada')+"]").attr('selected', 'selected');
+    }else{
+      Session.set('disciplinaSelecionada',"")
+    }
+    },100)
   },
   buscarDisciplina(){
     sem=Session.get('processoSelecionado');
@@ -374,8 +401,8 @@ Template.tableHorario.events({
   'change #semestre': function(event) {
     var tmp = $('#semestre').val();
     Session.set('periodoSelecionado', tmp)
-    $('#professorSelcionado').val('');
-    $('#disciplinaSelecionada').val('');
+    //$('#professorSelcionado').val('');
+    //$('#disciplinaSelecionada').val('');
   },
   'change #professorSelecionado':function(event){
     event.preventDefault();
