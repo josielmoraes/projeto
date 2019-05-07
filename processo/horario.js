@@ -436,7 +436,7 @@ if (Meteor.isClient) {
       }
       setTimeout(function() {
         for (dia = 1; dia < 7; dia++) {
-          for (aula = 0; aula < 12; aula++) {
+          for (aula = 0; aula < 15; aula++) {
             string = dia + 's' + aula + a;
             aux = document.getElementById(string);
             if (aux != null) {

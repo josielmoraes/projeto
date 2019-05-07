@@ -188,7 +188,7 @@ if(Meteor.isClient){
           var ofertas=Session.get('ofertas')
           var salaId=Session.get("salaId")
           for (dia = 1; dia < 7; dia++) {
-            for (aula = 0; aula < 12; aula++) {
+            for (aula = 0; aula < 15; aula++) {
               var string=dia+"s"+aula
               var element= document.getElementById(string);
               if (element != null) {
