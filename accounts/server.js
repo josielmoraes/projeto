@@ -11,6 +11,7 @@ import Prefix from '../imports/prefix.js';
 Meteor.startup(() => {
 
   if (Meteor.isClient) {
+   
     $('input').attr('autocomplete', 'off')
     /*Meteor.call('csv',function(e,r){
       if(e){
@@ -35,7 +36,9 @@ Meteor.startup(() => {
 
   if (Meteor.isServer) {
 
-
+    process.env.MONGO_URL="mongodb://horario:xJuECxR8@localhost:27017/horario";
+    process.env.ROOT_URL="https://faeng.ufmt.br/horario";
+    console.log(process.env.HTTP_FORWARDED_COUNT)
     Meteor.methods({
       "csv":function(){
     var fs = require('fs');
