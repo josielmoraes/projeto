@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.51",
-    "bcrypt": "3.0.0",
+    "bcrypt-nodejs": "0.0.3",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.7",
     "datatables.net-bs": "^1.10.16",
